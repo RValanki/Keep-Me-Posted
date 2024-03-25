@@ -13,4 +13,10 @@ Alex Ung (32498853)\
 Zihao Wang (32520433)\
 Maureen Pham (33117144)\
 Rohit Valanki (31451764)\
+<<<<<<< HEAD
 Danny Leung (32478705)\
+=======
+Marcus Wei (32503881)\
+Angelina Leung (33114447)\
+Benjamin Cherian (31483534)\
+>>>>>>> 369fff3aac5d9bd79d797b9192d8c0133ac5018c
