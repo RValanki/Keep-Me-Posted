@@ -22,6 +22,10 @@ Danny Leung (32478704)\
 
 To run project locally, run the frontend and backend in 2 seperate terminals. Eg, create one terminal and follow the frontend instructions, then create a different terminal and follow the backend instructions.
 
+# npm install 
+
+If you haven't already install node and npm globally - https://docs.npmjs.com/downloading-and-installing-node-js-and-npm 
+
 # Frontend setup
 
 cd frontend\
