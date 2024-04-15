@@ -34,7 +34,7 @@ npm run dev
 
 # backend
 
-* if you are using mac use python3 and pip3
+if you are using mac use python3 and pip3
 
 Create a virtual environment first time:
 
