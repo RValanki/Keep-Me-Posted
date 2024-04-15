@@ -16,7 +16,7 @@ Rohit Valanki (31451764)\
 Marcus Wei (32503881)\
 Angelina Leung (33114447)\
 Benjamin Cherian (31483534)\
-Danny Leung (32478704)\
+Danny Leung (32478704)
 
 # Installation
 
@@ -30,7 +30,7 @@ If you haven't already install node and npm globally - https://docs.npmjs.com/do
 
 cd frontend\
 npm install\
-npm run dev\
+npm run dev
 
 # backend
 
@@ -39,11 +39,11 @@ Create a virtual environment first time:
 cd backend\
 python -m venv venv\
 source venv/bin/activate\
-pip install -r requirements.txt\
+pip install -r requirements.txt
 
 To start backend:
 
 cd kmp_backend\
 python manage.py makemigrations\
 python manage.py migrate\
-python manage.py runserver\
+python manage.py runserver
