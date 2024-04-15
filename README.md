@@ -18,28 +18,28 @@ Angelina Leung (33114447)\
 Benjamin Cherian (31483534)\
 Danny Leung (32478704)\
 
-## Installation
+# Installation
 
 To run project locally, run the frontend and backend in 2 seperate terminals. Eg, create one terminal and follow the frontend instructions, then create a different terminal and follow the backend instructions.
 
-# Frontend
+# Frontend setup
 
-cd frontend
-npm install
-npm run dev
+cd frontend\
+npm install\
+npm run dev\
 
 # backend
 
 Create a virtual environment first time:
 
-cd backend
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+cd backend\
+python -m venv venv\
+source venv/bin/activate\
+pip install -r requirements.txt\
 
 To start backend:
 
-cd kmp_backend
-python manage.py makemigrations
-python manage.py migrate
-python manage.py runserver
+cd kmp_backend\
+python manage.py makemigrations\
+python manage.py migrate\
+python manage.py runserver\
