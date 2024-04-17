@@ -27,9 +27,9 @@ To run project locally, run the frontend and backend in 2 separate terminals. Eg
 If you haven't already install node and npm globally - https://docs.npmjs.com/downloading-and-installing-node-js-and-npm 
 
 # Frontend
-
 Setup npm
 ```console
+cd frontend
 npm install
 ```
 
@@ -40,11 +40,11 @@ npm run dev
 ```
 
 # Backend
-
 If you are using mac use **python3** and **pip3**
 
 Create a virtual environment for the first time:
 
+## Mac setup
 ```console
 cd backend
 python -m venv venv
@@ -52,7 +52,15 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-To run backend
+## Windows setup
+```console
+cd backend
+python -m venv venv
+venv/bin/activate OR venv/Scripts/activate
+pip install -r requirements.txt
+```
+
+## To run backend
 ```console
 cd kmp_backend
 python manage.py makemigrations
