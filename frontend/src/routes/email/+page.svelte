@@ -1,14 +1,13 @@
 <script>
-    let postRequestString = "http://localhost:8000/emailer/"  // yours may be different, see what link pops up when you run django server, then add /emailer on the end
+    let endpoint = "http://127.0.0.1:8000/emailer/"  // yours may be different, see what link pops up when you run django server, then add /emailer on the end
     let contacts = []
     let contents = ""
 
-    let buttonPressed = () => {
+    let handleSend = () => {
         let data = new FormData()
         data.append('contents', contents)
-        data.append('contacts', contacts)
-            
-        fetch(postRequestString, {method: 'POST', data: data}).then(response => {
+        data.append('contacts', contacts)    
+        fetch(endpoint, {method: 'POST', body: data}).then(response => {
             console.log(response)
         })
     }
@@ -21,6 +20,7 @@
         let displayField = document.getElementById("display");
         displayField.innerHTML = emailInputField.value;
     }
+
 </script>
 
 <!-- This link is currently used for using google material icons-->
@@ -36,10 +36,11 @@
 
 <br>
 
-<div class="heading">Add Receipents<br><br><br><br><br><br>
+<div class="heading">Add Receipents<br><br><br><br><br><br> 
+
 <!-- Below is HTML code for the input field and add button-->
-<label for = "email">Enter User Email Address:</label>
-<input id="inputEmail" placeholder = "test@example.com">
+<label for ="email">Enter User Email Address:</label>
+<input id="inputEmail" placeholder = "test@example.com" bind:value={contacts}>
 <!-- on click the add button calls the add_email function-->
 <button on:click={add_email}>Add +</button><br><br><br><br><br>
 
@@ -56,6 +57,10 @@
     </span>
 
 </div>
+
+<br>
+<button type="button" on:click={handleSend()}> Send </button>
+
 </div>
 
 
