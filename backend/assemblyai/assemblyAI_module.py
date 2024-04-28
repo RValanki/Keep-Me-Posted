@@ -29,7 +29,7 @@ def transcribe_with_speakers(audioUrl) -> str:
         audioURL (str): The URL of the audio file you want to transcribe.
         
     Returns:
-        str: Transcription text with speakers from the audio file.
+        str: Transcription text with speakers from the audio file. Each line should have one speaker.
     
     '''
     transcriber = aai.Transcriber()
