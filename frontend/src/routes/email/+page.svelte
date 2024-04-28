@@ -1,11 +1,13 @@
 <script>
 
-    let postRequestString = "http://localhost:8000/emailer/"  // yours may be different, see what link pops up when you run django server, then add /emailer on the end
+    let postRequestString = "http://localhost:5173/"  // yours may be different, see what link pops up when you run django server, then add /emailer on the end
     let contacts = []
     let contents = ""
     let emailField = ""
     let errorMessage = ""
+    let name = ""
 
+    
     let buttonPressed = () => {
         let data = new FormData()
         data.append('contents', contents)
@@ -43,12 +45,17 @@
             contacts.push(emailField)
             emailField = ""
             contacts = contacts
+            name = name
         }
         
     }
 
     
 </script>
+
+<input bind:value = {name} placeholder = "enter your email address" />
+<p>Hello {name || 'welcome to KeepMePosted'}!</p>
+
 
 
 <!-- This link is currently used for using google material icons-->
@@ -105,6 +112,8 @@
 
 
 <div id="display" >
+
+
 
 </div>
 </div>
