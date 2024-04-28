@@ -1,3 +1,14 @@
+# Set-up Instructions
+#
+# Install REST Client extension for VS Code
+# Run project backend sever (instructions found in README.md)
+# Go to development server URL and add /admin
+# Log in - user: admin pass: kmp000
+# Test signup by sending HTTP request using REST Client
+# Check Users tab under AUTHENTICATION AND AUTHORIZATION for successful signup
+# Test login by sending a HTTP request using REST client
+# Test token using token from Token tab under AUTH TOKEN and sending HTTP request using REST Client
+
 # Request to login endpoint
 POST http://127.0.0.1:8000/login
 Content-Type: application/json
