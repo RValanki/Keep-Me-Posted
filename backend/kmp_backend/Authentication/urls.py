@@ -18,7 +18,10 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    # Endpoint for user login
     path('login', views.login),
+    # Endpoint for user signup
     path('signup', views.signup),
+    # Test endpoint for token authentication
     path('test_token', views.test_token),
 ]

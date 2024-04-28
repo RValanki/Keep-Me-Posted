@@ -1,20 +1,26 @@
+# Request to login endpoint
 POST http://127.0.0.1:8000/login
 Content-Type: application/json
 
+# Request body containing user credentials
 {"email": "bob@gmail.com", "password": "Password123"}
 
 
 ###
 
+# Request to signup endpoint
 POST http://127.0.0.1:8000/signup
 Content-Type: application/json
 
+# Request body containing user registration details
 {"username": "bob", "password": "Password123", "email": "bob@gmail.com"}
 
 ###
 
+# Request to test_token endpoint
 GET http://127.0.0.1:8000/test_token
 Content-Type: application/json
+# Authorization header containing user token
 Authorization: Token d44dd15d9fe59a72ed203c3469ff355f8596e686
 
 {}
