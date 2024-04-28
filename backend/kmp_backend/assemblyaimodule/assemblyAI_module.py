@@ -1,8 +1,11 @@
 """ This is the module that stores all functions related to Assembly AI"""
 
 import assemblyai as aai
+from dotenv import load_dotenv
+import os
 
-aai.settings.api_key = "620d4459badf4480a039c646ab4c3216"
+load_dotenv()
+aai.settings.api_key = os.getenv('ASSEMBLYAI_API_KEY')
 
 def transcribe(audioURL) -> str:
     '''This function takes an audio file and returns its transcript.
