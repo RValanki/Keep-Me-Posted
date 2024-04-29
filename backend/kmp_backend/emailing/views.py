@@ -46,7 +46,7 @@ def add_subscriber(request):
     #     print("Failed to add subscriber:", response.text)
 
     # return HttpResponse(response.status_code)
-    return add_campaign(request)
+    return add_and_send_campaign(request)
 
 
 
@@ -116,5 +116,3 @@ def add_and_send_campaign(request):
         return HttpResponse("Campaign sent successfully!")
     else:
         return JsonResponse({'error': 'Failed to send campaign', 'details': send_response.text}, status=400)
-
-    return HttpResponse("Unhandled case", status=500)  # Fallback safety
