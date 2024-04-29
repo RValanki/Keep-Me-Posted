@@ -1,11 +1,11 @@
 POST http://127.0.0.1:8000/api/transcribe
 Content-Type: application/json
 
-{"audio_url": "https://github.com/AssemblyAI-Examples/audio-examples/raw/main/20230607_me_canadian_wildfires.mp3"}
+{"audio_file": "https://github.com/AssemblyAI-Examples/audio-examples/raw/main/20230607_me_canadian_wildfires.mp3"}
 
 ###
 
 POST http://127.0.0.1:8000/api/transcribe/speakers
 Content-Type: application/json
 
-{"audio_url": "https://github.com/AssemblyAI-Examples/audio-examples/raw/main/20230607_me_canadian_wildfires.mp3"}
+{"audio_file": "https://github.com/AssemblyAI-Examples/audio-examples/raw/main/20230607_me_canadian_wildfires.mp3"}

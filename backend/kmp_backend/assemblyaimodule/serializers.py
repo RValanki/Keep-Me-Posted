@@ -1,4 +1,8 @@
+# serializers.py
 from rest_framework import serializers
+from .models import AudioFile
 
-class AudioTranscriptionSerializer(serializers.Serializer):
-    audio_url = serializers.CharField()  # Assuming a maximum URL length of 255 characters
+class AudioFileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AudioFile
+        fields = ['audio_file']
