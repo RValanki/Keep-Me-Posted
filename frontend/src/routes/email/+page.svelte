@@ -103,7 +103,7 @@
     {/each}
 </ul>
 
-<button type="button" on:click={buttonPressed()}> Send </button>
+<button type="button" on:click={buttonPressed}> Send </button>
 
 <div id="display" >
 
