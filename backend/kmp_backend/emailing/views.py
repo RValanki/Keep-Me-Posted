@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 import requests
-# Create your views here.
 
 api_key = "API-key"
 list_id = 'list-ID'
@@ -9,25 +8,18 @@ list_id = 'list-ID'
 data_center = api_key.split('-')[-1]
 
 def send_email(request):
-    message = request.POST.get('message')
-    contacts = request.POST.get('contacts').split(',')
+    message = request.POST.get('message') # get message from data 
+    contacts = request.POST.get('contacts').split(',') # get contacts from data
     
-    for i in contacts:
+    for i in contacts: # loop through contacts and add them as subscribers
         res = add_subscriber(i)
-        if not res:
-            return JsonResponse({'error': 'Failed to add user to email list', 'details': 'Failed to add user to email list'}, status=400)
     
-    return create_campaign_and_send(message)
+    return create_campaign_and_send(message) # create campaign and send the email
     
 
 
 
 def add_subscriber(email):
-    """
-    Sends an email using the Mailchimp API with a hardcoded API key.
-    :param request: JSON data that will hold contacts and email content
-    """
-
     # Endpoint for adding a subscriber
     url = f'https://{data_center}.api.mailchimp.com/3.0/lists/{list_id}/members/'
 
