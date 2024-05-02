@@ -1,5 +1,5 @@
 <script>
-  const postRequestString = "http://localhost:5173/"; // yours may be different, see what link pops up when you run django server, then add /emailer on the end
+  const postRequestString = "http://127.0.0.1:8000/emailer/"; // yours may be different, see what link pops up when you run django server, then add /emailer on the end
 
   let contacts = [];
 
@@ -26,11 +26,11 @@
     data.append("message", messageField);
     data.append("contacts", contacts);
 
-    // fetch(postRequestString, { method: "POST", data: data }).then(
-    //   (response) => {
-    //     console.log(response);
-    //   }
-    // );
+    fetch(postRequestString, { method: "POST", body: data}).then(
+      (response) => {
+        console.log(response);
+      }
+    );
   };
 
   /**

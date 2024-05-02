@@ -8,16 +8,26 @@ list_id = 'list-ID'
 
 data_center = api_key.split('-')[-1]
 
-def add_subscriber(request):
+def send_email(request):
+    message = request.POST.get('message')
+    contacts = request.POST.get('contacts').split(',')
+    
+    for i in contacts:
+        res = add_subscriber(i)
+        if not res:
+            return JsonResponse({'error': 'Failed to add user to email list', 'details': 'Failed to add user to email list'}, status=400)
+    
+    return create_campaign_and_send(message)
+    
+
+
+
+def add_subscriber(email):
     """
     Sends an email using the Mailchimp API with a hardcoded API key.
     :param request: JSON data that will hold contacts and email content
     """
-    print("Send email function triggered")
 
-    email = 'example@gmail.com'
-    first_name = 'John'
-    last_name = 'Smith'
     # Endpoint for adding a subscriber
     url = f'https://{data_center}.api.mailchimp.com/3.0/lists/{list_id}/members/'
 
@@ -25,10 +35,6 @@ def add_subscriber(request):
     data = {
         "email_address": email,
         "status": "subscribed",  # or 'pending' if you want double opt-in
-        "merge_fields": {
-            "FNAME": first_name,
-            "LNAME": last_name
-        }
     }
 
     # Headers including Authorization
@@ -40,37 +46,18 @@ def add_subscriber(request):
     # POST request to add the subscriber
     response = requests.post(url, json=data, headers=headers)
 
-    # if response.status_code == 200:
-    #     print("Subscriber added successfully!")
-    # else:
-    #     print("Failed to add subscriber:", response.text)
-
-    # return HttpResponse(response.status_code)
-    return add_and_send_campaign(request)
-
-
-
-
-
-def add_and_send_campaign(request):
-    """
-    Creates and sends an email campaign using the Mailchimp API.
-    This function takes a request object containing the necessary configuration and credentials,
-    creates a new email campaign, sets the campaign content, and attempts to send the campaign.
-    Parameters:
-    - request (HttpRequest): The HTTP request object that may contain additional parameters such as data center identifier,
-      API key, list ID, etc. These parameters are expected to be accessible as attributes or through a specific method like GET/POST.
-    Returns:
-    - HttpResponse: Returns an HttpResponse indicating the success of the operation, including sending the campaign or any errors encountered.
-      If the campaign creation, content setting, or sending fails, it returns a JsonResponse detailing the error and the respective HTTP status code.
+    if response.status_code == 200:
+        print("Subscriber added successfully!")
+        return True
+    else:
+        print("Failed to add subscriber:", response.text)
+        return False
     
-    # send with mailchimp here
-    Raises:
-    - HttpResponse with status 500 if it encounters an unhandled case.
-    """
-    subject = "test campaign"
-    from_name = "Joe"
-    reply_to = "example@gmail.com"
+    
+def create_campaign_and_send(message):
+    subject = "KMP Meeting Summary"
+    from_name = "KMP"
+    reply_to = "kmp@gmail.com"
 
     create_url = f'https://{data_center}.api.mailchimp.com/3.0/campaigns'
 
@@ -83,7 +70,6 @@ def add_and_send_campaign(request):
             "subject_line": subject,
             "from_name": from_name,
             "reply_to": reply_to,
-            "to_name": "*|FNAME|* *|LNAME|*"
         }
     }
 
@@ -100,7 +86,7 @@ def add_and_send_campaign(request):
     campaign_id = create_response.json().get('id')
     content_url = f'https://{data_center}.api.mailchimp.com/3.0/campaigns/{campaign_id}/content'
     content_data = {
-        "html": "<p>Hello, this is a test email</p>"
+        "html": f"<p>{message}</p>"
     }
 
     # Set content
@@ -110,9 +96,9 @@ def add_and_send_campaign(request):
 
     send_url = f'https://{data_center}.api.mailchimp.com/3.0/campaigns/{campaign_id}/actions/send'
 
-  # Send campaign
+    # Send campaign
     send_response = requests.post(send_url, headers=headers)
     if send_response.status_code == 204:
-        return HttpResponse("Campaign sent successfully!")
+        return JsonResponse({'details': "Campaign sent successfully!"}, status=200)
     else:
         return JsonResponse({'error': 'Failed to send campaign', 'details': send_response.text}, status=400)
