@@ -6,17 +6,65 @@
 
     let email = '';
     let password = '';
+    let emailValidationString = "";
+    let passwordValidationString = "";
+
+    function isValidEmail(email) {
+    // You can use a regular expression for email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+    function emailValidation(email){
+        if (email == ""){
+          emailValidationString = "Please Enter Email";
+          return false
+        }
+        else if(!isValidEmail(email)){
+          emailValidationString = "Please Enter Valid Email";
+          return false
+        }
+        else{
+          emailValidationString = "";
+          return true
+        }
+    }
+
+    function passwordValidation(password){
+      if(password == ""){
+          passwordValidationString = "Please Enter Password"
+          return false
+      }
+      else{
+          passwordValidationString = ""
+          return true
+      }
+    }
+
+    function handleIncorrectEmailOrPassword(response){
+        if(response.detail = "Not found!"){
+          emailValidationString = "Incorrect Email or Password"
+          passwordValidationString = "Incorrect Email or Password"
+        }
+    }
 
     function handleSignIn() {
         console.log('Email:', email);
         console.log('Password:', password);
-        const data = {"email": email, "password": password}
-        postData(data)
+
+        if (emailValidation(email) & passwordValidation(password)){
+          const data = {"email": email, "password": password}
+          let response = postData(data)
+          handleIncorrectEmailOrPassword(response)
+        }
+        
+        
 
 
         // Here you can perform further actions like sending the data to the server
     }
 
+   
     // Optional: Fetch initial data or perform other tasks on component mount
     onMount(async () => {
         // Fetch initial data or perform other async tasks here
@@ -132,7 +180,7 @@ position: relative; top: 0.5vh;
  line-height: 38px;
  letter-spacing: 0%;
  vertical-align: baseline;
- text-align: center;
+ left: 11vh;
     "
     >
          Log in to your account
@@ -149,7 +197,7 @@ position: relative; top: 0.5vh;
     line-height: 24px;
     letter-spacing: 0%;
  vertical-align: baseline;
- text-align: center;
+ left: 11vh;
     "
     >
      Welcome back! Please enter your details.
@@ -168,7 +216,7 @@ position: relative; top: 0.5vh;
          letter-spacing: 0%;
          vertical-align: baseline;
          position: absolute;
-         left: 11.5vh;
+         left: 11vh;
          color: #344054;
          "
          
@@ -185,12 +233,26 @@ position: relative; top: 0.5vh;
          vertical-align: baseline;
          position: absolute;
          top: 3vh;
-         left: 11.5vh;
+         left: 11vh;
          ">
  
              <input type="text" bind:value={email} style="border: 1px solid #D0D5DD; border-radius: 5px; padding: 10px; width: 20vw;" placeholder="name@email.com" />
          </div>
- 
+         
+         <div style = 
+         "font-size: 10.5px;
+         font-family: 'Inter', sans-serif;
+         font-weight: 400;
+         line-height: 20px;
+         letter-spacing: 0%;
+         vertical-align: baseline;
+         position: absolute;
+         left: 11vh;
+         color: red;
+         top: 7.5vh;
+         ">
+          {emailValidationString}
+         </div>
     </div>
  
     
@@ -208,7 +270,7 @@ position: relative; top: 0.5vh;
          letter-spacing: 0%;
          vertical-align: baseline;
          position: absolute;
-         left: 11.5vh;
+         left: 11vh;
          color: #344054;
          "
          
@@ -225,10 +287,25 @@ position: relative; top: 0.5vh;
          vertical-align: baseline;
          position: absolute;
          top: 3vh;
-         left: 11.5vh;
+         left: 11vh;
          ">
  
              <input type="password" bind:value={password} style="border: 1px solid #D0D5DD; border-radius: 5px; padding: 10px; width: 20vw; letter-spacing: 2px;" placeholder="••••••••" />
+         </div>
+
+         <div style = 
+         "font-size: 10.5px;
+         font-family: 'Inter', sans-serif;
+         font-weight: 400;
+         line-height: 20px;
+         letter-spacing: 0%;
+         vertical-align: baseline;
+         position: absolute;
+         left: 11vh;
+         color: red;
+         top: 7.5vh;
+         ">
+          {passwordValidationString}
          </div>
  
     </div>
@@ -255,7 +332,7 @@ position: relative; top: 0.5vh;
     transition: background-color 0.3s ease-in-out;
     width: 21.5vw;
     position: absolute;
-    left: 11.5vh;
+    left: 11vh;
     font-weight: 575;
     " 
     onmouseover="this.style.backgroundColor='#0c4eae'" 
@@ -271,7 +348,7 @@ position: relative; top: 0.5vh;
     <div style="
     width: 60vh; height: 10vh; position: absolute; top: 53.5vh;
 ">
-    <button style="border: 1px solid #D0D5DD; background-color: white; color: #344054; border-radius: 8px; padding: 10px 20px; cursor: pointer; transition: background-color 0.3s ease-in-out; width: 21.5vw; position: absolute; left: 11.5vh;" onmouseover="this.style.backgroundColor='#D0D5DD'" onmouseout="this.style.backgroundColor='white'">
+    <button style="border: 1px solid #D0D5DD; background-color: white; color: #344054; border-radius: 8px; padding: 10px 20px; cursor: pointer; transition: background-color 0.3s ease-in-out; width: 21.5vw; position: absolute; left: 11vh;" onmouseover="this.style.backgroundColor='#D0D5DD'" onmouseout="this.style.backgroundColor='white'">
         <img src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_92x30px.svg" alt="Google Logo" style="width: 30px; height: auto; margin-right: 10px;">Sign in With Google
     </button>
 </div>
@@ -292,7 +369,7 @@ font-family: 'Inter', sans-serif;
 font-weight: 400;
 line-height: 20px;
 letter-spacing: 0%;
-position: absolute;
+position: relative;
 left: 20vh;
         ">
           Don't have an account?
@@ -307,8 +384,8 @@ font-family: 'Inter', sans-serif;
 font-weight: 600;
 line-height: 20px;
 letter-spacing: 0%;
-position: absolute;
-left: 36vh;
+position: relative;
+left:6vh;
 cursor: pointer;
         ">
           Sign Up
