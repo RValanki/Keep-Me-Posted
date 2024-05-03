@@ -24,7 +24,7 @@ POST http://127.0.0.1:8000/signup
 Content-Type: application/json
 
 # Request body containing user registration details
-{"username": "bob", "password": "Password123", "email": "bob69@gmail.com"}
+{"username": "bob", "password": "Password123", "email": "bob@gmail.com"}
 
 ###
 
