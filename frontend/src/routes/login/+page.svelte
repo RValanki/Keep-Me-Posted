@@ -1,6 +1,7 @@
 <script>
    import logo from '/Users/rohitvalanki/Keep-Me-Posted/frontend/src/routes/login/KMPLOGO_TEST.png';
    import { onMount } from 'svelte';
+   import { goto } from '$app/navigation';
 
 
     let email = '';
@@ -36,6 +37,10 @@
 
         const responseData = await response.json();
         console.log('Response:', responseData);
+
+        if (response.ok){
+            goto('/email');
+        }
    
       } catch (error) {
         console.error('Error:', error);
