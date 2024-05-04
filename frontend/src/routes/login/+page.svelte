@@ -94,6 +94,10 @@
         console.error('Error:', error);
       }
     }
+
+    function handleSignUpClick() {
+    goto('/signup');
+  }
     
 </script>
   
@@ -386,8 +390,8 @@ line-height: 20px;
 letter-spacing: 0%;
 position: relative;
 left:6vh;
-cursor: pointer;
-        ">
+cursor: pointer;"
+on:click={handleSignUpClick}>
           Sign Up
         </div>
       </div>
