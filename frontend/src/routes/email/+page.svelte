@@ -7,6 +7,7 @@
   let emailField = ""
 
   let errorMessage = "";
+  let confirmationMessage = "";
 
   let buttonPressed = () => {
     if (!(contacts.length) || !messageField) {
@@ -29,6 +30,21 @@
     fetch(postRequestString, { method: "POST", body: data}).then(
       (response) => {
         console.log(response);
+        if (response.status == 200) {
+          console.log('Email sent successfully')
+          confirmationMessage = "Email sent successfully.";
+          setTimeout(() => {
+            confirmationMessage = "";
+          }, 2000);
+
+          contacts = []
+          messageField = ""
+        } else {
+          errorMessage = "Email did not send successfully.";
+          setTimeout(() => {
+            errorMessage = "";
+          }, 2000);
+        }
       }
     );
   };
@@ -98,9 +114,13 @@
     <button type="button" on:click={buttonPressed}> Send </button>
   </div>
 
-  <div class="error">
+  <div class="alert">
     {#if errorMessage}
-      <p class="error">{errorMessage}</p>
+      <p id="error">{errorMessage}</p>
+    {/if}
+
+    {#if confirmationMessage}
+     <p id="confirmation">{confirmationMessage}</p>
     {/if}
   </div>
 </body>
@@ -151,13 +171,20 @@
     height: 20px;
   }
 
-  .error {
+  .alert {
     width: 100%;
     text-align: center;
-    color: red;
     position: fixed;
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
+  }
+
+  #error {
+    color: red;
+  }
+
+  #confirmation {
+    color: green;
   }
 </style>

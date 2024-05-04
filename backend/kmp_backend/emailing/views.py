@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 import requests
 
-api_key = "API-key"
-list_id = 'list-ID'
+api_key = ""
+list_id = ""
 
 data_center = api_key.split('-')[-1]
 
