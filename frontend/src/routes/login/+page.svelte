@@ -1,5 +1,5 @@
 <script>
-   import logo from '/Users/rohitvalanki/Keep-Me-Posted/frontend/src/routes/login/KMPLOGO_TEST.png';
+   import logo from './KMPLOGO_TEST.png';
    import { onMount } from 'svelte';
    import { goto } from '$app/navigation';
 
@@ -320,7 +320,8 @@ position: relative; top: 0.5vh;
     width: 60vh; height: 10vh; color: #667085; position: absolute; top: 42vh; left: 21vw;
     font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 550; line-height: 20px;
     letter-spacing: 0%; cursor: pointer; transition: color 0.3s ease-in-out;"
-    onmouseover="this.style.color='#6941C6'" onmouseout="this.style.color='#667085'">
+    onmouseover="this.style.color='#6941C6'" onmouseout="this.style.color='#667085'"
+    on:click = {() => {alert("Womp Womp")}}>
     Forgot Password
   </div>
   
