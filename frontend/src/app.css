@@ -1,0 +1,40 @@
+h1{
+    font-family: 'Inter', sans-serif;
+    size: 48px;
+    font-weight: bold; /* 700 */
+}
+h2{
+    font-family: 'Inter', sans-serif;
+    size: 30px;
+    font-weight: 550; /* semi-bold */
+}
+h3{
+    font-family: 'Inter', sans-serif;
+    size: 24px;
+    font-weight: 550; /* semi-bold */
+}
+.subheading{
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: normal; /* 400 */
+}
+body{
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: normal; /* 400 */
+}
+button{
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 550; /* semi-bold */
+}
+.caption{
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: normal; /* 400 */
+}
+.token{
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: normal; /* 400 */
+}
