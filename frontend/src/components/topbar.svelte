@@ -1,8 +1,6 @@
-import kmpIcon from '../assets/kmp-icon';
+<!-- Top Bar Component
 
-<!-- Top Bar Navigation Component
-
-    Enables settings and profile on-click
+    Contains top bar functionality and styling
 
     Author: mpha0039
     Edited by:
@@ -10,28 +8,18 @@ import kmpIcon from '../assets/kmp-icon';
 
  -->
 
-<nav>
-    <h2> KMP </h2>
-    <ul>
-        <li>
-            <img src={kmpIcon}</>
-        </li>
-        <li>
-            <a href="/">Profile</a>
-        </li>
-    </ul>
-</nav>
-
+<script>
+    <!-- image elements -->
+    <!-- logic to handle click events -->
+</script>
 <!-- make the toolbar permanent -->
 <slot />
 
 <!-- styling for the toolbar -->
 <style>
-    ul {
-        display: flex;
-        list-style: none;
-    }
-    li {
-        margin-right: 20px;
-    }
+
 </style>
+
+<!-- for the route page -->
+<!-- import toolbar elements -->
+<!-- implement logic for settings on click -->
