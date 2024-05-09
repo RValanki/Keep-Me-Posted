@@ -5,12 +5,13 @@
     export let cardBackgroundColor;
     export let cardDestination;
     export let cardTextColour;
-    export let cardWidth = "25%"; //default dimensions
+    export let cardWidth = "25%"; //default dimensions but still exporting IN CASE
     export let cardHeight = "55%";
     export let cardImagePath;
     
     const handleClick = () => {
         console.log("clickeddd")
+        // goto(cardDestination)
         // window.location.href = cardDestination;
     };
 </script>
@@ -41,11 +42,11 @@
 <!-- The code below is the initialised cards and the container you need to put the cards in
 Assuming this code will be in the routes directory also need to change cardDestination -->
 <!-- <script>
-    import Card from '../components/card.svelte';
+    import Card from '../components/Card.svelte';
 </script>
 
 <style>
-    .container {
+    .cardContainer {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -54,7 +55,7 @@ Assuming this code will be in the routes directory also need to change cardDesti
     }
 </style>
 
-<div class="container">
+<div class="cardContainer">
     <Card
         cardText="We will send the summary to your recipients as soon as it is generated. You can just sit back and relax"
         cardHeadingText="Send Summary Asap"
