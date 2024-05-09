@@ -44,9 +44,9 @@
 </script>
 
 
-<Dropzone on:drop={handleFilesSelect} />
-{#if file}
-  <p>File ready: {file.name} - {Math.floor(file.size / 1024)} KB</p>
-{:else}
-  <p>{errorMessage}</p>
-{/if}
+<Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav" let:open>
+  <div class="dropzone-label">
+    <p>Upload meeting audio</p>
+    <p>Must be under 120 minutes. MP3 or WAV formats accepted.</p>
+  </div>
+</Dropzone>
