@@ -52,7 +52,7 @@
 <!-- The code below is the initialised cards and the container you need to put the cards in
 Assuming this code will be in the routes directory also need to change cardDestination -->
 <!-- <script>
-    import Card from '../components/Card.svelte';
+    import Card from '../components/card.svelte';
 </script> -->
 
 <!-- This is a container that will hold the two cards: -->
