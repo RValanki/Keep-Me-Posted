@@ -27,11 +27,15 @@
             file = selectedFile;
             errorMessage = '';
           } else {
-            //Error message
+            errorMessage = 'File is too long. Please uploa  d a file shorter than 120 minutes.';
+            file = null;
+            //TODO: Replace with error message pop-up
           }
         });
       } else {
-        //Error message
+        errorMessage = 'Invalid file type. Please upload a .mp3 or .wav file.';
+        file = null;
+        //TODO: Replace with error message pop-up
       }
     }
   }
