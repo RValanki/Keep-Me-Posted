@@ -7,14 +7,15 @@
     Last modified: 9/05/2024
 
  -->
-<!-- importing image elements -->
-<!-- exporting topbar elements to page -->
-<!-- logic to handle click events -->
+
+<!--  -->
 <script>
+    // importing image elements
     import kmpIcon from '../assets/kmp-icon.png';
     import gearIcon from '../assets/gear-icon.png';
     import profileIcon from '../assets/profile-icon.png';
 
+    // logic to handle gear click events
     function handleGearClick() {
         alert('BOoooooo');
     }
@@ -42,8 +43,8 @@
         <hr class="line">
     </nav>
 </div>
-<!-- make the toolbar permanent -->
 
+<!-- make the toolbar permanent -->
 <slot />
 
 <!-- styling for the toolbar -->
