@@ -13,6 +13,8 @@
 <script>
   import Dropzone from "svelte-file-dropzone";
 
+  const MAX_DURATION_SECONDS = 7200; // 7200 seconds = 120 minutes
+
   let file;
   let errorMessage = '';
 
@@ -23,7 +25,7 @@
       if (selectedFile.name.endsWith('.mp3') || selectedFile.name.endsWith('.wav')) {
         const audio = new Audio(URL.createObjectURL(selectedFile));
         audio.addEventListener('loadedmetadata', () => {
-          if (audio.duration <= 7200) { // 7200 seconds = 120 minutes
+          if (audio.duration <= MAX_DURATION_SECONDS) { 
             file = selectedFile;
             errorMessage = '';
           } else {
