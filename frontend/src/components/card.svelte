@@ -1,12 +1,13 @@
 <script>
+    // declaring variables that will be used
     export let cardText;
     export let cardHeadingText;
     export let cardOutlineColor;
     export let cardBackgroundColor;
     export let cardDestination;
     export let cardTextColour;
-    export let cardWidth = "25%"; //default dimensions but still exporting IN CASE
-    export let cardHeight = "55%";
+    export let cardWidth = "25%"; //default dimensions but still exporting JUST IN CASE
+    export let cardHeight = "50%";
     export let cardImagePath;
     
     const handleClick = () => {
@@ -39,25 +40,29 @@
     }
 </style>
 
+
+
 <!-- The code below is the initialised cards and the container you need to put the cards in
 Assuming this code will be in the routes directory also need to change cardDestination -->
 <!-- <script>
     import Card from '../components/Card.svelte';
-</script>
+</script> -->
 
-<style>
-    .cardContainer {
+<!-- This is a container that will hold the two cards: -->
+<!-- <style>
+    .CardContainer {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
         gap: 1.5%;
     }
-</style>
+</style> -->
 
-<div class="cardContainer">
+<!-- Here i am putting the cards in the container also everything is initialised excpet for the destination -->
+<!-- <div class="CardContainer">
     <Card
-        cardText="We will send the summary to your recipients as soon as it is generated. You can just sit back and relax"
+        cardText="We will send the summary to your recipients as soon as it is generated. You can just sit back and relax."
         cardHeadingText="Send Summary Asap"
         cardOutlineColor="#FDDCAB"
         cardBackgroundColor="#FFFAF5"
