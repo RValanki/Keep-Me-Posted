@@ -26,9 +26,6 @@
  * ```
  */
 declare module '$env/static/private' {
-	export const NVM_RC_VERSION: string;
-	export const MANPATH: string;
-	export const TERM_PROGRAM: string;
 	export const NODE: string;
 	export const INIT_CWD: string;
 	export const NVM_CD_FLAGS: string;
@@ -120,9 +117,6 @@ declare module '$env/static/public' {
  */
 declare module '$env/dynamic/private' {
 	export const env: {
-		NVM_RC_VERSION: string;
-		MANPATH: string;
-		TERM_PROGRAM: string;
 		NODE: string;
 		INIT_CWD: string;
 		NVM_CD_FLAGS: string;
