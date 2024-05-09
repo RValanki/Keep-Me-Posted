@@ -9,7 +9,9 @@
  -->
 
 <script>
-    import TopBar from '../components/topbar.svelte';
+  import TopBar from "../components/topbar.svelte";
+  import DropZone from "../components/uploadbox.svelte";
 </script>
 
-<TopBar/>
+<TopBar />
+<DropZone />
