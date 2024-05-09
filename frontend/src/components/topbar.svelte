@@ -14,10 +14,10 @@
     import kmpIcon from '../assets/kmp-icon.png';
     import gearIcon from '../assets/gear-icon.png';
     import profileIcon from '../assets/profile-icon.png';
-    export let kmpIcon;
-    export let gearIcon;
-    export let profileIcon;
-    export let line;
+
+    function handleGearClick() {
+        alert('BOoooooo');
+    }
 </script>
 
 <div class = 'TopBar'>
@@ -28,9 +28,9 @@
             </li>
 
             <li>
-                <div class="gear-container">
+                <button class="gear-button" on:click={handleGearClick}>
                     <img class="gear-icon" src={gearIcon} alt="Gear Icon" />
-                </div>
+                </button>
             </li>
             <li>
                 <div>
@@ -64,6 +64,15 @@
         /* border: 1px solid red; */
         /* offset padding from the left edge by 70% of the viewport */
         padding-left: calc(73vw);
+    }
+    .gear-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding-left: calc(73vw);
+    }
+    .gear-button:focus {
+        outline: none;  /* Removes focus outline */
     }
     .gear-icon {
         width: 45px;

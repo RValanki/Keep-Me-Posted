@@ -14,4 +14,5 @@
 <script>
     import TopBar from '../components/topbar.svelte';
 </script>
+<TopBar/>
 <!-- implement logic for settings on click -->
