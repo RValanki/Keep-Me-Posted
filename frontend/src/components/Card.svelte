@@ -1,20 +1,27 @@
+<!-- Card Component
+
+    Contains a card button that can be modified
+
+    Author: Bowen Dong
+    Last Modified: 10/05/2024
+-->
+
 <script>
     // declaring variables that will be used
     export let cardText;
     export let cardHeadingText;
     export let cardOutlineColor;
     export let cardBackgroundColor;
-    export let cardDestination;
+    export let handleCardClick = () => {};
     export let cardTextColour;
     export let cardWidth = "25%"; //default dimensions but still exporting JUST IN CASE
     export let cardHeight = "50%";
     export let cardImagePath;
     
-    const handleClick = () => {
-        console.log("clickeddd")
-        // goto(cardDestination)
-        // window.location.href = cardDestination;
-    };
+    function handleClick() {
+        handleCardClick();
+    }
+
 </script>
   
 <button
@@ -66,7 +73,6 @@ Assuming this code will be in the routes directory also need to change cardDesti
         cardHeadingText="Send Summary Asap"
         cardOutlineColor="#FDDCAB"
         cardBackgroundColor="#FFFAF5"
-        cardDestination="/"
         cardTextColour= "#EC4A0A"
         cardImagePath= '/send_asap_lightning.png'
     />
@@ -76,7 +82,6 @@ Assuming this code will be in the routes directory also need to change cardDesti
         cardHeadingText="Customise"
         cardOutlineColor="#FCCEEE"
         cardBackgroundColor="#FAFAFF"
-        cardDestination="/"
         cardTextColour= "#C11574"
         cardImagePath= '/customise_pen.png'
     />  
