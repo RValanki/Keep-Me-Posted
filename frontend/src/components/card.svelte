@@ -44,13 +44,17 @@
     .Card {
         padding: 2% 2%;
         cursor: pointer;
+        transition: box-shadow 0.3s ease-in-out;
+    }
+    .Card:hover {
+        box-shadow: 0px 0px 10px 0px #aab4ff;
     }
 </style>
 
 
 
 <!-- The code below is the initialised cards and the container you need to put the cards in
-Assuming this code will be in the routes directory also need to change cardDestination -->
+Assuming this code will be in the routes directory also need to add handleCardClick -->
 <!-- <script>
     import Card from '../components/card.svelte';
 </script> -->
@@ -66,7 +70,7 @@ Assuming this code will be in the routes directory also need to change cardDesti
     }
 </style> -->
 
-<!-- Here i am putting the cards in the container also everything is initialised excpet for the destination -->
+<!-- Here i am putting the cards in the container also everything is initialised excpet for handleCardClick -->
 <!-- <div class="CardContainer">
     <Card
         cardText="We will send the summary to your recipients as soon as it is generated. You can just sit back and relax."
