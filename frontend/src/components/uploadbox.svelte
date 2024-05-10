@@ -47,7 +47,7 @@
   }
 </script>
 
-<Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav">
+<Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav" class="hi">
   <div class="dropzone-label">
     <p>Upload meeting audio</p>
     <p>Must be under 120 minutes. MP3 or WAV formats accepted.</p>
