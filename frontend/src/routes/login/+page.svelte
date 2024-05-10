@@ -43,19 +43,20 @@
     }
 
     function handleIncorrectEmailOrPassword(response){
-        if(response.detail = "Not found!"){
+      console.log(response)
+        if(response.detail == "Not found!" | response.detail == "No User matches the given query."){
           emailValidationString = "Incorrect Email or Password"
           passwordValidationString = "Incorrect Email or Password"
         }
     }
 
-    function handleSignIn() {
+    async function handleSignIn() {
         console.log('Email:', email);
         console.log('Password:', password);
 
         if (emailValidation(email) & passwordValidation(password)){
           const data = {"email": email, "password": password}
-          let response = postData(data)
+          const response = await postData(data)
           handleIncorrectEmailOrPassword(response)
         }
         
@@ -90,6 +91,8 @@
         if (response.ok){
             goto('/email');
         }
+
+        return responseData
    
       } catch (error) {
         console.error('Error:', error);

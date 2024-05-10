@@ -71,14 +71,15 @@
             emailValidationString = response['error']
         }
      }
-     function handleSignUp() {
+
+     async function handleSignUp() {
          console.log('Email:', email);
          console.log('Password:', password);
          console.log('VerifyPassword', verifyPassword)
 
          if(emailValidation(email) & passwordValidation(password) & verifyPasswordValidation(password, verifyPassword)){
             const data = {"username": email, "password": password, "email": email}
-            let response = postData(data)
+            const response = await postData(data)
             handleEmailInUse(response)
          }
  
@@ -110,6 +111,7 @@
          if (response.ok){
              goto('/login');
          }
+         return responseData
     
        } catch (error) {
          console.error('Error:', error);
