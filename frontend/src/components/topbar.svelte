@@ -27,88 +27,67 @@
     }
 </script>
 
-<div class = 'TopBar'>
+<div class="TopBar">
     <nav>
-        <ul>
-            <li>
-                <img class="kmp-icon" src={kmpIcon} alt="KMP Icon" />
-            </li>
-
-            <li>
-                <button class="gear-button" on:click={handleGearClick}>
-                    <img class="gear-icon" src={gearIcon} alt="Gear Icon" />
-                </button>
-            </li>
-            <li>
-                <button on:click={toggleDropdown} class="profile-button">
-                    <img class="profile-icon" src={profileIcon} alt="Profile Icon" />
-                </button>
-                {#if showDropdown}
-                <div class="dropdown">
-                    <ul>
-                        <li><a href="#">View Profile</a></li>
-                        <li><a href="#">Settings</a></li>
-                        <li><a href="#">Logout</a></li>
-                    </ul>
-                </div>
-                {/if}
-            </li>
-
-        </ul>
-        <hr class="line">
+        <div class="icon-container kmp-container">
+            <img class="kmp-icon" src={kmpIcon} alt="KMP Icon" />
+        </div>
+        <div class="icon-container gear-container">
+            <button class="gear-button" on:click={handleGearClick}>
+                <img class="gear-icon" src={gearIcon} alt="Gear Icon" />
+            </button>
+        </div>
+        <div class="icon-container profile-container">
+            <button on:click={toggleDropdown} class="profile-button">
+                <img class="profile-icon" src={profileIcon} alt="Profile Icon" />
+            </button>
+            {#if showDropdown}
+            <div class="dropdown">
+                <ul>
+                    <li><a href="#">View Profile</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            </div>
+            {/if}
+        </div>
+        <hr class="line"> <!-- This hr should be outside the ul to stretch properly -->
     </nav>
 </div>
 
-<!-- make the toolbar permanent -->
-<slot />
-
-<!-- styling for the toolbar -->
 <style>
-    ul {
-        display: flex;
-        list-style: none;
+    nav {
+        position: relative;
+        width: 100%;
+        padding-top: 50px;
     }
-    li {
-        margin-right: 30px;
+    .icon-container {
+        display: inline-block;
+        position: absolute;
+        top: 0; 
     }
-    .kmp-icon {
-        width: 163px;
-        height: 48px;
+    .kmp-container {
+        left: 3%;
     }
     .gear-container {
-        /* added for visualisation purposes */
-        /* border: 1px solid red; */
-        /* offset padding from the left edge by 70% of the viewport */
-        padding-left: calc(73vw);
-    }
-    .gear-button {
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding-left: calc(73vw);
-        outline: none;
-    }
-    .profile-button {
-        outline: none;
-        background: none;
-        border: none;
-        cursor: pointer;
-    }
-    .gear-button:focus {
-        outline: none;  /* Removes focus outline */
+        right: 7%; 
+        top: 15%;
+        padding-right: 25px;
     }
     .gear-icon {
-        width: 45px;
-        height: 42px;
+        height: 30px;
     }
-    .profile-icon {
-        width: 42px;
-        height: 42px;
+    .profile-container {
+        right: 3%; 
     }
-
-    .line {
-        border-top: 1px black;
-        width: 100%
+    img {
+        height: 42px; 
+    }
+    .gear-button, .profile-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        outline: none;
     }
     .dropdown {
         position: absolute;
@@ -118,17 +97,22 @@
         right: 0;
     }
     .dropdown ul {
-        display: block;
         padding: 10px;
         list-style: none;
+        margin: 0;
     }
     .dropdown li a {
         display: block;
-        text-decoration: none;
         padding: 10px;
         color: black;
+        text-decoration: none;
     }
     .dropdown li a:hover {
         background-color: #ddd;
+    }
+    .line {
+        border-top: 1px black;
+        position: absolute;
+        width: 100%;
     }
 </style>
