@@ -71,7 +71,10 @@
     }
     .gear-container {
         right: 7%; 
-        margin-right: 20px
+        top: 15%;
+    }
+    .gear-icon {
+        height: 30px;
     }
     .profile-container {
         right: 3%; 
