@@ -1,6 +1,5 @@
 <script>
   const postRequestString = "http://127.0.0.1:8000/emailer/"; // yours may be different, see what link pops up when you run django server, then add /emailer on the end
-
   let contacts = [];
 
   let messageField = "";
@@ -76,6 +75,7 @@
       contacts = contacts;
     }
   };
+  
 </script>
 
 <!-- This link is currently used for using google material icons-->
