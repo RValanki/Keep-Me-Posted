@@ -3,7 +3,8 @@
    import { onMount } from 'svelte';
    import { goto } from '$app/navigation';
 
-
+   
+  
     let email = '';
     let password = '';
     let emailValidationString = "";
@@ -96,8 +97,12 @@
     }
 
     function handleSignUpClick() {
-    goto('/signup');
-  }
+      goto('/signup');
+    }
+
+  
+
+    
     
 </script>
   
@@ -353,9 +358,11 @@ position: relative; top: 0.5vh;
     <div style="
     width: 60vh; height: 10vh; position: absolute; top: 53.5vh;
 ">
-    <button style="border: 1px solid #D0D5DD; background-color: white; color: #344054; border-radius: 8px; padding: 10px 20px; cursor: pointer; transition: background-color 0.3s ease-in-out; width: 21.5vw; position: absolute; left: 11vh;" onmouseover="this.style.backgroundColor='#D0D5DD'" onmouseout="this.style.backgroundColor='white'">
+    <form method="post" action="?/OAuth2">
+    <button alt='google sign in' style="border: 1px solid #D0D5DD; background-color: white; color: #344054; border-radius: 8px; padding: 10px 20px; cursor: pointer; transition: background-color 0.3s ease-in-out; width: 21.5vw; position: absolute; left: 11vh;" onmouseover="this.style.backgroundColor='#D0D5DD'" onmouseout="this.style.backgroundColor='white'">
         <img src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_92x30px.svg" alt="Google Logo" style="width: 30px; height: auto; margin-right: 10px;">Sign in With Google
     </button>
+    </form>
 </div>
 
  

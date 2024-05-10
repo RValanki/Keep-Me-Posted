@@ -419,10 +419,11 @@
  
      <div style="
      width: 60vh; height: 10vh; position: absolute; top: 60vh;
- ">
+ ">   <form method="post" action="?/OAuth2">
      <button style="border: 1px solid #D0D5DD; background-color: white; color: #344054; border-radius: 8px; padding: 10px 20px; cursor: pointer; transition: background-color 0.3s ease-in-out; width: 21.5vw; position: absolute; left: 11vh;" onmouseover="this.style.backgroundColor='#D0D5DD'" onmouseout="this.style.backgroundColor='white'">
          <img src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_92x30px.svg" alt="Google Logo" style="width: 30px; height: auto; margin-right: 10px;">Sign Up With Google
      </button>
+    </form>
  </div>
  
   
