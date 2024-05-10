@@ -137,7 +137,7 @@
 
     /* Text xl/Medium */
     font-style: normal;
-    //font-family: "Inter";
+    /*font-family: "Inter";*/ 
     font-weight: 500;
     font-size: 24px;
     line-height: 30px;
@@ -152,9 +152,7 @@
     flex: none;
     order: 0;
     flex-grow: 0;
-
-
-}
+  }
 
 .second-line{
     /* Must be under 120 minutes. MP3 or WAV formats accepted. */

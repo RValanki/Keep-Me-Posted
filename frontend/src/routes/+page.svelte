@@ -10,8 +10,6 @@
 
 <script>
   import TopBar from "../components/topbar.svelte";
-  import UploadBox from "../components/uploadBox.svelte";
 </script>
 
 <TopBar />
-<UploadBox />
