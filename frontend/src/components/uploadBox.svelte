@@ -12,6 +12,41 @@
 
     import micIcon from "../assets/mic.png"
 
+    import Dropzone from "svelte-file-dropzone";
+
+  const MAX_DURATION_SECONDS = 7200; // 7200 seconds = 120 minutes
+
+  let file;
+  let errorMessage = '';
+
+  function handleFilesSelect(e) {
+    const { acceptedFiles } = e.detail;
+    file = null; // Reset the file each time new files are selected
+
+    if (acceptedFiles.length > 0) {
+      const selectedFile = acceptedFiles[0];
+      // Initial file type check before loading it as an audio source
+      if (!selectedFile.name.endsWith('.mp3') && !selectedFile.name.endsWith('.wav')) {
+        errorMessage = 'Invalid audio format! \n Your meeting audio must be in MP3 or WAV format.';
+        return; // Exit the function early if file type is incorrect
+      }
+
+      const audio = new Audio(URL.createObjectURL(selectedFile));
+      audio.addEventListener('loadedmetadata', () => {
+        if (audio.duration <= MAX_DURATION_SECONDS) {
+          file = selectedFile;
+          errorMessage = '';
+        } else {
+          errorMessage = 'Meeting duration exceeded! \n Your meeting audio should be less than 120 minutes.';
+          file = null;
+          //TODO: Replace with error message pop-up
+        }
+      });
+    } else {
+      errorMessage = 'Invalid audio format! Your meeting audio must be in MP3 or WAV format';
+    }
+  }
+
 </script>
 
 <div class="upload-box">
@@ -25,6 +60,15 @@
 
     <input type="file" class = "hidden-box" id="uploadAudioBox" name="uploadAudioBox" accept="audio/mp3, audio/wav">
 </div>
+
+
+<Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav" class="uploadDropZone"></Dropzone>
+
+{#if file}
+  <p>File ready: {file.name} - {Math.floor(file.size / 1024)} KB</p>
+{:else}
+  <p>{errorMessage}</p>
+{/if}
 
 
 <style>
