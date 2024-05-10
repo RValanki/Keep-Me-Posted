@@ -12,7 +12,7 @@
 
     //required imports
     import Topbar from '../../components/topbar.svelte';
-    import UploadBox from "../../components/uploadBox.svelte";
+    import UploadBox from "../../components/uploadAudioBox.svelte";
     import clockIcon from "../../assets/clock.png"
 
 </script>
