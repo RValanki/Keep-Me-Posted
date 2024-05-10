@@ -72,6 +72,7 @@
     .gear-container {
         right: 7%; 
         top: 15%;
+        padding-right: 25px;
     }
     .gear-icon {
         height: 30px;
