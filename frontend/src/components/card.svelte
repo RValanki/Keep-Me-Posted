@@ -7,14 +7,13 @@
 -->
 
 <script>
-    // declaring variables that will be used
     export let cardText;
     export let cardHeadingText;
-    export let cardOutlineColor;
-    export let cardBackgroundColor;
+    export let cardOutlineColour;
+    export let cardBackgroundColour;
     export let handleCardClick = () => {};
     export let cardTextColour;
-    export let cardWidth = "25%"; //default dimensions but still exporting JUST IN CASE
+    export let cardWidth = "25%";
     export let cardHeight = "50%";
     export let cardImagePath;
     
@@ -27,11 +26,12 @@
 <button
     class="Card"
     style="
-        background-color: {cardBackgroundColor};
-        border: 2px solid {cardOutlineColor};
+        background-color: {cardBackgroundColour};
+        border: 2px solid {cardOutlineColour};
         border-radius: 10px;
         width: {cardWidth};
         height: {cardHeight};
+        --card-outline-colour: {cardOutlineColour};
     "
     on:click={handleClick}
     >
@@ -44,10 +44,15 @@
     .Card {
         padding: 2% 2%;
         cursor: pointer;
-        transition: box-shadow 0.3s ease-in-out;
+        transition: box-shadow 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
     }
     .Card:hover {
-        box-shadow: 0px 0px 10px 0px #aab4ff;
+        box-shadow: 0em 0em 1em 0em var(--card-outline-colour);
+        text-shadow: 0.1em 0.1em 0.2em var(--card-outline-colour);
+    }
+    .Card:hover img{
+        filter: drop-shadow(0.2rem 0.2rem 0rem var(--card-outline-colour));
+        transition: 0.4s ease-in-out;
     }
 </style>
 
