@@ -225,7 +225,6 @@
 
 <!-- this styling secton contains styles for many components used throughout the page-->
 <style>
-
 body {
      margin: 0;
      height: 100vh;
