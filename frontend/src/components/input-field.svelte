@@ -9,10 +9,12 @@
 
 <!--  -->
 <script>
-    let input = '';
+    export let input = '';
+
+    export let width = '100%'// Default width set to 100%, but it can be overridden when the component is used.
   </script>
   
-  <input type="text" bind:value={input} placeholder="Enter text here" class="input-field" />
+  <input type="text" bind:value={input} placeholder="Enter text here" class="input-field" style="width: {width};"/>
   
   <style>
     .input-field {
