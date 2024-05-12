@@ -14,20 +14,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls.static import static
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
+from django.urls import path
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('authentication.urls')),
-    path('', include('assemblyaimodule.urls')),
-    path('', include('emailing.urls')),
-    # Add URL pattern for serving audio files
-    path('', include('summariser.urls')),
+    # Endpoint for user login
+    path('login', views.login),
+    # Endpoint for user signup
+    path('signup', views.signup),
+    # Test endpoint for token authentication
+    path('test_token', views.test_token),
 ]
-
-
-# Add URL pattern for serving audio files under the 'audio_files' directory
-

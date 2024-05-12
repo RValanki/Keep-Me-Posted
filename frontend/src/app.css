@@ -1,0 +1,39 @@
+:root{
+    --semi-bold: 550;
+}
+html{
+    font-family: 'Inter', sans-serif;
+}
+
+body{
+    font-size: 1.25rem; /* 20px based on 16px default font size */
+    font-weight: normal; /* 400, scale [1,1000] */
+}
+h1{
+    font-size: 3rem; /* 48px based on 16px default font size */
+    font-weight: bold; /* 700, scale [1,1000] */
+}
+h2{
+    font-size: 1.875rem; /* 30px based on 16px default font size */
+    font-weight: var(--semi-bold); /* 550, scale [1,1000] */
+}
+h3{
+    font-size: 1.5rem; /* 24px based on 16px default font size */
+    font-weight: var(--semi-bold); /* 550, scale [1,1000] */
+}
+.subheading{
+    font-size: 1.5rem; /* 24px based on 16px default font size */
+    font-weight: normal; /* 400, scale [1,1000] */
+}
+button{
+    font-size: 1rem; /* 16px based on 16px default font size */
+    font-weight: var(--semi-bold); /* 550, scale [1,1000] */
+}
+.caption{
+    font-size: 1rem; /* 16px based on 16px default font size */
+    font-weight: normal; /* 400, scale [1,1000] */
+}
+.token{
+    font-size: 0.7rem; /* 14px based on 16px default font size */
+    font-weight: normal; /* 400, scale [1,1000] */
+}
