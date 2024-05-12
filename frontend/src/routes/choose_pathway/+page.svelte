@@ -57,7 +57,7 @@
             cardOutlineColour="#FDDCAB"
             cardBackgroundColour="#FFFAF5"
             cardTextColour= "#EC4A0A"
-            cardImagePath= '/send_asap_lightning.png'
+            cardImagePath= '../src/assets/send_asap_lightning.png'
             handleCardClick={simplePathway}
         />
         <Card
@@ -67,7 +67,7 @@
             cardOutlineColour="#FCCEEE"
             cardBackgroundColour="#FAFAFF"
             cardTextColour= "#C11574"
-            cardImagePath= '/customise_pen.png'
+            cardImagePath= '../src/assets/customise_pen.png'
             handleCardClick={customisePathway}
         />  
     </div>

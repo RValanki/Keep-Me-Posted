@@ -63,6 +63,10 @@
     }
     .card-text-container {
         flex: 1;
+        margin-top: 5%;
+    }
+    .card-text-container h2{
+        margin-bottom: 3%;
     }
 </style>
 
