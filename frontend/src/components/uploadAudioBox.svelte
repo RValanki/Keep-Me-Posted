@@ -10,7 +10,12 @@
 <!-- JavaScript -->
 <script>
 
-  import micIcon from "../assets/mic.png"
+  import micIcon from "../assets/mic-icon.png"
+  import uploadIcon from "../assets/upload-icon.png"
+  import radioIcon from "../assets/radio-icon.png"
+  import fileIcon from "../assets/file-icon.png"
+  import transparent from "../assets/transparent.png"
+
 
   import Dropzone from "svelte-file-dropzone";
 
@@ -34,7 +39,7 @@
       }
 
       const audio = new Audio(URL.createObjectURL(selectedFile));  // Create new Audio HTML object, create URL used as source for audio element
-      makeProgression()  // Trigger the loading bar
+      // makeProgression()  // Trigger the loading bar
       updateUploadBoxContents('Uploading Meeting Audio')  // Change box to show 'Uploading Meeting Audio'
       audio.addEventListener('loadedmetadata', () => {
         if (audio.duration <= MAX_DURATION_SECONDS) {
@@ -76,6 +81,21 @@
 
   // ------------------------------------------ Box Contents
   function updateUploadBoxContents() {
+    // TODO change text based on Response rather than the loading bar
+    const uploadBoxInner = document.getElementById('uploadBoxInner')  // get the span class
+
+    // remove other inner elements
+    uploadBoxInner.classList.remove('mic-icon')
+    uploadBoxInner.classList.remove('first-line')
+    uploadBoxInner.classList.remove('second-line')
+    
+    // update loading-line text
+
+    const icon = document.createElement('img');
+    loadingLine.textContent = 'Uploading Meeting Audio';
+
+    uploadBoxInner.appendChild(loadingLine)   
+     
     // when a file is dragged in show the loading bar and 'Uploading meeting audio'
 
     // when file is sent to assemblyai; show 'Transcribing audio'
@@ -91,18 +111,26 @@
   <label for="uploadAudioBox" class="custom-input">
     <Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav">
       <span id = "uploadBoxInner">
+        <!-- what the box has initially-->
         <img class="mic-icon" src={micIcon} alt="Mic Icon" />
         <span class="first-line">Upload meeting audio</span>
         <span class="second-line">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
+        
+        <!-- what the box has after a file is put in it-->
+        <span class="loading-line">
+          <img class="loading-line-icon" src={} alt="Icon"/>
+          <span class="loading-line-text"></span>
+        </span>
+
       </span>
     </Dropzone>
   </label>
 </div>
 
-<div id="loadingBar">
+<!-- <div id="loadingBar">
   <div id="progressBar" style="width: {progressBarWidth}px"></div>
   <div id="progressNumber"><b>{progressBarDisplay}</b>%</div>
-</div>
+</div> -->
 
 <div class="status-message">
   {#if file}
@@ -127,12 +155,10 @@
   width: 49px;
   height: 55px;
 
-
   /* Inside auto layout */
   flex: none;
   order: 0;
   flex-grow: 0;
-
 }
 
 .custom-input{
@@ -141,7 +167,6 @@
 
   box-sizing: border-box;
   
-
   /* Auto layout */
   display: flex;
   flex-direction: column;
@@ -166,9 +191,7 @@
 }
 
 .first-line{
-
   /* Upload meeting audio */
-
   width: 250px;
   height: 30px;
 
@@ -184,18 +207,14 @@
   /* Blue/800 */
   color: #1849A9;
 
-
   /* Inside auto layout */
   flex: none;
   order: 0;
   flex-grow: 0;
-
-
 }
 
 .second-line{
   /* Must be under 120 minutes. MP3 or WAV formats accepted. */
-
   width: 230px;
   height: 24px;
 
@@ -210,12 +229,29 @@
   /* Gray/400 */
   color: #98A2B3;
 
-
   /* Inside auto layout */
   flex: none;
   order: 1;
   flex-grow: 0;
 }
+
+.loading-line {
+  /* 
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 4px;
+
+  width: 256px;
+  height: 30px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+} 
 
 .status-message {
   text-align: center;
@@ -254,4 +290,6 @@
   top: 25%;
   left: 101%;
 }
+
 </style>
+
