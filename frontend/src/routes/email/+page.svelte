@@ -1,190 +1,122 @@
 <script>
-  const postRequestString = "http://127.0.0.1:8000/emailer/"; // yours may be different, see what link pops up when you run django server, then add /emailer on the end
-
-  let contacts = [];
-
-  let messageField = "";
-  let emailField = ""
-
-  let errorMessage = "";
-  let confirmationMessage = "";
-
-  let buttonPressed = () => {
-    if (!(contacts.length) || !messageField) {
-      errorMessage = "Please enter a message and add contacts.";
-      // Clear error message after 2 seconds
-      setTimeout(() => {
-        errorMessage = "";
-      }, 2000);
-
-      return
-    }
-
-    let data = new FormData();
-    contacts = contacts
-    messageField = messageField
-
-    data.append("message", messageField);
-    data.append("contacts", contacts);
-
-    fetch(postRequestString, { method: "POST", body: data}).then(
-      (response) => {
-        console.log(response);
-        if (response.status == 200) {
-          console.log('Email sent successfully')
-          confirmationMessage = "Email sent successfully.";
-          setTimeout(() => {
-            confirmationMessage = "";
-          }, 2000);
-
-          contacts = []
-          messageField = ""
-        } else {
-          errorMessage = "Email did not send successfully.";
-          setTimeout(() => {
-            errorMessage = "";
-          }, 2000);
+    import Button from "../../components/button.svelte";
+    import Topbar from "../../components/topbar.svelte";
+    import { ContactsStore } from "../../stores/contacts-store";
+  
+  
+    const postRequestString = "http://localhost:5173/emailer/"; 
+    // yours may be different, see what link pops up when you run django server, then add /emailer on the end
+  
+    let emailErrorString= ""
+  
+    let remove_email = (email) => {
+      ContactsStore.update(prev => prev.filter(contact => contact != email))
+    };
+  
+    let sendEmail = () => {
+  
+      let data = new FormData();
+  
+      // data.append("message", messageField);
+      // data.append("contacts", contacts);
+  
+      fetch(postRequestString, { method: "POST", body: data}).then(
+        (response) => {
+          console.log(response);
         }
-      }
-    );
-  };
-
-  /**
-   * This function is used to remove the email from the array and display when the user clicks the delete
-   * @param index
-   */
-  let remove_email = (index) => {
-    contacts.splice(index, 1);
-    contacts = contacts;
-  };
-
-  /**
-   * add_email function is for displaying the user emails in the display field and for adding the user to the contact array
-   */
-  let add_email = () => {
-    if (!emailField.trim()) {
-      //This is to display error message when inputfield is empty
-      errorMessage = "Please enter email address.";
-      // Clear error message after 2 seconds
-      setTimeout(() => {
-        errorMessage = "";
-      }, 2000);
-    } else {
-      //if input field is not empty then it will be pushed to the contacts list
-      contacts.push(emailField);
-      emailField = "";
-      contacts = contacts;
+      );
+    };
+  
+    let nextPage = () =>{
+      console.log("Send Another Summary")
+      // todo
     }
-  };
-</script>
-
-<!-- This link is currently used for using google material icons-->
-<link
-  href="https://fonts.googleapis.com/icon?family=Material+Icons"
-  rel="stylesheet"
-/>
-
-<body class="container">
-  <div class="message">
-    <p>Hello welcome to KeepMePosted!</p>
-    <textarea placeholder="Enter your message here" bind:value={messageField}></textarea>
-  </div>
-  <!--If an error message is triggered the error message is displayed-->
-
-  <div class="emails">
-    <div class="emails-add">
-      <label for="email">Enter Contact's Email Address:</label>
-      <input placeholder="test@example.com" bind:value={emailField} />
-      <button on:click={add_email}>Add +</button>
-    </div>
-
-    <!-- loops through each contact and prints -->
-    <div class="emails-list">
-      {#each contacts as email, index (index)}
-        <div class="emails-item">
-          <p>{email}</p>
-          <button class="remove-button" on:click={remove_email(index)}>-</button
-          >
+  
+  </script>
+  
+    
+      <Topbar> </Topbar>
+  
+      <div class="content-container">
+  
+        <div class="title-container">
+          <h1>Summary Sent!</h1>
+          <h3>Your summary has been sent to the recipients below.</h3>
+          <p><strong>Recipients:</strong></p>
         </div>
-      {/each}
-    </div>
-  </div>
-
-  <div class="send">
-    <button type="button" on:click={buttonPressed}> Send </button>
-  </div>
-
-  <div class="alert">
-    {#if errorMessage}
-      <p id="error">{errorMessage}</p>
-    {/if}
-
-    {#if confirmationMessage}
-     <p id="confirmation">{confirmationMessage}</p>
-    {/if}
-  </div>
-</body>
-
-<!-- this styling secton contains styles for many components used throughout the page-->
-<style>
-  body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 50px;
-  }
-
-  textarea {
-    width: 100%;
-    height: 100px;
-  }
-
-  .emails {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 10px;
-  }
-  .emails-add {
-    display: flex;
-    gap: 10px;
-  }
-
-  .emails-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .emails-item {
-    display: flex;
-    height: 30px;
-    gap: 30px;
-    align-items: center;
-  }
-
-  .remove-button {
-    border-radius: 50px;
-    border: 3px lightGrey;
-    cursor: pointer;
-    background-color: lightblue;
-    height: 20px;
-  }
-
-  .alert {
-    width: 100%;
-    text-align: center;
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  #error {
-    color: red;
-  }
-
-  #confirmation {
-    color: green;
-  }
-</style>
+  
+        {#if emailErrorString}
+          <div class="caption">{emailErrorString}</div>
+        {/if}
+  
+  
+        <div class="recipients-container">
+          {#each $ContactsStore as email}
+          <div class="email-token">
+            <div class="token">{email}</div>
+          </div>
+        {/each}
+        </div>
+  
+      </div>
+  
+      
+  
+      <div class="button-container">
+        <div class="button-holder">
+          <Button handleClick={nextPage} icon="../../src/assets/arrow-right.png" text="Choose Pathway"></Button>
+        </div>
+      </div>
+      
+    
+  
+  <style> 
+  
+  
+    .content-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 2%;
+      padding-bottom: 10%;
+    }
+  
+    .button-container {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+    }
+  
+    .title-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 5%;
+    }
+  
+    .recipients-container {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 40%;
+      gap: 5px;
+    }
+  
+    .email-token {
+      display: flex;
+      background-color: #F8F9FC;
+      padding: 4px;
+      border-radius: 5px;
+      justify-content: center;
+      align-items: center;
+      gap: 3px;
+    }
+  
+    .caption {
+      color: crimson;
+      padding-bottom: 10px;
+    }
+  
+  
+  
+  
+  </style>
