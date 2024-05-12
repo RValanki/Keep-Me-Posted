@@ -3,84 +3,98 @@
     Upload Audio Box Component
 
     Authors: Parul Garg (pgar0011)
-    Editied by:
-    Last Modified: 10/05/24
+    Editied by: Benjamin Cherian, Zihao Wang, Angelina Leung
+    Last Modified: 12/05/24
 
 -->
-
+<!-- JavaScript -->
 <script>
 
   import micIcon from "../assets/mic.png"
 
   import Dropzone from "svelte-file-dropzone";
 
-const MAX_DURATION_SECONDS = 7200; // 7200 seconds = 120 minutes
+  const MAX_DURATION_SECONDS = 7200; // 7200 seconds = 120 minutes
 
-let file;
-let errorMessage = '';
+  // ------------------------------------------ File Handling
+  let file;
+  let errorMessage = '';
 
-function handleFilesSelect(e) {
-  const { acceptedFiles } = e.detail;
-  file = null; // Reset the file each time new files are selected
+  function handleFilesSelect(e) {
+    const { acceptedFiles } = e.detail;
+    file = null; // Reset the file each time new files are selected
 
-  if (acceptedFiles.length > 0) {
-    const selectedFile = acceptedFiles[0];
-    // Initial file type check before loading it as an audio source
-    if (!selectedFile.name.endsWith('.mp3') && !selectedFile.name.endsWith('.wav')) {
-      errorMessage = 'Invalid audio format! \n Your meeting audio must be in MP3 or WAV format.';
-      return; // Exit the function early if file type is incorrect
-    }
+    if (acceptedFiles.length > 0) {
+      const selectedFile = acceptedFiles[0];
 
-    const audio = new Audio(URL.createObjectURL(selectedFile));
-    makeProgression()
-    audio.addEventListener('loadedmetadata', () => {
-      if (audio.duration <= MAX_DURATION_SECONDS) {
-        file = selectedFile;
-        errorMessage = '';
-      } else {
-        errorMessage = 'Meeting duration exceeded! \n Your meeting audio should be less than 120 minutes.';
-        file = null;
-        //TODO: Replace with error message pop-up
+      // Initial file type check before loading it as an audio source
+      if (!selectedFile.name.endsWith('.mp3') && !selectedFile.name.endsWith('.wav')) {
+        errorMessage = 'Invalid audio format! \n Your meeting audio must be in MP3 or WAV format.';
+        return; // Exit the function early if file type is incorrect
       }
-    });
-  } else {
-    errorMessage = 'Invalid audio format! Your meeting audio must be in MP3 or WAV format';
+
+      const audio = new Audio(URL.createObjectURL(selectedFile));  // Create new Audio HTML object, create URL used as source for audio element
+      makeProgression()  // Trigger the loading bar
+      updateUploadBoxContents('Uploading Meeting Audio')  // Change box to show 'Uploading Meeting Audio'
+      audio.addEventListener('loadedmetadata', () => {
+        if (audio.duration <= MAX_DURATION_SECONDS) {
+          file = selectedFile;
+          errorMessage = '';
+        } else {
+          errorMessage = 'Meeting duration exceeded! \n Your meeting audio should be less than 120 minutes.';
+          file = null;
+          //TODO: Replace with error message pop-up
+        }
+      });
+    } else {
+      errorMessage = 'Invalid audio format! Your meeting audio must be in MP3 or WAV format';
+    }
   }
-}
 
-// Progress Bar
-let progressBarWidth = 0
-let progressBarProgress
-let progressBarDisplay = 0
-let loadingBarWidth;
+  // ------------------------------------------ Progress Bar
+  let progressBarWidth = 0
+  let progressBarProgress
+  let progressBarDisplay = 0
+  let loadingBarWidth;
 
+  $: if (progressBarWidth === loadingBarWidth) {
+    clearInterval(progressBarProgress)
+  }
 
-$: if (progressBarWidth === loadingBarWidth) {
-  clearInterval(progressBarProgress)
-}
+  const progression = () => {
+    progressBarWidth += 1
+    progressBarDisplay = Math.round(progressBarWidth/loadingBarWidth * 100)
+  }
 
-const progression = () => {
-  progressBarWidth += 1
-  progressBarDisplay = Math.round(progressBarWidth/loadingBarWidth * 100)
-}
+  const makeProgression = () => {
+    loadingBarWidth = document.getElementById("loadingBar").clientWidth
+    document.getElementById("progressBar").style.display = "block"
+    progressBarWidth = 0
+    progressBarDisplay = 0
+    progressBarProgress = setInterval(progression, 1)
+  }
 
-const makeProgression = () => {
-  loadingBarWidth = document.getElementById("loadingBar").clientWidth
-  document.getElementById("progressBar").style.display = "block"
-  progressBarWidth = 0
-  progressBarDisplay = 0
-  progressBarProgress = setInterval(progression, 1)
-}
+  // ------------------------------------------ Box Contents
+  function updateUploadBoxContents() {
+    // when a file is dragged in show the loading bar and 'Uploading meeting audio'
 
+    // when file is sent to assemblyai; show 'Transcribing audio'
+    // when file is sent to gemini; show 'Generating Summary'
+    // when file is sent to assemblyai; show 'transcribing audio'
 
+    //
+  }
 </script>
 
+<!-- COMPONENT -->
 <div class="upload-box">
   <label for="uploadAudioBox" class="custom-input">
     <Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav">
-      <img class="mic-icon" src={micIcon} alt="Mic Icon" />
-      <span class="first-line">Upload meeting audio</span>
-      <span class="second-line">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
+      <span id = "uploadBoxInner">
+        <img class="mic-icon" src={micIcon} alt="Mic Icon" />
+        <span class="first-line">Upload meeting audio</span>
+        <span class="second-line">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
+      </span>
     </Dropzone>
   </label>
 </div>
@@ -98,6 +112,8 @@ const makeProgression = () => {
   {/if}
 </div>
 
+
+<!-- Styling -->
 <style>
 
 .upload-box{
