@@ -32,6 +32,7 @@ function handleFilesSelect(e) {
     }
 
     const audio = new Audio(URL.createObjectURL(selectedFile));
+    makeProgression()
     audio.addEventListener('loadedmetadata', () => {
       if (audio.duration <= MAX_DURATION_SECONDS) {
         file = selectedFile;
@@ -47,6 +48,31 @@ function handleFilesSelect(e) {
   }
 }
 
+// Progress Bar
+let progressBarWidth = 0
+let progressBarProgress
+let progressBarDisplay = 0
+let loadingBarWidth;
+
+
+$: if (progressBarWidth === loadingBarWidth) {
+  clearInterval(progressBarProgress)
+}
+
+const progression = () => {
+  progressBarWidth += 1
+  progressBarDisplay = Math.round(progressBarWidth/loadingBarWidth * 100)
+}
+
+const makeProgression = () => {
+  loadingBarWidth = document.getElementById("loadingBar").clientWidth
+  document.getElementById("progressBar").style.display = "block"
+  progressBarWidth = 0
+  progressBarDisplay = 0
+  progressBarProgress = setInterval(progression, 1)
+}
+
+
 </script>
 
 <div class="upload-box">
@@ -59,6 +85,10 @@ function handleFilesSelect(e) {
   </label>
 </div>
 
+<div id="loadingBar">
+  <div id="progressBar" style="width: {progressBarWidth}px"></div>
+  <div id="progressNumber"><b>{progressBarDisplay}</b>%</div>
+</div>
 
 <div class="status-message">
   {#if file}
@@ -68,14 +98,11 @@ function handleFilesSelect(e) {
   {/if}
 </div>
 
-
-
 <style>
 
 .upload-box{
   display: flex;
   justify-content: center;
-  
 }
 
 .mic-icon{
@@ -179,6 +206,36 @@ function handleFilesSelect(e) {
   padding: 10px;
   color: #333;
   font-size: 16px;
+  margin-top: 100px;
 }
 
+#loadingBar {
+  border: 1px solid;
+  width: 40%;
+  height: 40px;
+  top: 51%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  background-color: grey;
+  border-radius: 30px 30px 30px 30px;
+}
+
+#progressBar {
+  display: none; 
+  height: 40px;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  background-color: blue;
+  border-radius: 30px 30px 30px 30px;
+}
+
+#progressNumber {
+  position: absolute;
+  top: 25%;
+  left: 101%;
+}
 </style>
