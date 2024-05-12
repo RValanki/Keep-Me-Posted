@@ -18,9 +18,7 @@
 
     // Internal handleClick function that calls the passed handleClick prop
     function internalHandleClick() {
-        if (!disabled) {
         handleClick();
-        }   
     }
 </script>
 
