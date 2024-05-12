@@ -4,7 +4,7 @@
 
     Authors: Parul Garg (pgar0011)
     Editied by: Benjamin Cherian, Zihao Wang, Angelina Leung
-    Last Modified: 12/05/24
+    Last Modified: 13/05/24
 
 -->
 <!-- JavaScript -->
@@ -16,10 +16,15 @@
   import fileIcon from "../assets/file-icon.png"
   import transparent from "../assets/transparent.png"
 
-
   import Dropzone from "svelte-file-dropzone";
 
   const MAX_DURATION_SECONDS = 7200; // 7200 seconds = 120 minutes
+
+  var ICON_DICT = {
+    "Uploading meeting audio" : uploadIcon,
+    "Transcribing audio" : radioIcon,
+    "Generating summary" : fileIcon
+  }
 
   // ------------------------------------------ File Handling
   let file;
@@ -39,8 +44,8 @@
       }
 
       const audio = new Audio(URL.createObjectURL(selectedFile));  // Create new Audio HTML object, create URL used as source for audio element
-      // makeProgression()  // Trigger the loading bar
-      updateUploadBoxContents('Uploading Meeting Audio')  // Change box to show 'Uploading Meeting Audio'
+      makeProgression()  // Trigger the loading bar
+      updateUploadBoxContents("Uploading meeting audio")  // Change box to show 'Uploading Meeting Audio'
       audio.addEventListener('loadedmetadata', () => {
         if (audio.duration <= MAX_DURATION_SECONDS) {
           file = selectedFile;
@@ -80,57 +85,55 @@
   }
 
   // ------------------------------------------ Box Contents
-  function updateUploadBoxContents() {
-    // TODO change text based on Response rather than the loading bar
-    const uploadBoxInner = document.getElementById('uploadBoxInner')  // get the span class
+  // changes the contents of the audio box
+  function updateUploadBoxContents(newText) {
+    var firstLine = document.querySelector('.first-line');
+    changeClass('.first-line', '.loading-line')
+    firstLine.textContent = newText + '...';
 
-    // remove other inner elements
-    uploadBoxInner.classList.remove('mic-icon')
-    uploadBoxInner.classList.remove('first-line')
-    uploadBoxInner.classList.remove('second-line')
+    var secondLine = document.querySelector('.second-line');
+    changeClass('.second-line', 'loading-line')
+    secondLine.textContent = "";
     
-    // update loading-line text
+    // Change icon source
+    var icon = document.querySelector('.large-icon');
+    icon.src = ICON_DICT[newText];
+    changeClass('.large-icon', '.small-icon');
 
-    const icon = document.createElement('img');
-    loadingLine.textContent = 'Uploading Meeting Audio';
-
-    uploadBoxInner.appendChild(loadingLine)   
-     
     // when a file is dragged in show the loading bar and 'Uploading meeting audio'
-
     // when file is sent to assemblyai; show 'Transcribing audio'
     // when file is sent to gemini; show 'Generating Summary'
     // when file is sent to assemblyai; show 'transcribing audio'
-
-    //
   }
+
+  function changeClass(elemId, newClassName) {
+    // Get the span element by its ID
+    const spanElement = document.querySelector(elemId);
+
+    // Remove any existing class from the span element
+    spanElement.className = '';
+
+    // Add the new class to the span element
+    spanElement.classList.add(newClassName);
+  }
+
 </script>
 
 <!-- COMPONENT -->
 <div class="upload-box">
   <label for="uploadAudioBox" class="custom-input">
-    <Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav">
-      <span id = "uploadBoxInner">
-        <!-- what the box has initially-->
-        <img class="mic-icon" src={micIcon} alt="Mic Icon" />
-        <span class="first-line">Upload meeting audio</span>
-        <span class="second-line">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
-        
-        <!-- what the box has after a file is put in it-->
-        <span class="loading-line">
-          <img class="loading-line-icon" src={} alt="Icon"/>
-          <span class="loading-line-text"></span>
-        </span>
+    <Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav"> <!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
+      <div id="loadingBar">
+        <div id="progressBar" style="width: {progressBarWidth}px"></div>
+        <div id="progressNumber"><b>{progressBarDisplay}</b>%</div>
+      </div>
 
-      </span>
-    </Dropzone>
+      <img class="large-icon" src={micIcon} alt="Icon" />
+      <span class="first-line">Upload meeting audio</span>
+      <span class="second-line">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
+    </Dropzone>    
   </label>
 </div>
-
-<!-- <div id="loadingBar">
-  <div id="progressBar" style="width: {progressBarWidth}px"></div>
-  <div id="progressNumber"><b>{progressBarDisplay}</b>%</div>
-</div> -->
 
 <div class="status-message">
   {#if file}
@@ -140,7 +143,6 @@
   {/if}
 </div>
 
-
 <!-- Styling -->
 <style>
 
@@ -149,11 +151,24 @@
   justify-content: center;
 }
 
-.mic-icon{
-  /* mic */
+.large-icon{
+  /* large icon */
 
   width: 49px;
   height: 55px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+/* Not on inital load in */
+.small-icon{
+  /* small icon */
+
+  width: 30px;
+  height: 30px;
 
   /* Inside auto layout */
   flex: none;
@@ -187,7 +202,6 @@
   flex: none;
   order: 0;
   flex-grow: 0;
-
 }
 
 .first-line{
@@ -235,6 +249,7 @@
   flex-grow: 0;
 }
 
+/* Not on inital load in */
 .loading-line {
   /* 
   /* Auto layout */
@@ -269,19 +284,18 @@
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
-  background-color: grey;
+  background-color: #F8F9FC;
   border-radius: 30px 30px 30px 30px;
 }
 
 #progressBar {
-  display: none; 
   height: 40px;
   top: 50%;
   left: 50%;
   position: absolute;
   top: 0%;
   left: 0%;
-  background-color: blue;
+  background-color: #1570EF;
   border-radius: 30px 30px 30px 30px;
 }
 
