@@ -15,11 +15,6 @@
     import gearIcon from '../assets/gear-icon.png';
     import profileIcon from '../assets/profile-icon.png';
 
-    // logic to handle gear click events
-    function handleGearClick() {
-        alert('BOoooooo');
-    }
-
     let showDropdown = false;
 
     function toggleDropdown() {
@@ -31,11 +26,6 @@
     <nav>
         <div class="icon-container kmp-container">
             <img class="kmp-icon" src={kmpIcon} alt="KMP Icon" />
-        </div>
-        <div class="icon-container gear-container">
-            <button class="gear-button" on:click={handleGearClick}>
-                <img class="gear-icon" src={gearIcon} alt="Gear Icon" />
-            </button>
         </div>
         <div class="icon-container profile-container">
             <button on:click={toggleDropdown} class="profile-button">
