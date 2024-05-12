@@ -46,9 +46,9 @@
                 {#if showDropdown}
                 <div class="dropdown">
                     <ul>
-                        <li><a href="#">View Profile</a></li>
-                        <li><a href="#">Settings</a></li>
-                        <li><a href="#">Logout</a></li>
+                        <li><a href={"#"}>View Profile</a></li>
+                        <li><a href={"#"}>Settings</a></li>
+                        <li><a href={"#"}>Logout</a></li>
                     </ul>
                 </div>
                 {/if}
