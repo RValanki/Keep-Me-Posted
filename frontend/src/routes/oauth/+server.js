@@ -1,7 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 import { OAuth2Client } from 'google-auth-library';
-
-
+import { updateAuth } from '../../stores/auth-store.js';
 import {SECRET_CLIENT_ID,SECRET_CLIENT_SECRET} from '$env/static/private';
 
 async function getUserData(access_token) {
@@ -10,6 +9,7 @@ async function getUserData(access_token) {
   console.log('response',response);
   const data = await response.json();
   console.log('data',data);
+  updateAuth(data.email, true);
 }
 
 

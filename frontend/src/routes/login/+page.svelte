@@ -2,6 +2,7 @@
   import logo from "./KMPLOGO_TEST.png";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
+  import { updateAuth } from '../../stores/auth-store.js';
 
   let email = "";
   let password = "";
@@ -80,6 +81,7 @@
       console.log("Response:", responseData);
 
       if (response.ok) {
+        updateAuth(loginData.email, true)
         goto("/email");
       }
 
