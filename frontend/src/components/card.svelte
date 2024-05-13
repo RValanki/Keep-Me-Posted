@@ -14,7 +14,7 @@
     export let handleCardClick = () => {};
     export let cardTextColour;
     export let cardWidth = "25%";
-    export let cardHeight = "50%";
+    export let cardHeight = "100%";
     export let cardImagePath;
     
     function handleClick() {
@@ -35,9 +35,13 @@
     "
     on:click={handleClick}
     >
-    <img src={cardImagePath} alt="card icon" style="max-width: 100%; max-height: 100%;" />
-    <h2 style="color: {cardTextColour};">{cardHeadingText}</h2>
-    <p style="color: {cardTextColour};">{cardText}</p>
+    <div class="card-image-container">
+        <img src={cardImagePath} alt="card icon" style="max-width: 100%; max-height: 100%;" />
+    </div>
+    <div class="card-text-container">
+        <h2 style="color: {cardTextColour};">{cardHeadingText}</h2>
+        <body style="color: {cardTextColour};">{cardText}</body>
+    </div>
 </button>
   
 <style>
@@ -53,6 +57,16 @@
     .Card:hover img{
         filter: drop-shadow(0.2rem 0.2rem 0rem var(--card-outline-colour));
         transition: 0.4s ease-in-out;
+    }
+    .card-image-container {
+        flex: 0 0 auto;
+    }
+    .card-text-container {
+        flex: 1;
+        margin-top: 5%;
+    }
+    .card-text-container h2{
+        margin-bottom: 3%;
     }
 </style>
 

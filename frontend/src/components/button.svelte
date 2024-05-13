@@ -71,7 +71,6 @@
         cursor: pointer;
         transition: 0.3s ease-in-out;
 		min-height: 44px;
-		font-size: 1em;
     }
 
 	.full-width {
