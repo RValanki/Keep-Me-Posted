@@ -15,11 +15,6 @@
     import gearIcon from '../assets/gear-icon.png';
     import profileIcon from '../assets/profile-icon.png';
 
-    // logic to handle gear click events
-    function handleGearClick() {
-        alert('BOoooooo');
-    }
-
     let showDropdown = false;
 
     function toggleDropdown() {
@@ -29,33 +24,24 @@
 
 <div class="TopBar">
     <nav>
-        <ul>
-            <li>
-                <img class="kmp-icon" src={kmpIcon} alt="KMP Icon" />
-            </li>
-
-            <li>
-                <button class="gear-button" on:click={handleGearClick}>
-                    <img class="gear-icon" src={gearIcon} alt="Gear Icon" />
-                </button>
-            </li>
-            <li>
-                <button on:click={toggleDropdown} class="profile-button">
-                    <img class="profile-icon" src={profileIcon} alt="Profile Icon" />
-                </button>
-                {#if showDropdown}
-                <div class="dropdown">
-                    <ul>
-                        <li><a href={"#"}>View Profile</a></li>
-                        <li><a href={"#"}>Settings</a></li>
-                        <li><a href={"#"}>Logout</a></li>
-                    </ul>
-                </div>
-                {/if}
-            </li>
-
-        </ul>
-        <hr class="line">
+        <div class="icon-container kmp-container">
+            <img class="kmp-icon" src={kmpIcon} alt="KMP Icon" />
+        </div>
+        <div class="icon-container profile-container">
+            <button on:click={toggleDropdown} class="profile-button">
+                <img class="profile-icon" src={profileIcon} alt="Profile Icon" />
+            </button>
+            {#if showDropdown}
+            <div class="dropdown">
+                <ul>
+                    <li><a href="#">View Profile</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            </div>
+            {/if}
+        </div>
+        <hr class="line"> <!-- This hr should be outside the ul to stretch properly -->
     </nav>
 </div>
 
