@@ -103,6 +103,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
    </head>
    <body>
+    <div class = "login-container">
       <div class = "kmp-container">
          <div class = "logo-container">
             <img src={logo} alt="Logo" class = "logo-style" />
@@ -222,12 +223,13 @@
             </div>
          </div>
       </div>
+    </div>
    </body>
 </html>
 
 <!-- this styling secton contains styles for many components used throughout the page-->
 <style>
-body {
+.login-container {
      margin: 0;
      height: 100vh;
      background: linear-gradient(to left, #53b1fd 0%, #1570ef 100%);
