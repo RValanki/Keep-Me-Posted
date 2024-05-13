@@ -2,7 +2,8 @@
     import Button from "../../components/button.svelte";
     import Topbar from "../../components/topbar.svelte";
     import { ContactsStore } from "../../stores/contacts-store";
-    import greenTick from "../../assets/green-tick.png"
+    import greenTick from "../../assets/green-tick.png" 
+
     
 
     let nextPage = () => {
@@ -12,24 +13,28 @@
     </script>
     
       <Topbar> </Topbar>
-      <div class="center-icon"><img class="green-tick" src={greenTick} alt="Green Tick" /></div>
   
       <div class="content-container">
+        
   
         <div class="title-container">
+          <div class="center-icon"><img class="green-tick" src={greenTick} alt="Green Tick" /></div>
           <h1>Summary Sent!</h1>
           <h3>Your summary has been sent to the recipients below.</h3>
-          <p><strong>Recipients:</strong></p>
         </div>
-  
-  
-        <div class="recipients-container">
-          {#each $ContactsStore as email}
-          <div class="email-token">
-            <div class="token">{email}</div>
+        
+        <div class="all-recipients-container">
+          <div class="subtitle">Recipients:</div>
+    
+          <div class="recipients-container">
+            
+            {#each $ContactsStore as email}
+            <div class="email-token">
+              <div class="token">{email}</div>
+            </div>
+          {/each}
           </div>
-        {/each}
-        </div>
+      </div>
   
       </div>
   
@@ -37,13 +42,11 @@
   
       <div class="button-container">
         <div class="button-holder">
-          <Button handleClick={nextPage} icon="../../src/assets/arrow-right.png" text="Choose Pathway"></Button>
+          <Button handleClick={nextPage} text="Send Another Summary"></Button>
         </div>
       </div>
-      
-    
-  
-  <style> 
+
+  <style>
   
   .center-icon{
     display: flex;
@@ -75,7 +78,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 2%;
+      padding-top: 3%;
       padding-bottom: 10%;
     }
   
@@ -89,7 +92,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-bottom: 5%;
+    }
+
+    .all-recipients-container {
+      display: flex;
+      gap: 50px;
     }
   
     .recipients-container {
@@ -108,13 +115,8 @@
       align-items: center;
       gap: 3px;
     }
-  
-    .caption {
-      color: crimson;
-      padding-bottom: 10px;
+    .subtitle {
+      padding-bottom: 3%;
     }
-  
-  
-  
   
   </style>
