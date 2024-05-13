@@ -9,7 +9,7 @@
  -->
 
 <script>
-    import TopBar from '../components/topbar.svelte';
+  import TopBar from "../components/topbar.svelte";
 </script>
 
-<TopBar/>
+<TopBar />
