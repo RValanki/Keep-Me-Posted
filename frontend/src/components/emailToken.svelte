@@ -14,7 +14,7 @@ Last Modified: 12/05/2024 -->
   }
 
   import { Style } from '@material-ui/icons';
-  let inputText = 'tarayesha508@gmail.com';
+  let inputText = 'Test text';
 </script>
 
 <style>
@@ -39,6 +39,6 @@ Last Modified: 12/05/2024 -->
 <div class="email-token">
   {inputText}
 
-  <!-- <Button type="primary" on:click = {handleClick} text="" rounded=true><img class="remove-user-icon" src={removeUser} alt="remove-user-icon"/></Button> -->
-  <button on:click={handleClick} style="border-radius:50px; background-color: rgba(211, 211, 211, 0); color: #363F72;  border: none;  cursor:pointer;">X</button>
+  
+  <!-- <button on:click={handleClick} style="border-radius:50px; background-color: rgba(211, 211, 211, 0); color: #363F72;  border: none;  cursor:pointer;">X</button> -->
 </div>
