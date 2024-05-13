@@ -23,8 +23,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('authentication.urls')),
     path('', include('assemblyaimodule.urls')),
-    path('', include('emailing.urls'))
+    path('', include('emailing.urls')),
     # Add URL pattern for serving audio files
+    path('', include('summariser.urls')),
 ]
 
 

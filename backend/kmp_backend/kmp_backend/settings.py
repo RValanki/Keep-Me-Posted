@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'assemblyaimodule',
     'emailing',
+    'summariser'
 ]
 
 MIDDLEWARE = [
