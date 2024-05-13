@@ -3,7 +3,6 @@
   import Topbar from "../../components/topbar.svelte";
   import { ContactsStore } from "../../stores/contacts-store";
 
-
   const postRequestString = "http://127.0.0.1:8000/emailer/"; // yours may be different, see what link pops up when you run django server, then add /emailer on the end
 
   let emailString = ""
