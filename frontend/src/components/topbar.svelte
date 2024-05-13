@@ -49,26 +49,19 @@
     nav {
         position: relative;
         width: 100%;
-        padding-top: 50px;
+        padding-top: 70px;
     }
     .icon-container {
         display: inline-block;
         position: absolute;
-        top: 0; 
+        top: 10%;
     }
     .kmp-container {
         left: 3%;
     }
-    .gear-container {
-        right: 7%; 
-        top: 15%;
-        padding-right: 25px;
-    }
-    .gear-icon {
-        height: 30px;
-    }
     .profile-container {
-        right: 3%; 
+        right: 3%;
+        top: 10%; 
     }
     img {
         height: 42px; 

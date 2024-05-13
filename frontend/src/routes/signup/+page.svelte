@@ -126,7 +126,11 @@
       <div class="logo-container">
         <img src={logo} alt="Logo" class="logo-style" />
       </div>
-      <div class="title">Keep Me Posted</div>
+      <div class="title">
+        <h1>
+          Keep Me Posted
+        </h1>
+      </div>
       <div class="sub-title">Meetings to summaries.</div>
     </div>
     <div class="sign-up-card">
@@ -245,6 +249,9 @@
     align-items: center;
     color: white;
   }
+  h1{
+    color: white;
+  }
   .sign-up-card {
     height: 75vh;
     width: 32vw;
@@ -265,6 +272,7 @@
     letter-spacing: 0%;
     position: relative;
     top: 0.5vh;
+    color:white;
   }
   .title {
     font-size: calc(2vw + 2.5vh);

@@ -20,11 +20,11 @@
         <div class="title-container">
           <div class="center-icon"><img class="green-tick" src={greenTick} alt="Green Tick" /></div>
           <h1>Summary Sent!</h1>
-          <h3>Your summary has been sent to the recipients below.</h3>
+          <p class="subheading">Your summary has been sent to the recipients below.</p>
         </div>
         
         <div class="all-recipients-container">
-          <div class="subtitle">Recipients:</div>
+          <div class="recipients-txt">Recipients:</div>
     
           <div class="recipients-container">
             
@@ -92,11 +92,14 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding-top: 3%
     }
 
     .all-recipients-container {
       display: flex;
       gap: 50px;
+      padding-top: 3%;
+
     }
   
     .recipients-container {
@@ -117,6 +120,17 @@
     }
     .subtitle {
       padding-bottom: 3%;
+    }
+
+    h1 {
+      padding-top: 3%;
+    }
+
+    .subheading {
+      padding-top: 3%;
+    }
+    .recipients-txt{
+      font-weight: 700;
     }
   
   </style>

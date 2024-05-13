@@ -55,7 +55,7 @@
 
       <div class="title-container">
         <h1>Add Recipients</h1>
-        <div class="subtitle">Add the emails you would like to send the summary to.</div>
+        <div class="subheading">Add the emails you would like to send the summary to.</div>
       </div>
 
       <div class="enter-email-container">
@@ -112,6 +112,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 2%;
     padding-bottom: 5%;
   }
 
@@ -168,7 +169,9 @@
     padding-bottom: 10px;
   }
 
-
+  .subheading{
+    margin-top: 3%;
+  }
 
 
 </style>

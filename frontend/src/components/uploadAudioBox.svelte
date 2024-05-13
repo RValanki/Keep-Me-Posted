@@ -131,7 +131,7 @@
       <img class="large-icon" src={micIcon} alt="Icon" />
       <span class="first-line">Upload meeting audio</span>
       <span class="second-line">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
-    </Dropzone>    
+    </Dropzone>
   </label>
 </div>
 
@@ -207,6 +207,10 @@
   flex: none;
   order: 0;
   flex-grow: 0;
+}
+
+.custom-input:hover {
+  cursor: pointer;
 }
 
 .first-line{
