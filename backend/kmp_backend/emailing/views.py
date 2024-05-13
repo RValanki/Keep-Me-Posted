@@ -10,12 +10,14 @@ def send_email(request):
     username = "keepmeposted.monash@gmail.com"  
     password = "aqsokzlapmzxvuev" 
 
-    message = request.POST.get('message') # get message from data 
-    contacts = request.POST.get('contacts').split(',')    
+    message = request.POST.get('message') # get message from data
+    subject = request.POST.get('subject')  
+    contacts = request.POST.get('contacts').split(',')
+       
 
     for contact in contacts:
         email = MIMEMultipart("alternative")
-        email["Subject"] = "KMP Summary"
+        email["Subject"] = subject
         email["From"] = username
         email["To"] = contact
 
