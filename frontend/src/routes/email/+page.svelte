@@ -56,7 +56,7 @@
 
       <div class="title-container">
         <h1>Add Recipients</h1>
-        <h3>Add the emails you would like to send the summary to.</h3>
+        <div class="subtitle">Add the emails you would like to send the summary to.</div>
       </div>
 
       <div class="enter-email-container">
@@ -105,8 +105,8 @@
 
   .button-container {
     position: absolute;
-    right: 10px;
-    bottom: 10px;
+    right: 30px;
+    bottom: 30px;
   }
 
   .title-container {
