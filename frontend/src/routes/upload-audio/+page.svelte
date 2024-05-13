@@ -29,7 +29,7 @@
 
         <div class="center-icon"><img class="clock-icon" src={clockIcon} alt="Clock Icon" /></div>
         <h1 >Your Summary Will Be Sent..</h1>
-        <div class = "caption">After you upload your meeting audio, your summary will be automatically sent when it is ready.</div>
+        <div class = "subheading">After you upload your meeting audio, your summary will be automatically sent when it is ready.</div>
     
         <UploadBox />
 
@@ -45,7 +45,8 @@
 .center-icon{
     display: flex;
     justify-content: center;
-    padding-top: 20px;
+    /* padding-top: 20px; */
+    margin-top: 3%;
 }
 
 .clock-icon{
@@ -57,7 +58,7 @@
     justify-content: center;
     align-items: center;
     padding: 0px;
-    gap: 9.3px;
+    /* gap: 9.3px; */
 
     width: 7vw;
     height: width;
@@ -73,15 +74,19 @@
     order: 0;
     flex-grow: 0;
 
+    margin-top: 0;
+
 }
 
 h1{
     text-align: center;
+    margin-top: 2%;
 }
 
-.caption{
+.subheading{
     text-align: center;
     padding-bottom: 8vh;
+    margin-top: 1%;
 }
 
 </style>

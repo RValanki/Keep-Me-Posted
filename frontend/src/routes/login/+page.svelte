@@ -108,7 +108,7 @@
             <img src={logo} alt="Logo" class = "logo-style" />
          </div>
          <div class = "title">
-            Keep Me Posted
+            <h1>Keep Me Posted</h1>
          </div>
          <div class="sub-title">
             Meetings to summaries.
@@ -160,7 +160,7 @@
             alert("Womp Womp");
             }}
             >
-            Forgot Password
+            Forgot Password?
          </div>
          <div class = "primary-button-container">
             <button
@@ -483,14 +483,18 @@ body {
      letter-spacing: 0%;
      position: relative;
      top: 0.5vh;
+     color: white;
 }
  .title{
      font-size: calc(2vw + 2.5vh);
      font-family: 'Inter', sans-serif;
-     font-weight: 550;
      letter-spacing: 0%;
+      font-weight: 550;
      position: relative;
      top: 0.2vh;
+}
+h1{
+   color: white;
 }
  .logo-container{
      max-width: 41%;

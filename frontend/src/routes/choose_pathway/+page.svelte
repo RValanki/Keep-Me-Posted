@@ -37,6 +37,7 @@
         gap: 16px;
         align-items: center;
         margin: 64px;
+        margin-top: 3%;
     }
     .bottom-bar {
         margin-left: 3%;
