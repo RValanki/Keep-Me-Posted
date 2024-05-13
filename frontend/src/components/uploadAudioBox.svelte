@@ -44,8 +44,8 @@
       }
 
       const audio = new Audio(URL.createObjectURL(selectedFile));  // Create new Audio HTML object, create URL used as source for audio element
-      makeProgression()  // Trigger the loading bar
-      updateUploadBoxContents("Uploading meeting audio")  // Change box to show 'Uploading Meeting Audio'
+      // makeProgression()  // Trigger the loading bar
+      updateUploadBoxContents("Generating summary")  // Change box to show 'Uploading Meeting Audio'
       audio.addEventListener('loadedmetadata', () => {
         if (audio.duration <= MAX_DURATION_SECONDS) {
           file = selectedFile;
@@ -88,7 +88,7 @@
   // changes the contents of the audio box
   function updateUploadBoxContents(newText) {
     var firstLine = document.querySelector('.first-line');
-    changeClass('.first-line', '.loading-line')
+    // changeClass('.first-line', '.loading-line')
     firstLine.textContent = newText + '...';
 
     var secondLine = document.querySelector('.second-line');
@@ -123,10 +123,10 @@
 <div class="upload-box">
   <label for="uploadAudioBox" class="custom-input">
     <Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav"> <!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
-      <div id="loadingBar">
+      <!-- <div id="loadingBar">
         <div id="progressBar" style="width: {progressBarWidth}px"></div>
         <div id="progressNumber"><b>{progressBarDisplay}</b>%</div>
-      </div>
+      </div> -->
 
       <img class="large-icon" src={micIcon} alt="Icon" />
       <span class="first-line">Upload meeting audio</span>
