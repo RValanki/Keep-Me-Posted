@@ -45,6 +45,7 @@
 .center-icon{
     display: flex;
     justify-content: center;
+    padding-top: 20px;
 }
 
 .clock-icon{
