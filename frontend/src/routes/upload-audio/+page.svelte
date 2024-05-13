@@ -58,8 +58,10 @@
     padding: 0px;
     gap: 9.3px;
 
-    width: 100px;
-    height: 100px;
+    width: 7vw;
+    height: width;
+    max-width: 100px;
+    max-height: 100px;
 
     /* Blue/100 */
     background: #D1E9FF;
@@ -78,7 +80,7 @@ h1{
 
 .caption{
     text-align: center;
-    padding-bottom: 72px;
+    padding-bottom: 8vh;
 }
 
 </style>

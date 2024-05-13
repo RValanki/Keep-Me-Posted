@@ -154,8 +154,11 @@
 .large-icon{
   /* large icon */
 
-  width: 49px;
-  height: 55px;
+  width: 3.5vw;
+  height: calc(2*width);
+
+  max-width: 46px;
+  max-height: 52px;
 
   /* Inside auto layout */
   flex: none;
@@ -189,8 +192,10 @@
   padding: 0px 0px;
   gap: 16px;
 
-  width: 800px;
-  height: 195px;
+  width: 55vw;
+  height: 27vh;
+  max-width: 700px;
+  max-height: 233px;
 
   /* Blue/25 */
   background: #F5FAFF;
@@ -206,15 +211,15 @@
 
 .first-line{
   /* Upload meeting audio */
-  width: 250px;
-  height: 30px;
+  width: 25vw;
+  height: 5vh;
 
   /* Text xl/Medium */
   font-style: normal;
   font-family: "Inter";
   font-weight: 500;
-  font-size: 20px;
-  line-height: 30px;
+  font-size: 1.45vw;
+  line-height: 5vh;
   /* identical to box height, or 150% */
   text-align: center;
 
@@ -229,14 +234,15 @@
 
 .second-line{
   /* Must be under 120 minutes. MP3 or WAV formats accepted. */
-  width: 230px;
-  height: 24px;
+
+  width: 16.5vw;
+  height: 5vh;
 
   /* Text md/Regular */
   font-style: normal;
   font-weight: 400;
-  font-size: 15px;
-  line-height: 24px;
+  font-size: 1.1vw;
+  line-height: 4vh;
   /* or 150% */
   text-align: center;
 
@@ -295,7 +301,7 @@
   position: absolute;
   top: 0%;
   left: 0%;
-  background-color: #1570EF;
+  background-color:  #1849A9;
   border-radius: 30px 30px 30px 30px;
 }
 
