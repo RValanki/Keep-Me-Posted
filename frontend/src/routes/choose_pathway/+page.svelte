@@ -6,7 +6,7 @@
     
     let simplePathway = () => {
         let path = '';
-        goto(path);
+        goto("/upload-audio");
     };
     
     let customisePathway = () => {

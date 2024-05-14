@@ -9,15 +9,80 @@
 -->
 <!-- JavaScript -->
 <script>
-
+  
   import micIcon from "../assets/mic-icon.png"
   import uploadIcon from "../assets/upload-icon.png"
   import radioIcon from "../assets/radio-icon.png"
   import fileIcon from "../assets/file-icon.png"
   import transparent from "../assets/transparent.png"
-
   import Dropzone from "svelte-file-dropzone";
+  import { transcribe_audio } from "../api-functions/transcribe-audio"
+  import { simple_pathway } from "../api-functions/simple_pathway"
+  import { api_status } from "../stores/simple-pathway-store"
+  import { goto } from "$app/navigation";
+  export let simple = false;
+  
+  const unsubscribe = api_status.subscribe(value => {
+    console.log(value.status); // Log the status value
+    updateLoadingBar(value.status)
+  });
+ 
+function updateLoadingBar(api_status){
+  if(api_status == "Transcribe"){
+    updateUploadBoxContents("Transcribing audio")
+    currentProgress = 0.4
+    makeProgression()
+  }
+  else if(api_status == "Summary"){
+    //updateUploadBoxContents("Generating summary")
+    currentProgress = 0.7
+    makeProgression()
+  }
+  else if(api_status == "Email"){
+    currentProgress = 0.9
+    makeProgression()
+  }
+  else if(api_status == "Complete"){
+    currentProgress = 0.99
+    makeProgression()
+    setTimeout(() => {
+      goto("/sent")
+    }, 2500);
+    
+  }
+}
 
+  
+  // ------------------------------------------ Progress Bar
+  let progressBarWidth = 0
+  let progressBarProgress
+  let progressBarDisplay = 0
+  let loadingBarWidth;
+  let progressBarMax = 1;
+  let currentProgress = 0;
+  
+  $: switch(progressBarWidth) {
+    case (Math.round(loadingBarWidth*progressBarMax)):
+      clearInterval(progressBarProgress);
+  }
+
+  const progression = () => {
+    if(progressBarWidth < currentProgress * loadingBarWidth){
+    progressBarWidth += 1
+    progressBarDisplay = Math.round(progressBarWidth/loadingBarWidth * 100)
+    
+    
+    }
+  }
+
+  const makeProgression = () => {
+    loadingBarWidth = document.getElementById("loadingBar").clientWidth
+    document.getElementById("loadingBar").style.visibility = "visible"
+    document.getElementById("progressNumber").style.visibility = "visible"
+    progressBarProgress = setInterval(progression, 10)
+    
+    return true
+  }
   const MAX_DURATION_SECONDS = 7200; // 7200 seconds = 120 minutes
 
   var ICON_DICT = {
@@ -30,12 +95,15 @@
   let file;
   let errorMessage = '';
 
-  function handleFilesSelect(e) {
+  async function handleFilesSelect(e) {
     const { acceptedFiles } = e.detail;
     file = null; // Reset the file each time new files are selected
 
     if (acceptedFiles.length > 0) {
       const selectedFile = acceptedFiles[0];
+      
+      //Simple pathway
+
 
       // Initial file type check before loading it as an audio source
       if (!selectedFile.name.endsWith('.mp3') && !selectedFile.name.endsWith('.wav')) {
@@ -44,12 +112,18 @@
       }
 
       const audio = new Audio(URL.createObjectURL(selectedFile));  // Create new Audio HTML object, create URL used as source for audio element
-      // makeProgression()  // Trigger the loading bar
-      updateUploadBoxContents("Generating summary")  // Change box to show 'Uploading Meeting Audio'
-      audio.addEventListener('loadedmetadata', () => {
+      
+      audio.addEventListener('loadedmetadata', async () => {
         if (audio.duration <= MAX_DURATION_SECONDS) {
           file = selectedFile;
           errorMessage = '';
+          console.log("mao")
+          const response = await simple_pathway(file, "http://127.0.0.1:8000")
+          
+         
+          
+          
+          
         } else {
           errorMessage = 'Meeting duration exceeded! \n Your meeting audio should be less than 120 minutes.';
           file = null;
@@ -61,28 +135,7 @@
     }
   }
 
-  // ------------------------------------------ Progress Bar
-  let progressBarWidth = 0
-  let progressBarProgress
-  let progressBarDisplay = 0
-  let loadingBarWidth;
-
-  $: if (progressBarWidth === loadingBarWidth) {
-    clearInterval(progressBarProgress)
-  }
-
-  const progression = () => {
-    progressBarWidth += 1
-    progressBarDisplay = Math.round(progressBarWidth/loadingBarWidth * 100)
-  }
-
-  const makeProgression = () => {
-    loadingBarWidth = document.getElementById("loadingBar").clientWidth
-    document.getElementById("progressBar").style.display = "block"
-    progressBarWidth = 0
-    progressBarDisplay = 0
-    progressBarProgress = setInterval(progression, 1)
-  }
+  
 
   // ------------------------------------------ Box Contents
   // changes the contents of the audio box
@@ -123,15 +176,18 @@
 <div class="upload-box">
   <label for="uploadAudioBox" class="custom-input">
     <Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav"> <!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
-      <!-- <div id="loadingBar">
-        <div id="progressBar" style="width: {progressBarWidth}px"></div>
-        <div id="progressNumber"><b>{progressBarDisplay}</b>%</div>
-      </div> -->
-
       <img class="large-icon" src={micIcon} alt="Icon" />
       <span class="first-line">Upload meeting audio</span>
       <span class="second-line">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
-    </Dropzone>
+      
+      
+      <div id="loadingBar">
+        <div id="progressBar" style="width: {progressBarWidth}px"></div>
+      </div> 
+      <div id="progressNumber"><b>{progressBarDisplay}</b>%</div>
+      
+      
+    </Dropzone>    
   </label>
 </div>
 
@@ -209,10 +265,6 @@
   flex-grow: 0;
 }
 
-.custom-input:hover {
-  cursor: pointer;
-}
-
 .first-line{
   /* Upload meeting audio */
   width: 25vw;
@@ -287,33 +339,32 @@
 }
 
 #loadingBar {
+  top: 57%;
+  visibility: hidden;
   border: 1px solid;
-  width: 40%;
-  height: 40px;
-  top: 51%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   position: absolute;
-  background-color: #F8F9FC;
+  margin-top: 67px;
+  width: 35vw;
+  height: 10px;
+  background-color: #e9eaec;
   border-radius: 30px 30px 30px 30px;
+  border-color: #e9eaec;
 }
 
 #progressBar {
-  height: 40px;
-  top: 50%;
-  left: 50%;
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  background-color:  #1849A9;
+  position: relative; 
+  height: 10px;
+  background-color:  #1570EF;
   border-radius: 30px 30px 30px 30px;
 }
 
 #progressNumber {
-  position: absolute;
-  top: 25%;
-  left: 101%;
+  color: rgb(105, 104, 104);
+  visibility: hidden;
+  font-size: 14px;
+  left: 19vw;
+  top: 2.8vh;
+  position: relative; 
 }
 
 </style>
-

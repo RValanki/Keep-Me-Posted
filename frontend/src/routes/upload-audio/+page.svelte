@@ -14,6 +14,7 @@
     import Topbar from '../../components/topbar.svelte';
     import UploadBox from "../../components/uploadAudioBox.svelte";
     import clockIcon from "../../assets/clock.png"
+    
 
 </script>
 
@@ -31,7 +32,7 @@
         <h1 >Your Summary Will Be Sent..</h1>
         <div class = "subheading">After you upload your meeting audio, your summary will be automatically sent when it is ready.</div>
     
-        <UploadBox />
+        <UploadBox simple={true} />
 
 
     </body>
