@@ -1,17 +1,20 @@
 // send email api function. 
 // message: String, subject: String, Contacts: [String]
 
-export let send_email = (message, subject, contacts) => {
-    const postRequestString = "http://localhost:8000/emailer/" // may be different for your machine
+export let send_email = async (message, subject, contacts, baseURL) => {
+    const postRequestString = baseURL + "/api/sendemail" 
 
     let data = new FormData()
     data.append('message', message)
     data.append('subject', subject)
     data.append('contacts', contacts)
 
-    fetch(postRequestString, { method: "POST", body: data}).then((response) => {
-          console.log(response);
-          // do something with response
-        }
-      );
+    try {
+        const response = await fetch(postRequestString, { method: "POST", body: data})
+        const jsonResponse = await response.json()
+        return jsonResponse.details;
+    } catch (error) {
+        console.error("Error:", error)
+        return null
+    }
 }
