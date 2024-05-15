@@ -1,3 +1,7 @@
+// send summary api function.
+// transcript: String, baseURL = String
+// output: String
+
 export let send_summary = async (transcript, baseURL) => {
     const postRequestString = baseURL + "/api/summary"; 
     let data = new FormData()
