@@ -3,7 +3,7 @@
 // output: String
 
 export let send_summary = async (transcript, baseURL) => {
-    const postRequestString = baseURL + "/api/summary"; 
+    const postRequestString = baseURL + "/api/summariser"; 
     let data = new FormData()
     transcript = transcript
     data.append('transcript', transcript);
