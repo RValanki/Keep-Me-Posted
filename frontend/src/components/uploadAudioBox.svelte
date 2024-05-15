@@ -29,16 +29,17 @@
  
 function updateLoadingBar(api_status){
   if(api_status == "Transcribe"){
-    updateUploadBoxContents("Transcribing audio")
+    updateUploadBoxContents("Transcribing audio", false)
     currentProgress = 0.4
     makeProgression()
   }
   else if(api_status == "Summary"){
-    //updateUploadBoxContents("Generating summary")
+    updateUploadBoxContents("Generating summary", true)
     currentProgress = 0.7
     makeProgression()
   }
   else if(api_status == "Email"){
+    updateUploadBoxContents("Sending email", true)
     currentProgress = 0.9
     makeProgression()
   }
@@ -88,8 +89,13 @@ function updateLoadingBar(api_status){
   var ICON_DICT = {
     "Uploading meeting audio" : uploadIcon,
     "Transcribing audio" : radioIcon,
-    "Generating summary" : fileIcon
+    "Generating summary" : fileIcon,
+    "Sending email" : fileIcon
   }
+
+
+
+
 
   // ------------------------------------------ File Handling
   let file;
@@ -137,21 +143,33 @@ function updateLoadingBar(api_status){
 
   
 
+  
   // ------------------------------------------ Box Contents
   // changes the contents of the audio box
-  function updateUploadBoxContents(newText) {
+  function updateUploadBoxContents(newText, isProgression) {
     var firstLine = document.querySelector('.first-line');
     // changeClass('.first-line', '.loading-line')
     firstLine.textContent = newText + '...';
 
+    if(isProgression){
+
+    // Change icon source
+    var icon = document.getElementById("icon")
+    icon.src = ICON_DICT[newText];
+
+    } else{
     var secondLine = document.querySelector('.second-line');
     changeClass('.second-line', 'loading-line')
     secondLine.textContent = "";
-    
+
     // Change icon source
     var icon = document.querySelector('.large-icon');
     icon.src = ICON_DICT[newText];
     changeClass('.large-icon', '.small-icon');
+    }
+    
+    
+    
 
     // when a file is dragged in show the loading bar and 'Uploading meeting audio'
     // when file is sent to assemblyai; show 'Transcribing audio'
@@ -164,10 +182,12 @@ function updateLoadingBar(api_status){
     const spanElement = document.querySelector(elemId);
 
     // Remove any existing class from the span element
+    if(spanElement != null){
     spanElement.className = '';
 
     // Add the new class to the span element
     spanElement.classList.add(newClassName);
+    }
   }
 
 </script>
@@ -176,7 +196,7 @@ function updateLoadingBar(api_status){
 <div class="upload-box">
   <label for="uploadAudioBox" class="custom-input">
     <Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav"> <!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
-      <img class="large-icon" src={micIcon} alt="Icon" />
+      <img id = "icon" class="large-icon" src={micIcon} alt="Icon" />
       <span class="first-line">Upload meeting audio</span>
       <span class="second-line">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
       
