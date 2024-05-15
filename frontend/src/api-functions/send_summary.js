@@ -9,7 +9,7 @@ export let send_summary = async (transcript, baseURL) => {
     data.append('transcript', transcript);
 
     try {
-        const response = await fetch(postRequestString, { method: "POST", body: formData });
+        const response = await fetch(postRequestString, { method: "POST", body: data });
         const jsonResponse = await response.json();
         return jsonResponse.summary; 
 
