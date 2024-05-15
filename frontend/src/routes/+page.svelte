@@ -10,6 +10,9 @@
 
 <script>
   import TopBar from "../components/topbar.svelte";
+  import { goto } from "$app/navigation";
+  
 </script>
-
+<button on:click = {goto("/login")}></button>
 <TopBar />
+
