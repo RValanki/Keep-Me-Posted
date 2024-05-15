@@ -3,12 +3,14 @@
     import Topbar from "../../components/topbar.svelte";
     import { ContactsStore } from "../../stores/contacts-store";
     import greenTick from "../../assets/green-tick.png" 
+    import { goto } from "$app/navigation";
 
     
 
     let nextPage = () => {
         console.log("clicked");
-    }
+        goto("/email")
+    } 
   
     </script>
     
