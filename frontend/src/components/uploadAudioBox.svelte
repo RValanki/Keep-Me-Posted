@@ -13,9 +13,7 @@
   import uploadIcon from "../assets/upload-icon.png";
   import radioIcon from "../assets/radio-icon.png";
   import fileIcon from "../assets/file-icon.png";
-  import transparent from "../assets/transparent.png";
   import Dropzone from "svelte-file-dropzone";
-  import { transcribe_audio } from "../api-functions/transcribe-audio";
   import { simple_pathway } from "../api-functions/simple_pathway";
   import { api_status } from "../stores/simple-pathway-store";
   import { goto } from "$app/navigation";

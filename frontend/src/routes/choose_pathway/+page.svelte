@@ -16,7 +16,7 @@
 
     let backBtn = () => {
         let path = '';
-        goto(path);
+        goto("/email");
     };
 
 </script>

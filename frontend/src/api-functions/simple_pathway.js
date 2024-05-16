@@ -2,7 +2,7 @@
 // audioFile: .mp3 or .wav file, baseURL = String
 // output: String
 
-import { transcribe_audio } from "./transcribe-audio"
+import { transcribe_audio } from "./transcribe_audio"
 import { updateStatus } from "../stores/simple-pathway-store"
 import { send_summary } from "./send_summary"
 import { send_email } from "./send_email"
