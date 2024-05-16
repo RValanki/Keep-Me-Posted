@@ -32,6 +32,11 @@
       currentProgress = 0.4;
       makeProgression();
 
+      setTimeout(() => {
+        currentProgress = 0.55;
+        makeProgression();
+      }, 8000);
+
     } else if (api_status == "Summary") {
       updateUploadBoxContents("Generating summary", true);
       currentProgress = 0.7;
@@ -48,6 +53,7 @@
       setTimeout(() => {
         goto("/sent");
       }, 2500);
+      
     }
   }
 
@@ -67,7 +73,8 @@
   const progression = () => {
     if (progressBarWidth < currentProgress * loadingBarWidth) {
       progressBarWidth += 1;
-      progressBarDisplay = Math.round((progressBarWidth / loadingBarWidth) * 100,
+      progressBarDisplay = Math.round(
+        (progressBarWidth / loadingBarWidth) * 100,
       );
     }
   };
