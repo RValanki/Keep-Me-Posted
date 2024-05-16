@@ -8,14 +8,15 @@ import { send_summary } from "./send_summary"
 import { send_email } from "./send_email"
 import { ContactsStore } from "../stores/contacts-store"
 
-let text = " Speaker A: Smoke from hundreds of wildfires in Canada is triggering air quality alerts throughout the US. Skylines from Maine to Maryland to Minnesota are gray and smoggy. And in some places, the air quality warnings include the warning to stay inside. We wanted to better understand what's happening here and why. So he called Peter DiCarlo, an associate professor in the department of Environmental Health and Engineering at Johns Hopkins University. Good morning. Professor. Speaker B: Good morning. g us and sharing this expertise with us. Speaker B: Thank you for having me. "
 
 export let simple_pathway = async (audioFile, baseURL) => {
     updateStatus("Transcribe")
-    await transcribe_audio(audioFile, baseURL)
+    const transcript = await transcribe_audio(audioFile, baseURL)
+    console.log(transcript)
 
     updateStatus("Summary")
-    await send_summary(text, baseURL)
+    const summary = await send_summary(transcript, baseURL)
+    console.log(summary)
 
     updateStatus("Email")
     let contacts = []
@@ -23,7 +24,7 @@ export let simple_pathway = async (audioFile, baseURL) => {
         contacts = value;
       });    
     console.log(contacts)
-    await send_email(text, "bob", contacts, baseURL)
+    await send_email(summary, "Regular Show", contacts, baseURL)
 
     updateStatus("Complete")
 }
