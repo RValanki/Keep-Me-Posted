@@ -1,6 +1,6 @@
 # Keep-Me-Posted
 
-**Keep Me Posted (KMP)** is a powerful web application designed to streamline your meeting processes by providing concise summaries of meeting discussions. KMP allowes users to focus on productive conversations rather than documenting meeting minutes.
+**Keep Me Posted (KMP)** is a powerful web application designed to streamline your meeting processes by providing concise summaries of meeting discussions. KMP allowes users to focus on productive conversations rather than wasting precious time documenting meeting minutes.
 
 ## Team Members
 
