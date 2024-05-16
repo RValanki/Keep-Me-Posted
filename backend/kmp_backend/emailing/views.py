@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 
-import smtplib, ssl
+import smtplib, ssl, markdown2
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+
 
 def send_email(request):
    
@@ -22,12 +23,18 @@ def send_email(request):
         email["To"] = contact
 
 
-        # Turn these into plain/html MIMEText objects
+        # Convert message into plain MIMEText object
         part1 = MIMEText(message, "plain")
+
+        # Convert message into HTML MIMEText object
+        message_html = markdown2.markdown(message)
+        part2 = MIMEText(message_html, "html")
+    
 
         # Add HTML/plain-text parts to MIMEMultipart message
         # The email client will try to render the last part first
         email.attach(part1)
+        email.attach(part2)
 
         # Create secure connection with server and send email
         context = ssl.create_default_context()
