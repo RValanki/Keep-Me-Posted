@@ -1,6 +1,6 @@
 # Keep-Me-Posted
 
-**Keep Me Posted (KMP)** is a powerful web application designed to streamline your meeting processes by providing concise summaries of meeting discussions. KMP allowes users to focus on productive conversations rather than wasting precious time documenting meeting minutes.
+**Keep Me Posted (KMP)** is a powerful web application designed to streamline your meeting processes by providing concise summaries of meeting discussions. KMP allows users to focus on productive conversations rather than wasting precious time documenting meeting minutes.
 
 ## Team Members
 
@@ -18,7 +18,7 @@
 
 Follow these steps to set up and run the Keep Me Posted application locally.
 
-## Prerequiste
+## Prerequisite
 
 Before running the application locally, ensure you have installed node and npm globally - [guide]( https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) 
 
