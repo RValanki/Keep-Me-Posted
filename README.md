@@ -1,40 +1,39 @@
 # Keep-Me-Posted
 
-# Members
-Brenda Dang (33111197)\
-Harrison Lane (33110077)\
-Bowen Dong (33109834)\
-Ayesha Tariq (32497857)\
-Ahmed Almasry (31130143)\
-Parul Garg (32720254)\
-Diya Ramesh (32336012)\
-Afia Farzana (32501986)\
-Alex Ung (32498853)\
-Zihao Wang (32520433)\
-Maureen Pham (33117144)\
-Rohit Valanki (31451764)\
-Marcus Wei (32503881)\
-Angelina Leung (33114447)\
-Benjamin Cherian (31483534)\
-Danny Leung (32478704)
+**Keep Me Posted (KMP)** is a powerful web application designed to streamline your meeting processes by providing concise summaries of meeting discussions. KMP allowes users to focus on productive conversations rather than documenting meeting minutes.
 
-# Installation
+## Team Members
 
-To run project locally, run the frontend and backend in 2 separate terminals. Eg, create one terminal and follow the frontend instructions, then create a different terminal and follow the backend instructions.
 
-# Npm install 
+| **Agile Team 1**                                | **Agile Team 2**                               | **Agile Team 3**                               |
+|-------------------------------------------------|------------------------------------------------|------------------------------------------------|
+| **Danny Leung** <br> *Product Management* <br> 32478704    | **Parul Garg** <br> *Product Management* <br> 32720254      | **Ayesha Tariq** <br> *Product Management* <br> 32497857      |
+| **Diya Ramesh** <br> *Product Management* <br> 32336012    | **Angelina Leung** <br> *Product Management* <br> 33114447  | **Afia Farzana** <br> *Product Management* <br> 32501986      |
+| **Maureen Pham** <br> *Release Train Engineer* <br> 33117144    | **Zihao (Jeremy) Wang** <br> *Release Train Engineer* <br> 32520433   | **Alex Ung** <br> *Release Train Engineer* <br> 32498853     |
+| **Bowen Dong** <br> *Release Train Engineer* <br> 33109834    | **Benjamin Cherian** <br> *Release Train Engineer* <br> 31483534    | **Marcus Wei** <br> *Release Train Engineer* <br> 32503881   |
+| **Brenda Dang** <br> *System Architect* <br> 33111197    | **Rohit Valanki** <br> *System Architect* <br> 31451764   | **Harrison Lane** <br> *System Architect* <br> 33110077    |
+| **Ahmed Almasry** <br> *System Architect* <br> 31130143    |                                                 |                                                 |
 
-If you haven't already install node and npm globally - https://docs.npmjs.com/downloading-and-installing-node-js-and-npm 
+# Installation Guide
 
-# To run full application
-Make sure you're in root directory
+Follow these steps to set up and run the Keep Me Posted application locally.
 
-## Windows setup
+## Prerequiste
+
+Before running the application locally, ensure you have installed node and npm globally - [guide]( https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) 
+
+
+## Running the Full Application
+Ensure you are in the root directory
+
+### On Windows 
+To run the application on Windows, execute the run_servers.bat file. You can do this by double-clicking the file in your file explorer or by running the following command in your terminal:
 ```console
-run_servers.bat
+./run_servers.bat
 ```
 
-## To run backend
+### On macOS
+To run the servers on macOS, execute the run_servers.sh script. Use the following command in your terminal:
 ```console
 bash run_servers.sh
 ```
