@@ -7,15 +7,15 @@
 -->
 
 <script>
-    export let cardText;
-    export let cardHeadingText;
-    export let cardOutlineColour;
-    export let cardBackgroundColour;
-    export let handleCardClick = () => {};
-    export let cardTextColour;
+    export let cardText; // this is the main text of the card
+    export let cardHeadingText; // this is the heading (e.g. 'send asap', 'customise')
+    export let cardOutlineColour; // the outline colour of the border (also used for shadows)
+    export let cardBackgroundColour; // the background colour of the button
+    export let handleCardClick = () => {}; // pass a method here that does what you want to happen when you click the card
+    export let cardTextColour; // colour of the text
     export let cardWidth = "25%";
     export let cardHeight = "100%";
-    export let cardImagePath;
+    export let cardImagePath; // path of the icons
     
     function handleClick() {
         handleCardClick();
