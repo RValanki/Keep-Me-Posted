@@ -1,5 +1,5 @@
 <script>
-  import logo from "./KMPLOGO_TEST.png";
+  import logo from "../../assets/kmp-logo-large.png";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
 

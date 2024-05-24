@@ -7,3 +7,4 @@ typing_extensions==4.11.0
 google-generativeai
 python-dotenv
 assemblyai
+markdown2

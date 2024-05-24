@@ -1,11 +1,18 @@
+<!-- Choose pathway page
+
+    Page that directs the user to choose whether they want to customise or send summary asap
+
+    Author: Ahmed Almasry, Bowen Dong, Brenda Dang, Dannny Leung, Diya Ramesh, Maureen Pham
+    Last Modified: 12/05/2024
+-->
 <script>
     import Card from "../../components/card.svelte";
     import TopBar from "../../components/topbar.svelte";
     import Button from "../../components/button.svelte";
     import { goto } from "$app/navigation";
     
+    
     let simplePathway = () => {
-        let path = '';
         goto("/upload-audio");
     };
     
@@ -15,13 +22,12 @@
     };
 
     let backBtn = () => {
-        let path = '';
-        goto(path);
+        goto("/email");
     };
 
 </script>
 
-<!-- This is a container that will hold the two cards: -->
+<!-- This contains the containers that hold the cards, text and bottom bar -->
 <style>
     .card-container {
         display: flex;
