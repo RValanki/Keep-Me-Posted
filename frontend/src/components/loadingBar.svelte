@@ -103,15 +103,75 @@
         var icon = document.getElementById("loadingBarIcon");
         icon.src = ICON_DICT[newText];
     }
-    
+
 </script>
 
 <!-- COMPONENT -->
-<div id="loadingBar">
-    <span id="progressBar" style="width: {progressBarWidth}px"></span>
-    <span id="progressNumber"><b>{progressBarDisplay}</b>%</span>
-    <div id="loadingBarDesc">
-        <img id="loadingBarIcon" src={uploadIcon} alt="Icon" />
-        <span id="loadingBarTextDesc">Uploading Meeting Audio...</span>
+<div class="loading-bar">
+    <span class="progress-bar" style="width: {progressBarWidth}px"></span>
+    <span class="progress-number"><b>{progressBarDisplay}</b>%</span>
+    <div class="loading-bar-desc">
+        <img class="loading-bar-icon" src={uploadIcon} alt="Icon" />
+        <span class="loading-bar-text-desc">Uploading Meeting Audio...</span>
     </div>
 </div>
+
+<style>
+    .loading-bar {
+        display: flexbox;
+        top: 57%;
+        visibility: hidden;
+        border: 1px solid;
+        position: absolute;
+        margin-top: 67px;
+        width: 35vw;
+        height: 10px;
+        background-color: #e9eaec;
+        border-radius: 30px 30px 30px 30px;
+        border-color: #e9eaec;
+    }
+
+    .loading-bar-icon {
+        width: 30px;
+        height: 30px;
+
+        /* Inside auto layout */
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+    }
+    .loading-line {
+        /* 
+    /* Auto layout */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0px;
+        gap: 4px;
+
+        width: 256px;
+        height: 30px;
+
+        /* Inside auto layout */
+        flex: none;
+        order: 1;
+        flex-grow: 0;
+    }
+
+    .progress-bar {
+        position: relative;
+        height: 10px;
+        background-color: #1570ef;
+        border-radius: 30px 30px 30px 30px;
+    }
+
+    .progress-number {
+        color: rgb(105, 104, 104);
+        visibility: hidden;
+        font-size: 14px;
+        left: 19vw;
+        top: 2.8vh;
+        position: relative;
+    }
+
+</style>
