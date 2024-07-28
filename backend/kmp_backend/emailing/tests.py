@@ -5,9 +5,10 @@ from unittest.mock import patch, MagicMock
 
 # Create your tests here.
 class TestEmailSent(TestCase):
+    
     @patch('views.py.send_email')
 
-    def test_sending_email(self, mock_email_summary, mock_sending_smtp_email):
+    def test_sending_email(self, mock_send_smtp_email):
         request = HttpRequest()
         request.method = 'POST'
         request.POST = {
@@ -16,9 +17,12 @@ class TestEmailSent(TestCase):
             'contacts': 'tarayesha508@gmail.com'
         }
 
-        mock_email = MagicMock()
-        mock_email_value.return_value = mock_email
+        mock_response = JsonResponse({'details':'Emails sent successfully!'})
+        mock_send_smpty_email.return_value = mock_response
 
         response = send_email(request)
 
         self.assertEqual(response.json(), {'details':'Emails sent succesfully!'})
+
+
+
