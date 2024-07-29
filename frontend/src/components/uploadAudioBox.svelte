@@ -115,13 +115,6 @@
 
 <!-- Styling -->
 <style>
-	.upload-audio-container {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;	
-	}
-
 	.upload-audio-box{
 		box-sizing: border-box;
 
