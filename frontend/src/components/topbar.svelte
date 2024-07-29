@@ -30,14 +30,14 @@
 
 </script>
 
-<div class="flex justify-between">
-  <div class="p-8 m">
+<div class="flex justify-between border-b">
+  <div class="py-4 px-8 m">
     <button on:click={() => handleGoHome()}>
       <img class="h-12" src={kmpIcon} alt="KMP Icon" />
     </button>
   </div>
 
-  <div class="p-8">
+  <div class="py-4 px-8">
     <div>
       <button on:click={() => toggleDropdown()}>
         <img class="h-12" src={profileIcon} alt="Profile Icon" />
