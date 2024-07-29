@@ -87,27 +87,27 @@
 </script>
 
 <!-- COMPONENT -->
-<div class="audio-upload-container">
-	<div class="audio-upload-box">
+<div class="upload-audio-container">
+	<div class="upload-audio-box">
 		<Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav" containerStyles={dropzoneStyles}>
 
 			<!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
-			<div class="upload-box-desc">
+			<div class="upload-audio-box-desc">
 				<img id="icon" class="audio-box-icon" src={micIcon} alt="Icon" />
-				<span class="audio-box-header">Upload meeting audio</span>
-				<span class="audio-box-subtitle">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
+				<span class="upload-audio-box-header">Upload meeting audio</span>
+				<span class="upload-audio-box-subtitle">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
 			</div>
 		
 		</Dropzone>
 		<LoadingBar bind:this={loadingBarComponent} />
 	</div>
 
-	<div class="status-message">
-		{#if file}
-		  <p>File ready: {file.name}</p>
-		{:else}
-		  <p>{errorMessage}</p>
-		{/if}
+	<div class="upload-audio-status-message">
+      {#if file}
+        <p>File ready: {file.name}</p>
+      {:else}
+        <p>{errorMessage}</p>
+      {/if}
   	</div>
 </div>
 
@@ -115,14 +115,14 @@
 
 <!-- Styling -->
 <style>
-	.audio-upload-container {
+	.upload-audio-container {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;	
 	}
 
-	.audio-upload-box{
+	.upload-audio-box{
 		box-sizing: border-box;
 
 		display: flex;
@@ -148,7 +148,7 @@
 		flex-grow: 0;
 	}
 
-	.upload-box-desc {
+	.upload-audio-box-desc {
 		text-align: center;
 		display: flex;
 		flex-direction: column;
@@ -170,7 +170,7 @@
 		flex-grow: 0;
 	}
 
-	.audio-box-header {
+	.upload-audio-box-header {
 		/* Upload meeting audio */
 		width: 25vw;
 		height: 5vh;
@@ -193,7 +193,7 @@
 		flex-grow: 0;
 	}
 
-	.audio-box-subtitle {
+	.upload-audio-box-subtitle {
 		/* Must be under 120 minutes. MP3 or WAV formats accepted. */
 
 		width: 16.5vw;
@@ -216,7 +216,7 @@
 		flex-grow: 0;
 	}
 
-	.status-message {
+	.upload-audio-status-message {
 		text-align: center;
 		padding: 10px;
 		color: #333;
