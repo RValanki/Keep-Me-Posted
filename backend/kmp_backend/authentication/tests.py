@@ -52,3 +52,16 @@ class AuthTests(TestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn('token', response.data)
+    
+    def test_invalid_user_registration(self):
+        url = reverse('signup')
+
+        # Test login with invalid emailing format
+        data = {
+            'username': 'invaliduser',
+            'email': 'invalidemail',
+            'password': 'invalidpassword123'
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('email', response.data)
