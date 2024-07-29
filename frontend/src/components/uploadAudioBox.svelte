@@ -24,6 +24,7 @@
 	import { goto } from "$app/navigation";
 	export let simple = false;
 
+	let showDropzone = true;
 	let loadingBarComponent; // pointer for loading bar
 	const dropzoneStyles = "background-color: rgba(255, 0, 0, 0)"; // define custom to style dropzone
 
@@ -78,7 +79,7 @@
 			});
 
 			//hide the audio box desc and show the loading bar
-			document.querySelector('.audio-box-desc').style.visibility = "hidden";
+			showDropzone = false;
 		} else {
 		errorMessage =
 			"Invalid audio format! Your meeting audio must be in MP3 or WAV format";
@@ -89,17 +90,20 @@
 <!-- COMPONENT -->
 <div class="upload-audio-container">
 	<div class="upload-audio-box">
-		<Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav" containerStyles={dropzoneStyles}>
+		{#if showDropzone}
+			<Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav" containerStyles={dropzoneStyles}>
 
-			<!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
-			<div class="upload-audio-box-desc">
-				<img id="icon" class="audio-box-icon" src={micIcon} alt="Icon" />
-				<span class="upload-audio-box-header">Upload meeting audio</span>
-				<span class="upload-audio-box-subtitle">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
-			</div>
-		
-		</Dropzone>
-		<LoadingBar bind:this={loadingBarComponent} />
+				<!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
+				<div class="upload-audio-box-desc">
+					<img id="icon" class="audio-box-icon" src={micIcon} alt="Icon" />
+					<span class="upload-audio-box-header">Upload meeting audio</span>
+					<span class="upload-audio-box-subtitle">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
+				</div>
+			
+			</Dropzone>
+		{:else}
+			<LoadingBar bind:this={loadingBarComponent} />
+		{/if}
 	</div>
 
 	<div class="upload-audio-status-message">

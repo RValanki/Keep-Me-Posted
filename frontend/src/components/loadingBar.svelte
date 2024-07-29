@@ -107,15 +107,19 @@
 </script>
 
 <!-- COMPONENT -->
-<div class="loading-bar">
-    <span class="progress-bar" style="width: {progressBarWidth}px"></span>
-    <span class="progress-number"><b>{progressBarDisplay}</b>%</span>
-    <div class="loading-bar-desc">
-        <img class="loading-bar-icon" src={uploadIcon} alt="Icon" />
-        <span class="loading-bar-text-desc">Uploading Meeting Audio...</span>
-    </div>
+<div class="flex justify-between mb-1"> <!-- loading-bar -->
+    <span class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700"> <!-- progress-bar-base -->
+        <span class="bg-blue-600 h-2.5 rounded-full" style="width: {progressBarWidth}px"></span> <!-- progress-bar -->
+    </span>
+    <span class="text-sm font-medium text-blue-70"><b>{progressBarDisplay}</b>%</span> <!-- progress-number -->
 </div>
 
+<div class="flex items-center justify-center"> <!-- loading-bar-desc -->
+    <img class="w-7.5 7.5" src={uploadIcon} alt="Icon" /> <!-- loading-bar-icon -->
+    <span class="loading-bar-text-desc">Uploading Meeting Audio...</span>
+</div>
+
+<!-- The following is still being used for reference for tailwind styling -->
 <style>
     .loading-bar {
         display: flexbox;
