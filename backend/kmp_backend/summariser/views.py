@@ -39,8 +39,6 @@ def generate_summary(request):
     print(prompt_feedback)
     print(response.text)
 
-    response.finishReason
-
     response_data = {
         "summary": response.text
     }
