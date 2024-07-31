@@ -28,7 +28,17 @@ class GenerateSummaryTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn('summary', response.json())
         self.assertEqual(response.json()['summary'], "This is a safe summary.")
-        
+
+    @patch('google.generativeai.GenerativeModel')
+    def test_transcript_with_swear_word(self, mock_model):
+        mock_model_instance = mock_model.return_value
+        mock_model_instance.generate_content.return_value = mock_response("This transcript contains inappropriate content.", {"blockReason": "Hate Speech"})
+
+        response = self.client.post(self.url, {'transcript': 'This is a damn test transcript.'})
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content.decode(), "Unsafe transcript provided")
+
+
 def mock_response(text, feedback):
     class MockResponse:
         def __init__(self, text, feedback):
