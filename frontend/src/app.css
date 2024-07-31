@@ -6,6 +6,9 @@
     Last modified: 12/05/2024
 */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root{
     --semi-bold: 550;
