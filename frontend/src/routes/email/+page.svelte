@@ -8,7 +8,7 @@
   import { handleError } from "vue";
 
   let nextPage = () => {
-    // todo
+    goto("/chose_pathway")
     console.log("todo go to next page");
   };
 
