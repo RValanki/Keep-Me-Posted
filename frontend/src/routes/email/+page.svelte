@@ -3,12 +3,11 @@
   import Topbar from "../../components/topbar.svelte";
   import EmailEntry from "../../components/emailEntry.svelte";
   import EmailList from "../../components/emailList.svelte";
-
   import { goto } from "$app/navigation";
-  import { handleError } from "vue";
+  import { ContactsStore } from "../../stores/contacts-store"
 
   let nextPage = () => {
-    goto("/chose_pathway")
+    goto("/choose_pathway")
     console.log("todo go to next page");
   };
 
@@ -37,6 +36,7 @@
     handleClick={nextPage}
     icon="../../src/assets/arrow-right.png"
     text="Choose Pathway"
+    disabled={$ContactsStore.length == 0}
   ></Button>
 </div>
 
