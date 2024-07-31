@@ -18,9 +18,7 @@
 
     // Internal handleClick function that calls the passed handleClick prop
     function internalHandleClick() {
-        if (!disabled) {
         handleClick();
-        }   
     }
 </script>
 
@@ -73,7 +71,6 @@
         cursor: pointer;
         transition: 0.3s ease-in-out;
 		min-height: 44px;
-		font-size: 1em;
     }
 
 	.full-width {
@@ -90,6 +87,7 @@
 
 <button class="{type}" on:click="{internalHandleClick}" text="{text}" class:full-width="{fullWidth}">
     {#if icon}
+        <!-- svelte-ignore a11y-missing-attribute -->
         <img src="{icon}">
     {/if}
 
