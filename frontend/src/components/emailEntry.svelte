@@ -1,7 +1,6 @@
 <script>
-  import Button from "../../components/button.svelte";
-  import { ContactsStore } from "../../stores/contacts-store";
-
+  import Button from "../components/button.svelte";
+  import { ContactsStore } from "../stores/contacts-store"
   let emailString = "";
   let emailErrorString = "";
 
@@ -19,9 +18,9 @@
   };
 </script>
 
-<div class="enter-email-container">
+<div class="flex justify-center gap-2">
   <input
-    id="email-input"
+    class="border border-slate-300 p-2 rounded-xl w-96"
     type="email"
     placeholder="johndoe@email.com"
     bind:value={emailString}

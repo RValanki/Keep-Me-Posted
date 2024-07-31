@@ -15,6 +15,7 @@
     export let icon = ''; // Default empty string for icon URL
     export let text = 'Button';
 	export let fullWidth = false; // Default to false for not full width
+    export let disabled = false;
 
     // Internal handleClick function that calls the passed handleClick prop
     function internalHandleClick() {
@@ -85,7 +86,7 @@
     
 </style>
 
-<button class="{type}" on:click="{internalHandleClick}" text="{text}" class:full-width="{fullWidth}">
+<button class="{type}" on:click="{internalHandleClick}" text="{text}" class:full-width="{fullWidth}" disabled={disabled}>
     {#if icon}
         <!-- svelte-ignore a11y-missing-attribute -->
         <img src="{icon}">
