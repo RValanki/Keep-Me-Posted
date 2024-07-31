@@ -36,22 +36,22 @@ class TestEmailSent(TestCase):
 
     #draft testing below for status code response
 
-    # @patch('views.send_email')
-    # def test_sent_email_status(self, mock_status_email):
-    #     request = HttpRequest()
-    #     request.method = 'POST'
-    #     request.POST ={
-    #         'message': 'hi, please find the meeting minutes below',
-    #         'subject' : 'TestMeeting'
-    #         'contacts': 'tarayesha508@gmail.com',
-           
-    #     }
+    @patch('emailing.views.send_email')
+    def test_sent_email_status_code(self, mock_status_email):
+        request = HttpRequest()
+        request.method = 'POST'
+        request.POST ={
+            'message': 'hi, please find the meeting minutes below',
+            'subject' : 'TestMeeting',
+            'contacts': 'tarayesha508@gmail.com',
+        }
         
-    #     mock_response = STATUS CODE 200
-    #     mock_status_email.return_value = mock_response
+        mock_response = {'status_code': 200}
 
-    #     response = send_email(request)
+        mock_status_email.return_value = mock_response
 
-    #     self.assertEqual(response.json(), {'details':'Status code 200?'})
+        response = send_email(request)
+       
+        self.assertEqual(response.status_code, 200)
 
         
