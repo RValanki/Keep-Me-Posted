@@ -38,7 +38,16 @@ class GenerateSummaryTests(TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.content.decode(), "Unsafe transcript provided")
 
+    @patch('google.generativeai.GenerativeModel')
+    def test_transcript_with_sensitive_information(self, mock_model):
+        mock_model_instance = mock_model.return_value
+        mock_model_instance.generate_content.return_value = mock_response("This summary does not contain sensitive information.", {})
 
+        response = self.client.post(self.url, {'transcript': 'The password is 12345.'})
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('summary', response.json())
+        self.assertNotIn('12345', response.json()['summary'])
+        
 def mock_response(text, feedback):
     class MockResponse:
         def __init__(self, text, feedback):
