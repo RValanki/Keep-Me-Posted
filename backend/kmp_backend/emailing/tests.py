@@ -34,10 +34,15 @@ class TestEmailSent(TestCase):
         
         self.assertEqual(response_content, {'details':'Emails sent successfully!'})
 
-    #draft testing below for status code response
 
     @patch('emailing.views.send_email')
     def test_sent_email_status_code(self, mock_status_email):
+        """
+        This test case function determines the status code of the 
+        request
+
+        Status code 200 confirms that the email has been sent successfully
+        """
         request = HttpRequest()
         request.method = 'POST'
         request.POST ={
@@ -46,12 +51,13 @@ class TestEmailSent(TestCase):
             'contacts': 'tarayesha508@gmail.com',
         }
         
+        #setting mock status code value
         mock_response = {'status_code': 200}
 
         mock_status_email.return_value = mock_response
 
         response = send_email(request)
-       
+        #determine if the status code is as expected
         self.assertEqual(response.status_code, 200)
 
         
