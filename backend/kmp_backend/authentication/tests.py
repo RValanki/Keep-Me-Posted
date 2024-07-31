@@ -83,3 +83,41 @@ class AuthTests(TestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn('password', response.data)
+
+
+    def test_invalid_user_login(self):
+        url = reverse('login')
+        
+        # Test for Incorrect email
+        data = {
+            'email': 'incorrectemail@example.com',
+            'password': 'password123'
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('non_field_errors', response.data)
+
+        # Test for Incorrect password
+        data = {
+            'email': 'testuser@gmail.com',
+            'password': 'incorrectpassword'
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('non_field_errors', response.data)
+
+        # Test for Missing email
+        data = {
+            'password': 'password123'
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('email', response.data)
+
+        # Test for Missing password
+        data = {
+            'email': 'testuser@gmail.com'
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('password', response.data)
