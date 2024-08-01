@@ -104,21 +104,24 @@
    
    <div class="flex flex-col md:flex-row h-full w-full">
       <!-- Top Row on Mobile / Left Column on Desktop -->
-      <div class="h-1/4 md:h-full flex md:flex-col w-full md:w-1/2">
+      <div class="h-1/4 md:h-full flex md:flex-col w-full md:w-1/2 ">
           <div class="flex-1 bg-red-500 mt-0 md:mt-52">
             
-            <div class="py-0 h-full md:h-full w-2/5 md:w-1/5 ml-10 md:ml-32 flex flex-col justify-end" style="background-color: pink;">
+            <div class=" h-full md:h-full md:p-0 w-full md:w-1/5 ml-0 md:ml-32 flex flex-col justify-center md:justify-end" style="background-color: none  ;">
                <Logo class="mt-auto" />
            </div>
            
-            
          </div>
-          <div class="flex-1 bg-blue-500 mt-0 md:mb-40">
-            <div class = "ml-32">
+
+          <div class=" flex-1 bg-blue-500 mt-0 md:mb-40">
+            <div class = " ml-0 md:ml-32">
                <LandingPageTitle title = "Keep Me Posted" subTitle = "Meetings to Summaries."/>
             </div>
          </div>
+
       </div>
+
+
       <!-- Bottom Row on Mobile / Right Column on Desktop -->
       <div class="bg-green-500 h-full w-full md:w-1/2 flex justify-center items-center">Div 3</div>
   </div>
