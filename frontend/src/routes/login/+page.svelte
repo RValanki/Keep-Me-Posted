@@ -100,19 +100,28 @@
 </script>
 
  
-<div class="login-container relative h-screen">
-   <div class="flex flex-col items-start absolute left-0 ml-8 sm:ml-40 top-0 sm:top-64">
-      <div class = "w-1/2 sm:w-full mt-6 sm:mt-0">
-         <Logo />
-      </div>
-      <div class = "absolute top-0 sm:top-40 ml-24 sm:ml-0 flex flex-col mt-8 sm:mt-0 w-[500px]">
-         <LandingPageTitle title="Keep Me Posted" subTitle="Meetings to summaries." />
-      </div>
-   </div>
+<div class="login-container">
    
-   <div class="absolute bottom-0 sm:bottom-20 right-0 w-full sm:w-2/5 h-4/5 bg-white mr-0 sm:mr-12 rounded-lg rounded-b-none sm:rounded-b-lg">
-      <!-- Your content here -->
-   </div>
+   <div class="flex flex-col md:flex-row h-full w-full">
+      <!-- Top Row on Mobile / Left Column on Desktop -->
+      <div class="h-1/4 md:h-full flex md:flex-col w-full md:w-1/2">
+          <div class="flex-1 bg-red-500 mt-0 md:mt-40">
+            Div 1
+            <div class = " h-2/5 md:h-1/5 w-2/5 md:w-1/5 mt-0 md:mt-20 ml-10 md:ml-24 ">
+               <Logo/>
+            </div>
+            
+         </div>
+          <div class="flex-1 bg-blue-500 mt-0 md:mb-40">
+            <div class = "ml-24">
+               <LandingPageTitle title = "Keep Me Posted" subTitle = "Meetings to Summaries."/>
+            </div>
+         </div>
+      </div>
+      <!-- Bottom Row on Mobile / Right Column on Desktop -->
+      <div class="bg-green-500 h-full w-full md:w-1/2 flex justify-center items-center">Div 3</div>
+  </div>
+   
    
 </div>
 
