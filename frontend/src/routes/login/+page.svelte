@@ -107,7 +107,7 @@
       <div class="h-1/4 md:h-full flex md:flex-col w-full md:w-1/2 ">
           <div class="flex-1  mt-2 md:mt-52 mr-12">
             
-            <div class=" ml-[11vw] h-full md:h-full md:p-0 w-full md:w-1/5  md:ml-32 flex flex-col justify-center md:justify-end" style="background-color: none  ;">
+            <div class=" ml-[9.5vw] h-full md:h-full md:p-0 w-full md:w-1/5  md:ml-32 flex flex-col justify-center md:justify-end" style="background-color: none  ;">
                <Logo class="mt-auto" />
            </div>
            
@@ -123,7 +123,13 @@
 
 
       <!-- Bottom Row on Mobile / Right Column on Desktop -->
-      <div class="bg-green-500 h-full w-full md:w-1/2 flex justify-center items-center">Div 3</div>
+      <div class=" h-full w-full md:w-1/2 flex justify-center items-center">
+
+         <div class="h-full md:h-3/4 w-full md:w-3/5 rounded-[16px]  bg-white min-w-[300px] min-h-[400px] ml-0 md:ml-16 mr-0 md:mr-16 ">
+            <!-- Content here -->
+          </div>
+          
+      </div>
   </div>
    
    
