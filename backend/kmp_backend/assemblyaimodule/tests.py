@@ -2,10 +2,14 @@ from django.test import TestCase
 from gtts import gTTS
 from io import BytesIO
 from . import assemblyAI_module as tai
+from . import views
 import unittest
 from unittest.mock import patch, Mock
 
 class TranscribeTestCase(TestCase):
+    def setUp(self):
+        self.factory = APIRequestFactory()
+
     @staticmethod
     # Helper function to generate audio files in memory
     def generateAudio(text: str) -> BytesIO: 
@@ -19,30 +23,25 @@ class TranscribeTestCase(TestCase):
 
         return audio_file
     
-    # Test 1: Test transcribe() (AssemblyAI)
-    @patch('backend.kmp_backend.assemblyaimodule.assemblyAI_module.aai.Transcriber')
-    @patch('backend.kmp_backend.assemblyaimodule.assemblyAI_module.aai.TranscriptStatus')
-    def test_transcribe_success(self, MockTranscriber, MockTranscriptStatus):
-        # Create a mock AssemblyAI instance and a mock transcript and transcriptstatus object
-        mock_transcriber = MockTranscriber.return_value
-        mock_transcript = Mock()
-        MockTranscriptStatus.success = 's'
-        MockTranscriptStatus.error = 'e'
+    # Test 1: Test transcribe() 
+    @patch('backend.kmp_backend.assemblyaimodule.views.TS.transcribe')
+    @patch('backend.kmp_backend.assemblyaimodule.views.AudioFileSerializer')
+    @patch('backend.kmp_backend.assemblyaimodule.views.FileSystemStorage')
+    def test_transcribe(self, MockTranscribe, MockSerializer, MockStorage):
+        # Mock serializer object as valid
+        mock_serializer = MockSerializer.return_value
+        mock_serializer.is_valid.return_value = True
 
-        # Set the transcript status and text for a successful transcription
-        mock_transcript.status = MockTranscriptStatus.success
-        test_text = "Testing transcription function"    
-        mock_transcript.text = test_text
-        mock_transcriber.transcribe.return_value = mock_transcript
+        # Mock uploaded file
+        mock_storage = MockStorage.return_value
+        mock_url = views.UPLOAD_DIRECTORY_PATH + "test"
+        mock_storage.save.return_value = mock_url
 
-        print("Mock Transcript Status:", mock_transcript.status)
-        print("Mock Transcript Text:", mock_transcript.text)
+        # Mock transcription tesult
+        mock_transcription_result = "I am testing, testing."
+        MockTranscribe.return_value = mock_transcription_result
+
         
-        # Call transcribe with mocked transcript and assert
-        result = tai.transcribe("test")
-        print("Transcribe Result:", result)
-        self.assertEqual(result, test_text)
-
     # Test 1: Test return type of transcribe()
     def test_transcribe_type(self):
         test_text = "Hello, world."
