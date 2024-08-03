@@ -14,12 +14,16 @@
 
     export let title = "Your Summary is Being Generated...";
     export let subTitle = "We are still generating your summary...";
+    let summaryBoxRef;
 
     let backBtn = () => {
         goto("/upload-audio");
     };
 
     let forwardBtn = () => {
+        if (summaryBoxRef && summaryBoxRef.saveSummaryToStore) {
+            summaryBoxRef.saveSummaryToStore();
+        }
         goto("/email");
     };
 
@@ -40,7 +44,7 @@
     </div>
 
     <div class="mt-10">
-        <SummaryBox />
+        <SummaryBox bind:this={summaryBoxRef}/>
     </div>
 
     <div class="flex flex-row my-10 w-full">
