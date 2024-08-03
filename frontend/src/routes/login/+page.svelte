@@ -99,41 +99,42 @@
 
 </script>
 
- 
-<div class="login-container">
+<div class = "login-container">
    
-   <div class="flex flex-col md:flex-row h-full w-full">
-      <!-- Top Row on Mobile / Left Column on Desktop -->
-      <div class="h-1/4 md:h-full flex md:flex-col w-full md:w-1/2 ">
-          <div class="flex-1  mt-2 md:mt-52 mr-12">
-            
-            <div class=" ml-[9.5vw] h-full md:h-full md:p-0 w-full md:w-1/5  md:ml-32 flex flex-col justify-center md:justify-end" style="background-color: none  ;">
-               <Logo class="mt-auto" />
-           </div>
-           
-         </div>
 
-          <div class=" flex-1  mt-0 md:mb-40">
-            <div class = " absolute md:relative top-[6%] right-8 sm:right-32  md:right-0 md:top-0 ml-0 md:ml-32">
-               <LandingPageTitle title = "Keep Me Posted" subTitle = "Meetings to Summaries."/>
-            </div>
-         </div>
-
+<div class="flex flex-col md:flex-row h-screen w-full">
+   <!-- Top Row on Mobile / Left Column on Desktop -->
+   <div class="flex md:flex-col w-full md:w-1/2">
+       <div class="w-1/4 md:w-full md:flex-1">
+         <div class=" ml-4 p-4 sm:p-6 md:p-0 mt-1 md:mt-0 min-w-[100%] md:min-w-[150px] ml-0 md:ml-32 h-full w-1/5 flex flex-col justify-end md:justify-end">
+            <Logo class="mt-auto" />
+        </div>
+    
+         
       </div>
-
-
-      <!-- Bottom Row on Mobile / Right Column on Desktop -->
+       <div class="w-3/4 md:w-full md:flex-1 flex items-center md:items-start">
+         <div class = "ml-4 md:ml-32 mt-2 md:mt-4 mb-0">
+            <LandingPageTitle title = "Keep Me Posted" subTitle = "Meetings to summaries."/>
+         </div>
+         
+      </div>
+   </div>
+   <!-- Bottom Row on Mobile / Right Column on Desktop -->
+   <div class="w-full md:w-1/2 flex justify-center items-center h-full">
       <div class=" h-full w-full md:w-1/2 flex justify-center items-center">
 
-         <div class="h-full md:h-3/4 w-full md:w-3/5 rounded-[16px]  bg-white min-w-[300px] min-h-[400px] ml-0 md:ml-16 mr-0 md:mr-16 ">
+         <div class="h-full md:h-3/4 w-full md:w-3/5 rounded-[16px]  bg-white min-w-[100%] md:min-w-[450px] min-h-full md:min-h-[500px] ml-0 md:ml-16 mr-0 md:mr-16 ">
             <!-- Content here -->
+            hi
           </div>
           
       </div>
-  </div>
-   
-   
+
+   </div>
 </div>
+
+</div>
+
 
 
 

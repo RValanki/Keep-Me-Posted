@@ -3,10 +3,10 @@ export let title = "Title";
 export let subTitle = "Subtitle!"
 </script>
   
-<div class=" text-3xl sm:text-4xl md:text-5xl font-inter font-bold mb-0 sm:mb-4 text-white">
+<div class=" text-3xl sm:text-4xl md:text-5xl font-inter font-bold mb-0 sm: mb-0 md:mb-4 text-white">
     {title}
 </div>
-<div class="text-xl sm:text-2xl font-inter font-thin italic text-white">
+<div class="text-xl sm:text-2xl font-inter font-thin italic text-white mr-12">
     {subTitle}
 </div>
   
