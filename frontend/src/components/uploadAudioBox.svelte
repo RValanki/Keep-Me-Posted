@@ -10,8 +10,8 @@
 	4. status message = section below confirming status of an upload
 
 	Authors: Parul Garg (pgar0011)
-	Editied by: Benjamin Cherian, Zihao Wang, Angelina Leung
-	Last Modified: 28/07/24
+	Editied by: Benjamin Cherian, Zihao Wang, Angelina Leung, Maureen Pham
+	Last Modified: 3/08/24
 
 -->
 <!-- JavaScript -->
@@ -88,18 +88,19 @@
 </script>
 
 <!-- COMPONENT -->
-<div class="upload-audio-container">
-	<div class="upload-audio-box">
+<div class= "flex items-center justify-center">
+    <!-- upload-audio-box -->
+    <div class= "bg-light-blue box-border flex flex-col justify-center p-0 gap-16 w-7/12 h-48 max-w-2xl max-h-48 border-2 border-medium-blue rounded-md flex-none order-0 flex-grow-0">
 		{#if showDropzone}
 			<Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav" containerStyles={dropzoneStyles}>
 
 				<!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
-				<div class="upload-audio-box-desc">
-					<img id="icon" class="audio-box-icon" src={micIcon} alt="Icon" />
-					<span class="upload-audio-box-header">Upload meeting audio</span>
-					<span class="upload-audio-box-subtitle">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
+				<div class="text-center flex flex-col items-center text-center">
+					<img id="icon" class="w-12 h-20 max-w-12 max-h-12 flex-none order-0 flex-grow-0" src={micIcon} alt="Icon" />
+					<span class="font-inter w-72 font-medium text-xl text-blue-800 flex-none order-0 flex-grow-0">Upload meeting audio</span>
+					<span class="font-inter w-64 font-normal text-lg text-gray-400 flex-none order-1 flex-grow-0">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
 				</div>
-			
+
 			</Dropzone>
 		{:else}
 			<LoadingBar bind:this={loadingBarComponent} />
@@ -108,7 +109,7 @@
 
 	<div class="upload-audio-status-message">
       {#if file}
-        <p>File ready: {file.name}</p>
+       <!-- <p>File ready: {file.name}</p> -->
       {:else}
         <p>{errorMessage}</p>
       {/if}
@@ -119,105 +120,12 @@
 
 <!-- Styling -->
 <style>
-	.upload-audio-box{
-		box-sizing: border-box;
-
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		padding: 0px 0px;
-		gap: 16px;
-
-		width: 55vw;
-		height: 27vh;
-		max-width: 700px;
-		max-height: 233px;
-
-		/* Blue/25 */
-		background: #f5faff;
-		/* Blue/300 */
-		border: 3px solid #84caff;
-		border-radius: 5px;
-
-		/* Inside auto layout */
-		flex: none;
-		order: 0;
-		flex-grow: 0;
-	}
-
-	.upload-audio-box-desc {
-		text-align: center;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-
-	.audio-box-icon {
-		/* large icon */
-
-		width: 3.5vw;
-		height: calc(2 * width);
-
-		max-width: 46px;
-		max-height: 52px;
-
-		/* Inside auto layout */
-		flex: none;
-		order: 0;
-		flex-grow: 0;
-	}
-
-	.upload-audio-box-header {
-		/* Upload meeting audio */
-		width: 25vw;
-		height: 5vh;
-
-		/* Text xl/Medium */
-		font-style: normal;
-		font-family: "Inter";
-		font-weight: 500;
-		font-size: 1.45vw;
-		line-height: 5vh;
-		/* identical to box height, or 150% */
-		text-align: center;
-
-		/* Blue/800 */
-		color: #1849a9;
-
-		/* Inside auto layout */
-		flex: none;
-		order: 0;
-		flex-grow: 0;
-	}
-
-	.upload-audio-box-subtitle {
-		/* Must be under 120 minutes. MP3 or WAV formats accepted. */
-
-		width: 16.5vw;
-		height: 5vh;
-
-		/* Text md/Regular */
-		font-style: normal;
-		font-weight: 400;
-		font-size: 1.1vw;
-		line-height: 4vh;
-		/* or 150% */
-		text-align: center;
-
-		/* Gray/400 */
-		color: #98a2b3;
-
-		/* Inside auto layout */
-		flex: none;
-		order: 1;
-		flex-grow: 0;
-	}
-
+    <!-- need to check before deleting-->
 	.upload-audio-status-message {
 		text-align: center;
 		padding: 10px;
 		color: #333;
-		font-size: 16px;
+		font-size: 60px;
 		margin-top: 100px;
 	}
 </style>

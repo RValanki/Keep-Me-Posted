@@ -56,3 +56,6 @@ button{
     font-size: 0.7rem; /* 14px based on 16px default font size */
     font-weight: normal; /* 400, scale [1,1000] */
 }
+.w-1/2 {
+    width: 50%
+}
