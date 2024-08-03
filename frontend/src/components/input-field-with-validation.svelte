@@ -23,7 +23,7 @@
       value={value}
       placeholder={placeholder}
       on:input={handleInput}
-      class="border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 text-sm placeholder:text-sm leading-tight focus:outline-none focus:shadow-outline"
+      class="border-gray-300 rounded-lg w-full py-3 px-3 text-gray-700 text-sm placeholder:text-sm leading-tight focus:outline-none focus:shadow-outline"
       style="border-radius: 8px; border-width: 1px;"
     />
     {#if showValidation| validationActive | validationMessage }
