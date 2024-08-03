@@ -2,7 +2,7 @@
 
     Contains modifiable button
 
-    Author: Diya Ramesh, Brenda Dang
+    Author: Diya Ramesh, Brenda Dang, Benjamin Cherian
     Last modified: 9/05/2024
 
 -->
@@ -19,7 +19,6 @@
         handleClick();
     }
 </script>
-
 <style>
 </style>
 
