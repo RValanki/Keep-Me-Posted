@@ -10,6 +10,8 @@
 <!--  -->
 <script>
     import Button from "./button.svelte"
+    import { summaryStore } from "../stores/summary-store"
+    import { onMount } from "svelte"
 
     export let emailSubject = ""
     export let summaryGenerated = ""
@@ -19,6 +21,23 @@
         const textarea = event.target
         textarea.style.height = `${textarea.scrollHeight}px`
     }
+
+    async function handleTest() {
+        console.log("happend");
+        
+    }
+
+    function loadSummaryContent() {
+        summaryStore.subscribe(value => {
+            console.log('Updated summary:', value.summary);
+            summaryGenerated = value.summary;
+            emailSubject = value.subject;
+        });
+    }
+    
+    onMount(() => {
+        loadSummaryContent();
+    });
 </script>
 
 <style>
