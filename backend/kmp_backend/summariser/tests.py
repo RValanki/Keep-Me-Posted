@@ -52,7 +52,7 @@ class GenerateSummaryTests(TestCase):
         Expect a 400 status code and a specific error message indicating unsafe content.
         """
         mock_model_instance = mock_model.return_value
-        mock_model_instance.generate_content.return_value = mock_response("This transcript contains inappropriate content.", {"blockReason": "Hate Speech"})
+        mock_model_instance.generate_content.return_value = mock_response("This transcript contains inappropriate content.", {"block_reason": "Hate Speech"})
 
         response = self.client.post(self.url, {'transcript': 'This is a damn test transcript.'})
         self.assertEqual(response.status_code, 400)
