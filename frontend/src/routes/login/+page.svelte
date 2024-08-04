@@ -42,6 +42,8 @@
   let password = "";
   let emailValidationString = "";
   let passwordValidationString = "";
+  let emailValidationActive = false;
+  let passwordValidationActive = false;
 
   function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -51,12 +53,15 @@
   function emailValidation(email) {
     if (email == "") {
       emailValidationString = "Please Enter Email";
+      emailValidationActive = true;
       return false;
     } else if (!isValidEmail(email)) {
       emailValidationString = "Please Enter Valid Email";
+      emailValidationActive = true;
       return false;
     } else {
       emailValidationString = "";
+      emailValidationActive = false;
       return true;
     }
   }
@@ -64,9 +69,11 @@
   function passwordValidation(password) {
     if (password == "") {
       passwordValidationString = "Please Enter Password";
+      passwordValidationActive = true;
       return false;
     } else {
       passwordValidationString = "";
+      passwordValidationActive = false;
       return true;
     }
   }
@@ -78,7 +85,9 @@
       (response.detail == "No User matches the given query.")
     ) {
       emailValidationString = "Incorrect Email or Password";
+      emailValidationActive = true;
       passwordValidationString = "Incorrect Email or Password";
+      passwordValidationActive = true;
     }
   }
 
@@ -159,8 +168,8 @@
             <!-- Content here -->
             <div class = "w-full h-full">
                <LoginCardHeader heading = "Log in to your account" subheading = "Welcome back! Please enter your details."/>
-               <InputFieldWithValidation label = "Email" type = "email" placeholder = "name@email.com" validationMessage = {emailValidationString}/>
-               <InputFieldWithValidation label = "Password" type = "password" placeholder = "••••••••" validationMessage = {passwordValidationString}/>
+               <InputFieldWithValidation label = "Email" type = "email" placeholder = "name@email.com" bind:value = {email} validationMessage = {emailValidationString} validationActive = {emailValidationActive}/>
+               <InputFieldWithValidation label = "Password" type = "password" placeholder = "••••••••" bind:value = {password} validationMessage = {passwordValidationString} validationActive = {passwordValidationActive}/>
                
                <div class="w-full mb-5 flex justify-end text-xs text-gray-500 font-bold hover:text-purple-500 cursor-pointer">
                   Forgot Password

@@ -19,8 +19,8 @@
 <div class="mb-4">
     <label class="block text-gray-700 text-sm mb-1">{label}</label>
     <input
-      type={type}
-      value={value}
+      type= "text"
+      bind:value={value}
       placeholder={placeholder}
       on:input={handleInput}
       class="border-gray-300 rounded-lg w-full py-3 px-3 text-gray-700 text-sm placeholder:text-sm leading-tight focus:outline-none focus:shadow-outline"
