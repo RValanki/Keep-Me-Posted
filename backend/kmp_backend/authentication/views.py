@@ -24,6 +24,12 @@ def login(request):
         Response: JSON response with authentication token and user details if authentication is successful,
                   or an error message with HTTP status code if authentication fails.
     """
+    # Check if email or password is missing
+    if 'email' not in request.data or request.data['email'] == "":
+        return Response({"error": "Email is required."}, status=status.HTTP_400_BAD_REQUEST)
+    if 'password' not in request.data or request.data['password'] == "":
+        return Response({"error": "Password is required."}, status=status.HTTP_400_BAD_REQUEST)
+    
     user = get_object_or_404(User, email=request.data['email'])
     if not user.check_password(request.data['password']):
         return Response({"detail": "Not found!"}, status=status.HTTP_404_NOT_FOUND)
@@ -46,7 +52,7 @@ def signup(request):
     Returns:
         Response: JSON response with authentication token and user details if registration is successful,
                   or an error message with HTTP status code if registration fails.
-    """
+    """    
     # Check if email is already in use
     if User.objects.filter(email=request.data['email']).exists():
         return Response({"error": "This email address is already in use."}, status=status.HTTP_400_BAD_REQUEST)
