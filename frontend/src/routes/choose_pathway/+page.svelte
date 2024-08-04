@@ -46,7 +46,9 @@
         margin-top: 3%;
     }
     .bottom-bar {
-        margin-left: 3%;
+        position: absolute;
+        left: 30px;
+        bottom: 30px;
     }
 </style>
 
@@ -81,7 +83,7 @@
 
     <div class="bottom-bar">
         <Button
-        class="primary" 
+        type="primary" 
         text="Back"
         icon='../src/assets/arrow-left.png'
         handleClick={backBtn}/>
