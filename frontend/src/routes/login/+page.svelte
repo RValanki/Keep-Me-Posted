@@ -107,7 +107,7 @@
 <div class="flex flex-col md:flex-row h-screen w-full">
    <!-- Top Row on Mobile / Left Column on Desktop -->
    <div class="flex md:flex-col w-full md:w-1/2">
-       <div class="w-1/4 md:w-full md:flex-1">
+       <div class="ml-0 sm:ml-24 md:ml-0 w-1/4 md:w-full md:flex-1">
          <div class=" ml-4 p-4 sm:p-6 md:p-0 mt-1 md:mt-0 min-w-[100%] md:min-w-[150px] ml-0 md:ml-40 h-full w-1/5 flex flex-col justify-end md:justify-end">
             <Logo class="mt-auto" />
         </div>
@@ -125,12 +125,12 @@
    <div class="w-full md:w-1/2 flex justify-center items-center h-full">
       <div class=" h-full w-full md:w-1/2 flex justify-center items-center">
 
-         <div class="p-16  h-full md:h-3/4 w-full md:w-3/5 rounded-[16px]  bg-white min-w-[100%] md:min-w-[450px] min-h-full md:min-h-[500px] ml-0 md:ml-16 mr-0 md:mr-16 ">
+         <div class="p-16  h-full md:h-3/4 w-full sm:w-3/4 md:w-3/5 rounded-[16px]  bg-white  md:min-w-[450px] min-h-full md:min-h-[500px] ml-0 md:ml-16 mr-0 md:mr-16 ">
             <!-- Content here -->
             <div class = "w-full h-full">
                <LoginCardHeader heading = "Log in to your account" subheading = "Welcome back! Please enter your details."/>
-               <InputFieldWithValidation label = "Email" type = "email" placeholder = "name@email.com"/>
-               <InputFieldWithValidation label = "Password" type = "password" placeholder = "••••••••"/>
+               <InputFieldWithValidation label = "Email" type = "email" placeholder = "name@email.com" validationMessage = {emailValidationString}/>
+               <InputFieldWithValidation label = "Password" type = "password" placeholder = "••••••••" validationMessage = {passwordValidationString}/>
 
                
             </div>
