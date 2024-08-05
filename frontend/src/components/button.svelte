@@ -29,7 +29,7 @@
         class="flex items-center justify-center font-sans rounded-lg px-3 py-2 md:px-4 md:py-3 lg:px-5 lg:py-3.5 transition ease-in-out duration-300 min-h-11
         {type === 'primary' ? 'bg-blue-600 text-white hover:bg-blue-800 border-none' : ''}
         {type === 'secondary' ? 'bg-blue-50 text-blue-700 hover:bg-blue-100 border-none' : ''}
-        {type === 'secondary-with-border' ? 'bg-blue-50 text-blue-700 hover:bg-blue-100 border-blue-600 border-2 lg:py-2' : ''}
+        {type === 'secondary-with-border' ? 'bg-blue-50 text-blue-700 hover:bg-blue-100 border-blue-600 border-2 lg:py-1 lg:px-4' : ''}
         {type === 'tertiary' ? 'bg-white text-gray-800 border-[1px] border-gray-300 hover:bg-gray-300' : ''}
         {type === 'disabled' ? 'bg-gray-200 text-white cursor-not-allowed border-none' : ''}
         {type === 'error' ? 'bg-red-600 text-white border-none' : ''}
