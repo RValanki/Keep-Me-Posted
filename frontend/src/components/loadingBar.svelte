@@ -107,75 +107,14 @@
 </script>
 
 <!-- COMPONENT -->
-<div class="flex justify-between mb-1"> <!-- loading-bar -->
-    <span class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700"> <!-- progress-bar-base -->
+<div class="flex space-x-5 p-5"> <!-- loading-bar -->
+    <span class="w-full bg-gray-200 rounded-full h-2.5 self-center"> <!-- progress-bar-base -->
         <span class="bg-blue-600 h-2.5 rounded-full" style="width: {progressBarWidth}px"></span> <!-- progress-bar -->
     </span>
     <span class="text-sm font-medium text-blue-70"><b>{progressBarDisplay}</b>%</span> <!-- progress-number -->
 </div>
 
-<div class="flex items-center justify-center"> <!-- loading-bar-desc -->
-    <img class="w-7.5 7.5" src={uploadIcon} alt="Icon" /> <!-- loading-bar-icon -->
-    <span class="loading-bar-text-desc">Uploading Meeting Audio...</span>
+<div class="flex space-x-5 justify-center p-5"> <!-- loading-bar-desc -->
+    <img class="w-5.5 h-5 self-center" src={uploadIcon} alt="Icon" /> <!-- loading-bar-icon -->
+    <span class="text-blue-800 text-base">Uploading Meeting Audio...</span>
 </div>
-
-<!-- The following is still being used for reference for tailwind styling -->
-<style>
-    .loading-bar {
-        display: flexbox;
-        top: 57%;
-        visibility: hidden;
-        border: 1px solid;
-        position: absolute;
-        margin-top: 67px;
-        width: 35vw;
-        height: 10px;
-        background-color: #e9eaec;
-        border-radius: 30px 30px 30px 30px;
-        border-color: #e9eaec;
-    }
-
-    .loading-bar-icon {
-        width: 30px;
-        height: 30px;
-
-        /* Inside auto layout */
-        flex: none;
-        order: 0;
-        flex-grow: 0;
-    }
-    .loading-line {
-        /* 
-    /* Auto layout */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 0px;
-        gap: 4px;
-
-        width: 256px;
-        height: 30px;
-
-        /* Inside auto layout */
-        flex: none;
-        order: 1;
-        flex-grow: 0;
-    }
-
-    .progress-bar {
-        position: relative;
-        height: 10px;
-        background-color: #1570ef;
-        border-radius: 30px 30px 30px 30px;
-    }
-
-    .progress-number {
-        color: rgb(105, 104, 104);
-        visibility: hidden;
-        font-size: 14px;
-        left: 19vw;
-        top: 2.8vh;
-        position: relative;
-    }
-
-</style>
