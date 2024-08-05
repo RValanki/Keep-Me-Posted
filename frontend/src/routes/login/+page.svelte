@@ -168,8 +168,8 @@
             <!-- Content here -->
             <div class = "w-full h-full">
                <LoginCardHeader heading = "Log in to your account" subheading = "Welcome back! Please enter your details."/>
-               <InputFieldWithValidation label = "Email" type = "email" placeholder = "name@email.com" bind:value = {email} validationMessage = {emailValidationString} validationActive = {emailValidationActive}/>
-               <InputFieldWithValidation label = "Password" type = "password" placeholder = "••••••••" bind:value = {password} validationMessage = {passwordValidationString} validationActive = {passwordValidationActive}/>
+               <InputFieldWithValidation label = "Email" placeholder = "name@email.com" bind:value = {email} validationMessage = {emailValidationString} validationActive = {emailValidationActive}/>
+               <InputFieldWithValidation label = "Password" isPasswordType = {true} placeholder = "••••••••" bind:value = {password} validationMessage = {passwordValidationString} validationActive = {passwordValidationActive}/>
                
                <div class="w-full mb-5 flex justify-end text-xs text-gray-500 font-bold hover:text-purple-500 cursor-pointer">
                   Forgot Password
