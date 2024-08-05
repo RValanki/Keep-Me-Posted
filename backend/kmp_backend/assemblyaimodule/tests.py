@@ -5,6 +5,7 @@ from . import assemblyAI_module as tai
 from assemblyaimodule import views
 import unittest
 from unittest.mock import patch, Mock
+from rest_framework.test import APIClient
 from rest_framework.response import Response
 from rest_framework import status
 
