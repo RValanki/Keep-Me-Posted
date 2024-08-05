@@ -19,10 +19,10 @@ export const dictionary = {
 		"/": [2],
 		"/choose_pathway": [3],
 		"/email": [4],
-		"/login": [~5],
-		"/sent": [6],
-		"/signup": [~7],
-		"/tailwind": [8],
+		"/generate_summary": [5],
+		"/login": [~6],
+		"/sent": [7],
+		"/signup": [~8],
 		"/upload-audio": [9]
 	};
 
