@@ -22,6 +22,11 @@ export const dictionary = {
 		"/sent": [6],
 		"/signup": [~7],
 		"/upload-audio": [8]
+		"/generate_summary": [5],
+		"/login": [~6],
+		"/sent": [7],
+		"/signup": [~8],
+		"/upload-audio": [9]
 	};
 
 export const hooks = {
