@@ -178,7 +178,7 @@
      <!-- Bottom Row on Mobile / Right Column on Desktop -->
      <div class="w-full md:w-1/2 flex justify-center items-center h-full">
         <div class="h-full w-full md:w-full lg:w-2/3 flex justify-center items-center">
-           <div class="py-10 px-16 h-full md:h-3/4 lg:h-3/4 w-full sm:w-3/4 md:w-4/5 rounded-[16px] bg-white md:min-w-full lg:min-w-[450px] md:min-h-[600px] lg:min-h-[600px] ml-0 md:ml-16 mr-0 md:mr-16 max-h-[700px]">
+           <div class="py-10 px-16 h-full md:h-3/4 lg:h-3/4 w-full sm:w-3/4 md:w-4/5 rounded-[16px] bg-white md:min-w-full lg:min-w-[450px] md:min-h-[635px] lg:min-h-[635px] ml-0 md:ml-16 mr-0 md:mr-16 max-h-[700px]">
               <!-- Content here -->
               <LoginCardHeader heading = "Sign Up" subheading = "Create an account!"/>
 
