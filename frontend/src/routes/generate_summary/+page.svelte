@@ -61,6 +61,7 @@
             class="primary" 
             text="Add Recipients"
             icon='../src/assets/arrow-right.png'
+            iconPos='right'
             handleClick={forwardBtn}/>
         </div>
     </div>

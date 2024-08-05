@@ -12,6 +12,7 @@
     import Button from "./button.svelte"
     import { summaryStore } from "../stores/summary-store"
     import { onMount, onDestroy } from "svelte"
+    import regenerateIcon from "../assets/regenerate-icon.png"
 
     export let emailSubject = ""
     export let summaryGenerated = ""
@@ -80,7 +81,7 @@
 
 <div class="rounded-lg p-4 w-9/12 mx-auto" style="background-color: #F5FAFF;">
     <div class="flex justify-end ml-auto">
-        <Button type="secondary"></Button>
+        <Button type="secondary-with-border" text="Regenerate" icon={regenerateIcon}></Button>
     </div>
     <div class="flex flex-col gap-0	 mb-4">
         <label 
