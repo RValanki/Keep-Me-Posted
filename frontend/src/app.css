@@ -17,7 +17,6 @@
     @apply text-black m-0;
 }
 html{
-    @apply font-sans;
     font-family: 'Inter', sans-serif; /* Custom font */
 }
 body {
