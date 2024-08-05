@@ -1,16 +1,15 @@
 <script>
-  import logo from "../../assets/kmp-logo-large.png";
-  import { onMount } from "svelte";
-  import { goto } from "$app/navigation";
-  import { updateAuth } from '../../stores/auth-store.js';
-  import Logo from "../../components/logo.svelte"
-  import LandingPageTitle from "../../components/landingPageTitle.svelte";
-  import InputFieldWithValidation from "../../components/input-field-with-validation.svelte";
-  import LoginCardHeader from "../../components/loginCardHeader.svelte"
-  import Button from "../../components/button.svelte";
-  import LoginPrompt from "../../components/loginPrompt.svelte"
-   
-  let googleIcon = `<svg
+   import { onMount } from "svelte";
+   import { goto } from "$app/navigation";
+   import { updateAuth } from "../../stores/auth-store.js";
+   import Logo from "../../components/logo.svelte";
+   import LandingPageTitle from "../../components/landingPageTitle.svelte";
+   import InputFieldWithValidation from "../../components/input-field-with-validation.svelte";
+   import LoginCardHeader from "../../components/loginCardHeader.svelte";
+   import Button from "../../components/button.svelte";
+   import LoginPrompt from "../../components/loginPrompt.svelte";
+
+   let googleIcon = `<svg
               xmlns="http://www.w3.org/2000/svg"
               x="0px"
               y="0px"
@@ -34,184 +33,190 @@
                 fill="#1976D2"
                 d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
               ></path>
-            </svg>`
+            </svg>`;
 
+   let email = "";
+   let password = "";
+   let emailValidationString = "";
+   let passwordValidationString = "";
+   let emailValidationActive = false;
+   let passwordValidationActive = false;
 
+   function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+   }
 
-  let email = "";
-  let password = "";
-  let emailValidationString = "";
-  let passwordValidationString = "";
-  let emailValidationActive = false;
-  let passwordValidationActive = false;
-
-  function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
-
-  function emailValidation(email) {
-    if (email == "") {
-      emailValidationString = "Please Enter Email";
-      emailValidationActive = true;
-      return false;
-    } else if (!isValidEmail(email)) {
-      emailValidationString = "Please Enter Valid Email";
-      emailValidationActive = true;
-      return false;
-    } else {
-      emailValidationString = "";
-      emailValidationActive = false;
-      return true;
-    }
-  }
-
-  function passwordValidation(password) {
-    if (password == "") {
-      passwordValidationString = "Please Enter Password";
-      passwordValidationActive = true;
-      return false;
-    } else {
-      passwordValidationString = "";
-      passwordValidationActive = false;
-      return true;
-    }
-  }
-
-  function handleIncorrectEmailOrPassword(response) {
-    console.log(response);
-    if (
-      (response.detail == "Not found!") |
-      (response.detail == "No User matches the given query.")
-    ) {
-      emailValidationString = "Incorrect Email or Password";
-      emailValidationActive = true;
-      passwordValidationString = "Incorrect Email or Password";
-      passwordValidationActive = true;
-    }
-  }
-
-  async function handleSignIn() {
-    console.log("Email:", email);
-    console.log("Password:", password);
-
-    if (emailValidation(email) & passwordValidation(password)) {
-      const data = { email: email, password: password };
-      const response = await postData(data);
-      handleIncorrectEmailOrPassword(response);
-    }
-  }
-
-  // Optional: Fetch initial data or perform other tasks on component mount
-  onMount(async () => {
-    // Fetch initial data or perform other async tasks here
-  });
-
-  async function postData(loginData) {
-    try {
-      const url = "http://127.0.0.1:8000/login";
-      const data = loginData;
-
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      const responseData = await response.json();
-      console.log("Response:", responseData);
-
-      if (response.ok) {
-        updateAuth(loginData.email, true)
-        goto("/email");
+   function emailValidation(email) {
+      if (email == "") {
+         emailValidationString = "Please Enter Email";
+         emailValidationActive = true;
+         return false;
+      } else if (!isValidEmail(email)) {
+         emailValidationString = "Please Enter Valid Email";
+         emailValidationActive = true;
+         return false;
+      } else {
+         emailValidationString = "";
+         emailValidationActive = false;
+         return true;
       }
+   }
 
-      return responseData;
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }
+   function passwordValidation(password) {
+      if (password == "") {
+         passwordValidationString = "Please Enter Password";
+         passwordValidationActive = true;
+         return false;
+      } else {
+         passwordValidationString = "";
+         passwordValidationActive = false;
+         return true;
+      }
+   }
 
-  function handleSignUpClick() {
-    goto("/signup");
-  }
+   function handleIncorrectEmailOrPassword(response) {
+      console.log(response);
+      if (
+         (response.detail == "Not found!") |
+         (response.detail == "No User matches the given query.")
+      ) {
+         emailValidationString = "Incorrect Email or Password";
+         emailValidationActive = true;
+         passwordValidationString = "Incorrect Email or Password";
+         passwordValidationActive = true;
+      }
+   }
 
+   async function handleSignIn() {
+      console.log("Email:", email);
+      console.log("Password:", password);
+
+      if (emailValidation(email) & passwordValidation(password)) {
+         const data = { email: email, password: password };
+         const response = await postData(data);
+         handleIncorrectEmailOrPassword(response);
+      }
+   }
+
+   // Optional: Fetch initial data or perform other tasks on component mount
+   onMount(async () => {
+      // Fetch initial data or perform other async tasks here
+   });
+
+   async function postData(loginData) {
+      try {
+         const url = "http://127.0.0.1:8000/login";
+         const data = loginData;
+
+         const response = await fetch(url, {
+            method: "POST",
+            headers: {
+               "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+         });
+
+         const responseData = await response.json();
+         console.log("Response:", responseData);
+
+         if (response.ok) {
+            updateAuth(loginData.email, true);
+            goto("/email");
+         }
+
+         return responseData;
+      } catch (error) {
+         console.error("Error:", error);
+      }
+   }
+
+   function handleSignUpClick() {
+      goto("/signup");
+   }
 </script>
 
 <div class="m-0 h-screen bg-gradient-to-l from-[#53b1fd] to-[#1570ef] flex justify-center items-center text-white">
-    
-    
-
-<div class="flex flex-col md:flex-row h-screen w-full">
-   <!-- Top Row on Mobile / Left Column on Desktop -->
-   <div class="flex md:flex-col w-full md:w-1/2">
-       <div class="ml-0 sm:ml-24 md:ml-0 w-1/4 md:w-full md:flex-1">
-         <div class=" ml-4 p-4 sm:p-6 md:p-0 mt-1 md:mt-0 min-w-[100%] md:min-w-[150px] ml-0 md:ml-40 h-full w-1/5 flex flex-col justify-end md:justify-end">
-            <Logo class="mt-auto" />
-        </div>
-    
-         
-      </div>
-       <div class="w-3/4 md:w-full md:flex-1 flex items-center md:items-start">
-         <div class = "ml-4 md:ml-40 mt-2 md:mt-4 mb-0">
-            <LandingPageTitle title = "Keep Me Posted" subTitle = "Meetings to summaries."/>
-         </div>
-         
-      </div>
-   </div>
-   <!-- Bottom Row on Mobile / Right Column on Desktop -->
-   <div class="w-full md:w-1/2 flex justify-center items-center h-full">
-      <div class="h-full w-full md:w-full lg:w-2/3 flex justify-center items-center">
-
-         <div class="p-16  h-full md:h-3/4 lg:h-3/4 w-full sm:w-3/4 md:w-4/5 rounded-[16px]  bg-white  md:min-w-full lg:min-w-[450px] lg:min-h-[550px]  ml-0 md:ml-16 mr-0 md:mr-16 ">
-            <!-- Content here -->
-            <div class = "w-full h-full">
-               <LoginCardHeader heading = "Log in to your account" subheading = "Welcome back! Please enter your details."/>
-               <InputFieldWithValidation label = "Email" placeholder = "name@email.com" bind:value = {email} validationMessage = {emailValidationString} validationActive = {emailValidationActive}/>
-               <InputFieldWithValidation label = "Password" isPasswordType = {true} placeholder = "••••••••" bind:value = {password} validationMessage = {passwordValidationString} validationActive = {passwordValidationActive}/>
-               
-               <div class="w-full mb-5 flex justify-end text-xs text-gray-500 font-bold hover:text-purple-500 cursor-pointer">
-                  Forgot Password
-              </div>
-              
-              
-
-               <div class = "w-full h-[20px] mb-9">
-                  <Button fullWidth = {true} type = "primary" text = "Sign In" handleClick = {handleSignIn}/>
-               </div>
-
-               <div>
-                  <form class = "w-full h-[20px] mb-10" method="post" action="?/OAuth2">
-                     <Button fullWidth = {true} type = "tertiary" text = "Sign in with Google" iconSvg = {googleIcon}/>
-                  </form>
-                  
-               </div>
-
-               <div class="w-full flex justify-center">
-                  <LoginPrompt text = "Don’t have an account?" linkText = "Sign Up" handleClick = {handleSignUpClick}/>
-              </div>
-              
-
-               
-               
-               
-               
-               
+   <div class="flex flex-col md:flex-row h-screen w-full">
+      <!-- Top Row on Mobile / Left Column on Desktop -->
+      <div class="flex md:flex-col w-full md:w-1/2">
+         <div class="ml-0 sm:ml-24 md:ml-0 w-1/4 md:w-full md:flex-1">
+            <div class=" ml-4 p-4 sm:p-6 md:p-0 mt-1 md:mt-0 min-w-[100%] md:min-w-[150px] ml-0 md:ml-40 h-full w-1/5 flex flex-col justify-end md:justify-end">
+               <Logo class="mt-auto" />
             </div>
-          </div>
-          
+         </div>
+         <div class="w-3/4 md:w-full md:flex-1 flex items-center md:items-start">
+            <div class="ml-4 md:ml-40 mt-2 md:mt-4 mb-0">
+               <LandingPageTitle
+                  title="Keep Me Posted"
+                  subTitle="Meetings to summaries."
+               />
+            </div>
+         </div>
       </div>
+      <!-- Bottom Row on Mobile / Right Column on Desktop -->
+      <div class="w-full md:w-1/2 flex justify-center items-center h-full">
+         <div class="h-full w-full md:w-full lg:w-2/3 flex justify-center items-center">
+            <div class="p-16 h-full md:h-3/4 lg:h-3/4 w-full sm:w-3/4 md:w-4/5 rounded-[16px] bg-white md:min-w-full lg:min-w-[450px] md:min-h-[550px] lg:min-h-[550px] ml-0 md:ml-16 mr-0 md:mr-16 max-h-[700px]">
+               <!-- Content here -->
+               <div class="w-full h-full">
+                  <LoginCardHeader
+                     heading="Log in to your account"
+                     subheading="Welcome back! Please enter your details."
+                  />
+                  <InputFieldWithValidation
+                     label="Email"
+                     placeholder="name@email.com"
+                     bind:value={email}
+                     validationMessage={emailValidationString}
+                     validationActive={emailValidationActive}
+                  />
+                  <InputFieldWithValidation
+                     label="Password"
+                     isPasswordType={true}
+                     placeholder="••••••••"
+                     bind:value={password}
+                     validationMessage={passwordValidationString}
+                     validationActive={passwordValidationActive}
+                  />
+                  <div class="w-full mb-5 flex justify-end text-xs text-gray-500 font-bold hover:text-purple-500 cursor-pointer">
+                     Forgot Password
+                  </div>
 
+                  <div class="w-full h-[20px] mb-9">
+                     <Button
+                        fullWidth={true}
+                        type="primary"
+                        text="Sign In"
+                        handleClick={handleSignIn}
+                     />
+                  </div>
+
+                  <div>
+                     <form
+                        class="w-full h-[20px] mb-10"
+                        method="post"
+                        action="?/OAuth2"
+                     >
+                        <Button
+                           fullWidth={true}
+                           type="tertiary"
+                           text="Sign in with Google"
+                           iconSvg={googleIcon}
+                        />
+                     </form>
+                  </div>
+
+                  <div class="w-full flex justify-center">
+                     <LoginPrompt
+                        text="Don’t have an account?"
+                        linkText="Sign Up"
+                        handleClick={handleSignUpClick}
+                     />
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
    </div>
 </div>
-
-</div>
-
-
-
-
-
- 
-
