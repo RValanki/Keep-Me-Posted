@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.http import HttpRequest, JsonResponse
 from unittest.mock import patch, MagicMock
 from emailing.views import send_email
-import json
+import json, ssl
 
 # Create your tests here.
 class TestEmailSent(TestCase):
@@ -63,7 +63,7 @@ class TestEmailSent(TestCase):
 
     @patch('emailing.views.ssl.create_default_context')
     @patch('emailing.views.smtplib.SMTP_SSL')
-    def test_send_email_case_3(self, mock_create_default_context, mock_smtp_ssl):
+    def test_ssl_secure_email(self, mock_create_default_context, mock_smtp_ssl):
 
         mock_context = MagicMock()
         mock_create_default_context.return_value = mock_context
@@ -83,12 +83,27 @@ class TestEmailSent(TestCase):
 
         # determining whether the default_context is called at least once
         mock_create_default_context.assert_called_once()
+    
+    @patch('smtplib.SMTP_SSL')
+    def test_secure_connection_creation(self, mock_smtp_ssl):
+        
+        ssl_context = ssl.create_default_context()
 
-        # # Assert that the SMTP_SSL connection was established and used
-        # mock_smtp_ssl.assert_called_once_with("smtp.gmail.com", 465, context=mock_context)
-        # mock_server.login.assert_called_once_with("keepmeposted.monash@gmail.com", "aqsokzlapmzxvuev")
-        # mock_server.sendmail.assert_called_once()
-        # mock_server.quit.assert_called_once()
+        mock_server = MagicMock()
+        mock_smtp_ssl.return_value.__enter__.return_value = mock_server
+
+        #mock request created
+        request = HttpRequest()
+        request.method = 'POST'
+        request.POST['message'] = "Testing message"
+        request.POST['subject'] = "Testing Subject"
+        request.POST['contacts'] = "at@test.com"
+
+        # calling the send_email function to generate response
+        response = send_email(request)
+
+
+        mock_smtp_ssl.assert_called_once_with('smtp.gmail.com', 465, context=ssl_context)
 
 
     
