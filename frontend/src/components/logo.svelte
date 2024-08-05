@@ -6,6 +6,6 @@
   </script>
   
   <div class="mb-4">
-    <img src={logo} alt="Logo" class={`${width} ${height} object-contain`} />
+    <img src={logo} alt="Logo" class = "w-full h-full"/>
   </div>
   

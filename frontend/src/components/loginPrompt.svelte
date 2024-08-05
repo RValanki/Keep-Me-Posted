@@ -1,5 +1,5 @@
 <script>
-    export let handleSignUpClick;
+    export let handleClick;
     export let isPrimary = true; // Default to primary color
     export let text = "The main text";
     export let linkText = "Linktext";
@@ -13,7 +13,7 @@
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
       class="text-xs font-inter font-semibold cursor-pointer"
-      on:click={handleSignUpClick}
+      on:click={handleClick}
       class:text-[#6941C6]={isPrimary}
       class:text-[#175cd3]={!isPrimary}
     >
