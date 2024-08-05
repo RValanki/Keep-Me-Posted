@@ -13,6 +13,7 @@
     export let icon = ''; // Default empty string for icon URL
     export let text = 'Button';
 	export let fullWidth = false; // Default to false for not full width
+    export let disabled = false;
 
     // Internal handleClick function that calls the passed handleClick prop
     function internalHandleClick() {
