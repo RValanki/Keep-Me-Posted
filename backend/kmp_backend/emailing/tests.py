@@ -59,5 +59,15 @@ class TestEmailSent(TestCase):
         response = send_email(request)
         #determine if the status code is as expected
         self.assertEqual(response.status_code, 200)
-
+    
+    def test_exception_raised_when_contacts_empty(self):
+        request = HttpRequest()
+        request.method = 'POST'
+        request.POST ={
+            'message': 'Here you will find a remarkable set of notes.',
+            'subject' : 'Meeting Notes'
+        }
+        with self.assertRaises(ValueError) as context:
+            send_email(request)
+        self.assertEqual(str(context.exception), "Contacts list is empty.")
         
