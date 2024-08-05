@@ -58,6 +58,7 @@ button {
     /* 16px based on 16px default font size */
     /* 400, scale [1,1000] */
 }
+
 .token {
     @apply text-[0.7rem] font-normal;
     /* 14px based on 16px default font size */
