@@ -15,6 +15,8 @@
     export let text = 'Button';
     export let fullWidth = false; // Default to false for not full width
     export let fitContainerHeight = false; // New prop to fit container height
+    export let disabled = false;
+
 
     // Internal handleClick function that calls the passed handleClick prop
     function internalHandleClick() {

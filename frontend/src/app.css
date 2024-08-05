@@ -17,7 +17,6 @@
     @apply text-black m-0;
 }
 html{
-    @apply font-sans;
     font-family: 'Inter', sans-serif; /* Custom font */
 }
 body {
@@ -58,6 +57,7 @@ button {
     /* 16px based on 16px default font size */
     /* 400, scale [1,1000] */
 }
+
 .token {
     @apply text-[0.7rem] font-normal;
     /* 14px based on 16px default font size */

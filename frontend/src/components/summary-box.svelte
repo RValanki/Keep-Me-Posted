@@ -10,6 +10,8 @@
 <!--  -->
 <script>
     import Button from "./button.svelte"
+    import { summaryStore } from "../stores/summary-store"
+    import { onMount, onDestroy } from "svelte"
 
     export let emailSubject = ""
     export let summaryGenerated = ""
@@ -19,6 +21,41 @@
         const textarea = event.target
         textarea.style.height = `${textarea.scrollHeight}px`
     }
+
+    function loadSummaryContent() {
+        const unsubscribe = summaryStore.subscribe(value => {
+            summaryGenerated = value.summary;
+            emailSubject = value.subject;
+        });
+        if (summaryGenerated && emailSubject) {
+            unsubscribe();
+        }
+    }
+    
+    onMount(() => {
+        loadSummaryContent();
+    });
+
+    export const saveSummaryToStore = () => {
+        // bind not working for some reason so I have to get the content manually
+        const updatedSubject = document.getElementById("emailSubject").value
+        const updatedSummary = document.getElementById("summaryGenerated").value
+        
+        // only overwrite store if the edit fields have been populated
+        if (updatedSubject && updatedSummary) {
+            summaryStore.set({
+            summary: updatedSubject,
+            subject: updatedSummary,
+        });
+        }
+
+        // for testing
+        // summaryStore.subscribe(value => {
+        //     console.log(value.summary);
+        //     console.log(value.subject)
+        // })
+    }
+
 </script>
 
 <style>
