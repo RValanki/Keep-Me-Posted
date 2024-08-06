@@ -168,7 +168,7 @@
         <div class="ml-4 md:ml-40 mt-2 md:mt-4 mb-0">
           <LandingPageTitle
             title="Keep Me Posted"
-            subTitle="Meetings to summaries."
+            subTitle="Your AI Powered Meeting Companion."
           />
         </div>
       </div>
