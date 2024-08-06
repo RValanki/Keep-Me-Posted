@@ -28,18 +28,6 @@
 	let loadingBarComponent; // pointer for loading bar
 	const dropzoneStyles = "background-color: rgba(255, 0, 0, 0)"; // define custom to style dropzone
 
-	/**
-	 * Subscribes to updates from the `api_status` observable
-	 * This function also updates the `loadingBar` with the current status value.
-	 */
-	const unsubscribe = api_status.subscribe((value) => {
-		console.log(value.status); // Log the status value
-		console.log(typeof updateLoadingBar); // Should log 'function'
-		if (loadingBarComponent) {
-		loadingBarComponent.updateLoadingBar(value.status);
-		}
-	});
-
 	// ------------------------------------------ File Handling
 	let file;
 	let errorMessage = "";
@@ -79,6 +67,7 @@
 			});
 
 			//hide the audio box desc and show the loading bar
+			//TODO
 			showDropzone = false;
 		} else {
 		errorMessage =
@@ -115,17 +104,3 @@
       {/if}
   	</div>
 </div>
-
-
-
-<!-- Styling -->
-<style>
-    <!-- need to check before deleting-->
-	.upload-audio-status-message {
-		text-align: center;
-		padding: 10px;
-		color: #333;
-		font-size: 60px;
-		margin-top: 100px;
-	}
-</style>
