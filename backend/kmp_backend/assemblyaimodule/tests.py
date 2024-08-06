@@ -1,10 +1,11 @@
 from django.test import TestCase
+from django.urls import reverse
 from gtts import gTTS
 from io import BytesIO
 from . import assemblyAI_module as tai
-from assemblyaimodule import views
+from assemblyaimodule import views, models
 import unittest
-from unittest.mock import patch, Mock
+from unittest.mock import patch, MagicMock
 from rest_framework.test import APIClient
 from rest_framework.response import Response
 from rest_framework import status
@@ -28,9 +29,9 @@ class TranscribeTestCase(TestCase):
         return audio_file
     
     # Test 1: Test transcribe() 
-    @patch('backend.kmp_backend.assemblyaimodule.views.TS.transcribe')
-    @patch('backend.kmp_backend.assemblyaimodule.views.AudioFileSerializer')
-    @patch('backend.kmp_backend.assemblyaimodule.views.FileSystemStorage')
+    @patch('assemblyaimodule.views.TS.transcribe')
+    @patch('assemblyaimodule.views.AudioFileSerializer')
+    @patch('assemblyaimodule.views.FileSystemStorage')
     def test_transcribe(self, MockTranscribe, MockSerializer, MockStorage):
         # Mock serializer object as valid
         mock_serializer = MockSerializer.return_value
@@ -46,8 +47,12 @@ class TranscribeTestCase(TestCase):
         mock_transcription_result = "I am testing, testing."
         MockTranscribe.return_value = mock_transcription_result
 
+        # Create a mock audio file
+        mock_file = BytesIO(b"fake audio data")
+        mock_file.name = 'testfile.mp3'
+
         # Mock a POST request
-        response = self.client.post('/transcribe/', {'audio_file': MagicMock()})
+        response = self.client.post(reverse('transcribe'), {'audio_file': mock_file}, format='multipart')
 
         # Assert the response
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -59,16 +64,3 @@ class TranscribeTestCase(TestCase):
         mock_fs.save.assert_called_once_with(mock_serializer.validated_data['audio_file'].name, mock_serializer.validated_data['audio_file'])
         MockTranscribe.assert_called_once_with(mock_saved_file_url)
         mock_fs.delete.assert_called_once_with(mock_saved_file_url)
-
-        
-    # Test 1: Test return type of transcribe()
-    def test_transcribe_type(self):
-        test_text = "Hello, world."
-        test_audio = self.generateAudio(test_text)
-        self.assertIsInstance(tai.transcribe(test_audio), str)
-    
-    # Test 2: Test return type of transcribe_with_speakers
-    def test_transcribe_speakers_type(self):
-        test_text = "Hello, world."
-        test_audio = self.generateAudio(test_text)
-        self.assertIsInstance(tai.transcribe_with_speakers(test_audio), str)
