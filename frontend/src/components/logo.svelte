@@ -1,5 +1,5 @@
 <script>
-    import logo from "../assets/kmp-logo-large.png";
+    import logo from "../assets/kmp-logo-large.svg";
     
     export let width = 'w-full';
     export let height = 'h-full';
