@@ -20,6 +20,8 @@
     import { sineOut } from 'svelte/easing';
 
     let progress = 0;
+    let progressNumber = 0;
+    let targetProgress = 0; // Target value for the progress bar, used for animating
     let description = "Uploading Meeting Audio...";
     let iconSrc = uploadIcon;
 
@@ -27,22 +29,45 @@
      * Function to update the progress based on value input
     */ 
     function updateLoadingBar(value) {
-        if (value > progress){
+        if (value >= progress){
             progress = value
+            targetProgress = value
         }
-        if (progress < 50) {
+        if (progress <= 50) {
             description = "Uploading Meeting Audio...";
             iconSrc = uploadIcon;
-        }
-        if (progress > 50) {
+        } else {
             description = "Generating Summary...";
             iconSrc = fileIcon;
+        }
+    }
+
+    /**
+     * Smoothly update the progress number
+    */ 
+    function animateProgress() {
+        const speed = 0.1; // Speed of animation
+        if (progressNumber < targetProgress) {
+            progressNumber += speed;
+            if (progressNumber > targetProgress) {
+                progressNumber = targetProgress;
+            }
+            requestAnimationFrame(animateProgress);
+        }
+    }
+
+    /**
+     * Start animation when progress changes
+    */
+    $: {
+        if (targetProgress !== progressNumber) {
+            animateProgress();
         }
     }
 </script>
 
 <!-- COMPONENT -->
-<div class="flex space-x-5 p-5 pb-0"> <!-- loading-bar -->
+<div class="flex space-x-5 p-5 h-20"> <!-- loading-bar -->
     <Progressbar
         {progress}
         animate
@@ -50,10 +75,10 @@
         tweenDuration={1500}
         easing={sineOut}
         size="h-6"
-        class="mb-8"
+        class="self-center"
         color="blue"
     />
-    <span class="text-sm font-medium text-gray-700">{progress}%</span> <!-- progress-number -->
+    <span class="text-sm font-medium text-gray-700 w-10 self-center">{Math.round(progressNumber)}%</span> <!-- progress-number -->
 </div>
 
 <div class="flex space-x-5 justify-center"> <!-- loading-bar-desc -->
