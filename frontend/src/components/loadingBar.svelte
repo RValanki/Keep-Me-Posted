@@ -20,7 +20,6 @@
     import { sineOut } from 'svelte/easing';
 
     let progress = 0;
-    let progressNumber = 0;
     let targetProgress = 0; // Target value for the progress bar, used for animating
     let description = "Uploading Meeting Audio...";
     let iconSrc = uploadIcon;
@@ -47,10 +46,10 @@
     */ 
     function animateProgress() {
         const speed = 0.1; // Speed of animation
-        if (progressNumber < targetProgress) {
-            progressNumber += speed;
-            if (progressNumber > targetProgress) {
-                progressNumber = targetProgress;
+        if (progress < targetProgress) {
+            progress += speed;
+            if (progress > targetProgress) {
+                progress = targetProgress;
             }
             requestAnimationFrame(animateProgress);
         }
@@ -60,7 +59,7 @@
      * Start animation when progress changes
     */
     $: {
-        if (targetProgress !== progressNumber) {
+        if (targetProgress !== progress) {
             animateProgress();
         }
     }
@@ -78,7 +77,7 @@
         class="self-center"
         color="blue"
     />
-    <span class="text-sm font-medium text-gray-700 w-10 self-center">{Math.round(progressNumber)}%</span> <!-- progress-number -->
+    <span class="text-sm font-medium text-gray-700 w-10 self-center">{Math.round(progress)}%</span> <!-- progress-number -->
 </div>
 
 <div class="flex space-x-5 justify-center"> <!-- loading-bar-desc -->
