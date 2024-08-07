@@ -136,7 +136,7 @@
    }
 
    function navigateToNextPage(){
-      goto("/email");
+      goto("/upload-audio");
    }
 </script>
 
