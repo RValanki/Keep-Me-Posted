@@ -16,7 +16,6 @@
     export let mainText = 'This is a pop-up modal.';
     export let firstButtonText = 'Button';
     export let secondButtonText = 'Button';
-    export let fitContainerHeight = false; // New prop to fit container height
 </script>
 
 <div class="justify-center items-center font-sans h-full transition ease-in-out duration-300">
