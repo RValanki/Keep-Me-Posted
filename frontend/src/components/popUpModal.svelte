@@ -9,13 +9,14 @@
 
 <script>
     import Button from "./button.svelte";
-    export let type = 'primary';
-    export let firstHandleClick = () => {};
-    export let secondHandleClick = () => {};
-    export let header = 'Pop-Up Modal';
-    export let mainText = 'This is a pop-up modal.';
-    export let firstButtonText = 'Button';
-    export let secondButtonText = 'Button';
+
+    export let type = 'primary';  // Default type is primary (blue with 1 button)
+    export let firstHandleClick = () => {};  // Click function for primary button (dark blue, or red)
+    export let secondHandleClick = () => {};  // Click function for secondary button (light blue)
+    export let header = 'Pop-Up Modal';  // Header of popup modal
+    export let mainText = 'This is a pop-up modal.';  // Main text of popup modal
+    export let firstButtonText = 'Button';  // Text for primary button (dark blue, or red)
+    export let secondButtonText = 'Button';  // Text for secondary button (light blue)
 </script>
 
 <div class="justify-center items-center font-sans h-full transition ease-in-out duration-300">
