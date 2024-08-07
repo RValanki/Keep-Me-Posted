@@ -30,3 +30,25 @@ jobs:
       run: |
         cd backend/kmp_backend
         python manage.py test
+
+    - name: Start Backend Server
+      run: |
+        cd backend
+        python -m venv venv
+        source venv \bin\activate
+        pip install -r requirements 
+        cd kmp_backend
+        python manage.py makemigrations
+        python manage.py migrate
+        python manage.py runserver
+
+    - name: Start Content Server 
+      run: |
+        cd frontend 
+        npm install
+        npm run dev 
+
+    - name: Testing Frontend
+      run: |
+        cd frontend
+        python seleniumtesting.py 
