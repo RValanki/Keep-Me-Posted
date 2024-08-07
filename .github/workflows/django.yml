@@ -35,7 +35,7 @@ jobs:
       run: |
         cd backend
         python -m venv venv
-        source venv \bin\activate
+        source venv\bin\activate
         pip install -r requirements 
         cd kmp_backend
         python manage.py makemigrations
