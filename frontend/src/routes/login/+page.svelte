@@ -122,7 +122,7 @@
 
          if (response.ok) {
             updateAuth(loginData.email, true);
-            goto("/email");
+            navigateToNextPage();
          }
 
          return responseData;
@@ -133,6 +133,10 @@
 
    function handleSignUpClick() {
       goto("/signup");
+   }
+
+   function navigateToNextPage(){
+      goto("/email");
    }
 </script>
 
@@ -224,12 +228,12 @@
                      </div>
                    </div>
                    
-                   <div class="w-full h-[20px] mb-9">
+                   <div class="w-full h-[20px] mb-10">
                      <Button
                         fullWidth={true}
                         type="tertiary"
-                        text="Continue Without Account"
-                        handleClick={handleSignIn}
+                        text="Continue Without an Account"
+                        handleClick={navigateToNextPage}
                      />
                   </div>
                    
