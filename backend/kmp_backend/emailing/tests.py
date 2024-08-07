@@ -83,28 +83,34 @@ class TestEmailSent(TestCase):
 
         # determining whether the default_context is called at least once
         mock_create_default_context.assert_called_once()
-    
-    @patch('smtplib.SMTP_SSL')
-    def test_secure_connection_creation(self, mock_smtp_ssl):
-        
-        ssl_context = ssl.create_default_context()
 
+    @patch('emailing.views.ssl.create_default_context')
+    @patch('emailing.views.smtplib.SMTP_SSL')
+    def test_server_login(self, mock_create_default_context,mock_smtp):
+        mock_context = MagicMock()
+        mock_create_default_context.return_value = mock_context
+        # Mock server.login to verify it is called
         mock_server = MagicMock()
-        mock_smtp_ssl.return_value.__enter__.return_value = mock_server
+        mock_smtp.return_value = mock_server
 
-        #mock request created
         request = HttpRequest()
         request.method = 'POST'
         request.POST['message'] = "Testing message"
         request.POST['subject'] = "Testing Subject"
         request.POST['contacts'] = "at@test.com"
 
-        # calling the send_email function to generate response
+        
         response = send_email(request)
 
+        # test verify that server login is called with correct credentials
+        mock_server.login.assert_called_with('keepmeposted.monash@gmail.com', 'aqsokzlapmzxvuev')
 
-        mock_smtp_ssl.assert_called_once_with('smtp.gmail.com', 465, context=ssl_context)
+        response_content = json.loads(response.content.decode('utf-8'))
 
+        # confirm and verify response
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response_content, {'details': 'Emails sent successfully!'})
 
     
     def test_exception_raised_when_contacts_empty(self):
