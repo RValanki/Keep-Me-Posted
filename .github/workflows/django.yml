@@ -40,13 +40,15 @@ jobs:
         cd kmp_backend
         python manage.py makemigrations
         python manage.py migrate
-        python manage.py runserver
+        python manage.py runserver & 
+        sleep 10
 
     - name: Start Content Server 
       run: |
         cd frontend 
         npm install
-        npm run dev 
+        npm run dev &
+        sleep 10
 
     - name: Testing Frontend
       run: |
