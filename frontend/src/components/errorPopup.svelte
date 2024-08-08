@@ -1,9 +1,9 @@
 <!-- Error Popup Component
 
-    Contains an error pop-up that can be modified
+    Contains an error pop-up that can have it's text be modified
 
     Author: Bowen Dong
-    Last Modified: 
+    Last Modified: 8/08/2024
 -->
 
 <script>
@@ -11,7 +11,7 @@
     export let errorSubHeadingText; // this is the main text of the card (e.g. 'Your meeting audio should be less than 120 minutes')
     export let errorHeadingText; // this is the heading (e.g. 'Meeting duration exceeded!')
     export let errorButtonText; // this is the button text (e.g. 'Re-Upload')
-    export let isVisible = false;
+    export let isVisible = false; // when error occurs, change to true
     
     function dismissError() {
         isVisible = false;
@@ -27,7 +27,7 @@
             <div class="flex items-center justify-center text-gray-900 text-lg font-bold pt-2">
                 {errorHeadingText}
             </div>
-            <div class="flex items-center justify-center text-gray-500 text-sm pb-3 pt-2">
+            <div class="text-gray-500 text-sm pb-3 pt-2">
                 {errorSubHeadingText}
             </div>
             <div class="pt-4 w-full">
