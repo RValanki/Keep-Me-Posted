@@ -17,28 +17,45 @@
     export let mainText = 'This is a pop-up modal.';  // Main text of popup modal
     export let firstButtonText = 'Button';  // Text for primary button (dark blue, or red)
     export let secondButtonText = 'Button';  // Text for secondary button (light blue)
+    export let iconPath = '';
+    export let width = '64';
 </script>
 
 <div class="justify-center items-center font-sans h-full transition ease-in-out duration-300">
     <div class="fixed inset-0 flex items-center justify-center w-full h-full bg-black backdrop-blur md:bg-opacity-70">
-        <div class="bg-white rounded-lg p-4 w-64">
+        <div class="bg-white rounded-lg p-4 w-{width}">
+            {#if iconPath}
+                <div class="flex items-center justify-center pb-2">
+                    <img src={iconPath} alt="pop up icon"/>
+                </div>  
+            {/if}
             <div class="flex items-center justify-center text-gray-900 text-lg font-bold">
                 {header}
             </div>
-            <div class="flex items-center justify-center text-gray-500 text-sm pb-3 pt-2">
+            <div class="flex items-center justify-center text-gray-500 text-sm pb-5 pt-2">
                 {mainText}
             </div>
-            <div class="flex items-center justify-between flex-row">
-                {#if type === 'secondary'}
+            {#if type === 'secondary'}
+                <div class="flex items-center justify-between flex-row">
                     <Button type="secondary" text={secondButtonText} handleClick={secondHandleClick} />
-                {/if}
-                <Button class="
-                {type === 'error' ? '' : 'primary'}"
-                fullWidth= {type === 'primary' ? true : false}
-                text={firstButtonText} 
-                handleClick={firstHandleClick}
-                />
-            </div>
+                    <Button type=
+                    {type === 'error' ? 'error' : 'primary'}
+                    fullWidth= {type === 'primary' || type === 'error' ? true : false}
+                    text={firstButtonText} 
+                    handleClick={firstHandleClick}
+                    />
+                </div>
+            {:else}
+                <div class="w-full">
+                    <Button type=
+                    {type === 'error' ? 'error' : 'primary'}
+                    fullWidth= {type === 'primary' || type === 'error' ? true : false}
+                    text={firstButtonText} 
+                    handleClick={firstHandleClick}
+                    />
+                </div>
+            {/if}
+
         </div>
     </div>
 </div>
