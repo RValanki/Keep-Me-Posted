@@ -11,14 +11,15 @@
     export let errorSubHeadingText; // this is the main text of the card (e.g. 'Your meeting audio should be less than 120 minutes')
     export let errorHeadingText; // this is the heading (e.g. 'Meeting duration exceeded!')
     export let errorButtonText; // this is the button text (e.g. 'Re-Upload')
-    export let handleErrorClick = () => {}; // pass a method here that does what you want to happen when you click the button
+    export let isVisible = false;
     
-    function handleClick() {
-        handleCardClick();
+    function dismissError() {
+        isVisible = false;
     }
 
 </script>
-  
+
+{#if isVisible}
 <div class="justify-center items-center font-sans h-full transition ease-in-out duration-300">
     <div class="fixed inset-0 flex items-center justify-center w-full h-full bg-black backdrop-blur md:bg-opacity-70">
         <div class="bg-white rounded-lg p-4 w-96 flex flex-col justify-center items-center">
@@ -34,9 +35,10 @@
                 type='error'
                 fullWidth = {true}
                 text={errorButtonText} 
-                handleClick={handleErrorClick}
+                handleClick={dismissError}
                 />
             </div>
         </div>
     </div>
 </div>
+{/if}
