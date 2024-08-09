@@ -1,3 +1,13 @@
+<!-- Email Popup Modal Component
+
+    A pop up that shows when continuing without sign in
+    Prompts user to enter their email address
+
+    Author: Harry Lane, Maureen Pham
+    Last modified: 9/08/2024
+
+-->
+
 <script>
   import Button from "./button.svelte";
   import { ContactsStore } from "../stores/contacts-store";
