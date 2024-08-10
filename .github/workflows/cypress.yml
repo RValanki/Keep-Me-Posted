@@ -23,10 +23,14 @@ jobs:
           cd frontend
           npm run dev &
 
+      - name: Wait for Application
+        run: |
+          cd frontend
+          npx wait-on http://localhost:5173 --timeout 60000
+          
       - name: Run Cypress Tests
-        uses: cypress-io/github-action@v6
-        with:
-          browser: chrome
-          wait-on: 'http://localhost:5173'
+        run: |
+          cd frontend
+          npx cypress run --browser chrome
 
         
