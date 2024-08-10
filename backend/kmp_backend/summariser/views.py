@@ -16,7 +16,7 @@ def generate_title_and_summary(transcript):
     
     # No transcript provided
     if not transcript.strip():
-        return "No transcript provided", "No summary can be generated without a transcript."
+        return None, "No summary can be generated without a transcript."
 
     # Title generation prompt
     title_prompt = (
@@ -60,18 +60,19 @@ def generate_title_and_summary(transcript):
     # Check for prompt feedback in title generation
     title_feedback = title_response.prompt_feedback
     if title_feedback and "block_reason" in title_feedback:
-        return "Blocked Title", "Blocked Summary"
+        return None, None
 
     # Check for prompt feedback in summary generation
     summary_feedback = summary_response.prompt_feedback
     if summary_feedback and "block_reason" in summary_feedback:
-        return "Blocked Title", "Blocked Summary"
+        return None, None
 
     # Extract and return title and summary
     title = title_response.text.strip()
     summary = summary_response.text.strip()
 
     return title, summary
+
 
 def generate_summary(request):
     """Handles the request to generate or regenerate the meeting summary and title."""
@@ -80,6 +81,9 @@ def generate_summary(request):
         return HttpResponse("Transcript not found", status=404)
 
     title, summary = generate_title_and_summary(transcript)
+
+    if title is None or summary is None:
+        return HttpResponse("Unsafe transcript provided", status=400)
 
     response_data = {
         "title": title,
