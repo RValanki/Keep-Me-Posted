@@ -14,6 +14,7 @@
     import { ContactsStore } from "../../stores/contacts-store";
     import clock from "../../assets/clock.png"
     import { goto } from "$app/navigation";
+    import Recepients from "../../components/sendRecepientsList.svelte";
 
     
     //the next page in the sequence
@@ -38,16 +39,12 @@
   </div>
   
   <div class="flex pt-10 gap-3.125">
-    <div class="font-bold">Recipients:</div>
+    <div class="font-bold pr-8">Recipients:</div>
 
-    <div class="flex flex-wrap gap-0.3125">
-      
-      {#each $ContactsStore as email}
-      <div class="flex bg-gray-100 p-1 rounded justify-center items-center gap-3.125">
-        <div class="token">{email}</div>
-      </div>
-    {/each}
+    <div class="flex flex-wrap">
+      <Recepients></Recepients>
     </div>
+
   </div>
 </div>
 
