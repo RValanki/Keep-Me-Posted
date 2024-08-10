@@ -3,7 +3,7 @@
     The end page when user reaches the end before the summary has generated with transcipt attached
 
     Author: Parul Garg
-    Last Modified: 8/08/2024
+    Last Modified: 10/08/2024
 -->
 
 
@@ -11,7 +11,6 @@
 <script>
     import Button from "../../components/button.svelte";
     import Topbar from "../../components/topbar.svelte";
-    import { ContactsStore } from "../../stores/contacts-store";
     import clock from "../../assets/clock.png"
     import { goto } from "$app/navigation";
     import Recepients from "../../components/sendRecepientsList.svelte";
