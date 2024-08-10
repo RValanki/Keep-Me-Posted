@@ -28,6 +28,5 @@ jobs:
         with:
           browser: chrome
           wait-on: 'http://localhost:5173'
-          start: npm run dev
 
         
