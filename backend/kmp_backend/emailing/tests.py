@@ -84,14 +84,17 @@ class TestEmailSent(TestCase):
         # determining whether the default_context is called at least once
         mock_create_default_context.assert_called_once()
 
-    @patch('emailing.views.ssl.create_default_context')
     @patch('emailing.views.smtplib.SMTP_SSL')
+    @patch('emailing.views.ssl.create_default_context')
     def test_server_login(self, mock_create_default_context,mock_smtp):
         mock_context = MagicMock()
         mock_create_default_context.return_value = mock_context
         # Mock server.login to verify it is called
         mock_server = MagicMock()
         mock_smtp.return_value = mock_server
+
+        mock_server.__enter__.return_value = mock_server
+        mock_server.__exit__.return_value = False
 
         request = HttpRequest()
         request.method = 'POST'
