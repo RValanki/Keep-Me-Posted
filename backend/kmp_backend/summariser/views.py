@@ -60,12 +60,12 @@ def generate_title_and_summary(transcript):
     # Check for prompt feedback in title generation
     title_feedback = title_response.prompt_feedback
     if title_feedback and "block_reason" in title_feedback:
-        return HttpResponse("Unsafe transcript provided", status=400)
+        return HttpResponse("Unsafe transcript provided", status=400), None
 
     # Check for prompt feedback in summary generation
     summary_feedback = summary_response.prompt_feedback
     if summary_feedback and "block_reason" in summary_feedback:
-        return HttpResponse("Unsafe transcript provided", status=400)
+        return HttpResponse("Unsafe transcript provided", status=400), None
 
     # Extract and return title and summary
     title = title_response.text.strip()
