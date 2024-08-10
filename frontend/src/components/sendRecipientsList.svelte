@@ -1,6 +1,6 @@
-<!-- Send Recepients Component
+<!-- Send Recipients Component
 
-    The list of the recepients displayed on the end pages of the website
+    The list of the recipients displayed on the end pages of the website
 
     Author: Parul Garg
     Last Modified: 10/08/2024

@@ -13,7 +13,7 @@
     import Topbar from "../../components/topbar.svelte";
     import clock from "../../assets/clock.png"
     import { goto } from "$app/navigation";
-    import Recepients from "../../components/sendRecepientsList.svelte";
+    import Recipients from "../../components/sendRecipientsList.svelte";
 
     
     //the next page in the sequence
@@ -41,7 +41,7 @@
     <div class="font-bold pr-8">Recipients:</div>
 
     <div class="flex flex-wrap">
-      <Recepients></Recepients>
+      <Recipients></Recipients>
     </div>
 
   </div>
