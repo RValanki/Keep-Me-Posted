@@ -11,9 +11,23 @@
     import Button from "../../components/button.svelte";
     import SummaryBox from "../../components/summary-box.svelte";
     import { goto } from "$app/navigation";
+    import { summaryStore } from "../../stores/summary-store";
 
-    export let title = "Your Summary is Being Generated...";
-    export let subTitle = "We are still generating your summary...";
+    export let title;
+    export let subTitle;
+
+    $: hasSummaryGenerated = $summaryStore["summary"] && $summaryStore["subject"];
+    $: {
+        if (hasSummaryGenerated) {
+            title = "Summary Generated!";
+            subTitle = "Your summary is ready to be sent.";
+        } else {
+            title = "Your Summary is Being Generated...";
+            subTitle = "We are still generating your summary...";
+        }
+    }
+
+
     let summaryBoxRef;
 
     let backBtn = () => {
@@ -27,6 +41,14 @@
         goto("/email");
     };
 
+    // onMount(() => {
+    //     const interval = setInterval(hasSummaryGenerated, 1000);
+
+    //     return () => {
+    //         clearInterval(interval);
+    //     };
+    // });
+
 </script>
 
 <style>
@@ -37,10 +59,10 @@
     <TopBar />
 
     <div class="text-4xl font-inter font-bold mb-4 text-black flex flex-col justify-center items-center mt-20">
-        {title}
+        {hasSummaryGenerated ? "Summary Generated!" : "Your Summary is Being Generated..."}
     </div>
     <div class="text-xl font-inter font-thin text-black flex flex-col justify-center items-center mt-6">
-        {subTitle}
+        {hasSummaryGenerated ? "Your summary is ready to be sent." : "We are still generating your summary..."}
     </div>
 
     <div class="mt-10">
