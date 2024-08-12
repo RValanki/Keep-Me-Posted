@@ -14,6 +14,8 @@
   import kmpIcon from "../assets/kmp-icon.png";
   import profileIcon from "../assets/profile-icon.png";
   import profileHoverIcon from "../assets/profile-icon-dark.png";
+  import logOutIcon from "../assets/log-out-icon.png";
+  import { authStore } from "../stores/auth-store.js";
 
   let showDropdown = false;
   let profileIcons = [profileIcon, profileHoverIcon];
@@ -49,10 +51,21 @@
         </div>
       </button>
       {#if showDropdown}
-        <div class="absolute bg-white shadow right-8 px-4 py-2 rounded-lg z-50">
-          <ul class="hover:bg-slate-200 px-4 py-1 rounded-lg">
-            <li><button on:click={() => handleLogout()}>Logout</button></li>
-          </ul>
+        <div class="absolute bg-white shadow right-16 px-4 py-2 rounded-lg z-50">
+          <div class="text-left w-32 py-2 rounded-lg">
+            <div class="text-gray-500 text-base px-1 pb-2 w-full">
+              {authStore["email"]}
+            </div>
+            
+            <div class="w-full border-t border-gray-300"></div>
+            
+            <button on:click={() => handleLogout()}>
+              <div class="justify-center items-center flex flex-row px-1 pt-3 w-full">
+                <img class="h-4" src={logOutIcon} alt="Log Out Icon" />
+                <div class="text-gray-700 text-base px-1">Log Out</div>
+              </div>
+            </button>
+          </div>
         </div>
       {/if}
     </div>
