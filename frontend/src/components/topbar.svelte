@@ -53,7 +53,7 @@
 
   <div class="px-8 flex">
     <div>
-      {#if (!authStore["loggedIn"])}
+      {#if (authStore["loggedIn"])}
       <button on:click={() => toggleDropdown()}>
         <div class="flex justify-center items-center px-8">
           <img class="h-6" src={profileIcons[currentIconIndex]} alt="Profile Icon" />
@@ -63,17 +63,17 @@
         <Button type="secondary" text="Sign In" handleClick={handleSignIn}/>
       {/if}
       {#if showDropdown}
-        <div class="w-fit absolute bg-white shadow right-16 px-4 py-2 rounded-lg z-50">
+        <div class="w-fit absolute bg-white shadow right-16 py-2 rounded-lg z-50">
           <div class="text-left w-fit py-2 rounded-lg">
-            <div class="text-gray-500 text-base px-1 pb-2 w-full">
+            <div class="text-gray-500 text-base px-5 pb-2 w-full">
               {email}
             </div>
             
-            <div class="w-full border-t border-gray-300"></div>
+            <div class="w-full border-t border-gray-100"></div>
             
-            <div class="flex w-full float-start items-start justify-start pt-3 pb-1">
+            <div class="flex w-full float-start items-start justify-start pt-3 pb-1 px-3">
               <button class="hover:bg-gray-100 rounded-lg font-sans justify-center items-center flex w-full h-8" on:click={() => handleLogout()}>
-                <div class="justify-start items-center flex flex-row w-full ms-2 px-1">
+                <div class="justify-start items-center flex flex-row w-full ms-1 px-1">
                   <img class="h-4" src={logOutIcon} alt="Log Out Icon" />
                   <div class="text-gray-700 text-base px-3">Log Out</div>
                 </div>
