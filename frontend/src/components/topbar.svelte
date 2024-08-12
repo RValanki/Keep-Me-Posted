@@ -2,9 +2,9 @@
 
     Contains top bar functionality and styling
 
-    Author: mpha0039
-    Edited by: dleu0007
-    Last modified: 9/05/2024
+    Author: Maureen Pham
+    Edited by: Danny Leung, Brenda Dang
+    Last modified: 12/08/2024
 
  -->
 
