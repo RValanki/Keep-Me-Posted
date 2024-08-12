@@ -40,7 +40,9 @@
   <div class="py-4 px-8">
     <div>
       <button on:click={() => toggleDropdown()}>
-        <img class="h-12" src={profileIcon} alt="Profile Icon" />
+        <div class="py-2 px-8">
+          <img class="h-8" src={profileIcon} alt="Profile Icon" />
+        </div>
       </button>
       {#if showDropdown}
         <div class="absolute bg-white shadow right-8 px-4 py-2 rounded-lg z-50">
