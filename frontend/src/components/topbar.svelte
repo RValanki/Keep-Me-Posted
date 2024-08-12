@@ -15,7 +15,9 @@
   import profileIcon from "../assets/profile-icon.png";
   import profileHoverIcon from "../assets/profile-icon-dark.png";
   import logOutIcon from "../assets/log-out-icon.png";
+  import Button from "../components/button.svelte";
   import { authStore } from "../stores/auth-store.js";
+  import { goto } from "$app/navigation";
 
   let showDropdown = false;
   let profileIcons = [profileIcon, profileHoverIcon];
@@ -34,6 +36,10 @@
     console.log("todo - handle go to home")
   }
 
+  function handleSignIn () {
+    goto("/login")
+  }
+
 </script>
 
 <div class="flex justify-center items-center justify-between border-b h-20">
@@ -46,9 +52,13 @@
   <div class="px-8">
     <div>
       <button on:click={() => toggleDropdown()}>
+        {#if (authStore["loggedIn"])}
         <div class="flex justify-center items-center px-8">
           <img class="h-6" src={profileIcons[currentIconIndex]} alt="Profile Icon" />
         </div>
+        {:else}
+          <Button type="secondary" text="Sign In" handleClick={handleSignIn}/>
+        {/if}
       </button>
       {#if showDropdown}
         <div class="absolute bg-white shadow right-16 px-4 py-2 rounded-lg z-50">
