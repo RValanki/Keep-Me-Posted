@@ -28,18 +28,6 @@
 	let loadingBarComponent; // pointer for loading bar
 	const dropzoneStyles = "background-color: rgba(255, 0, 0, 0)"; // define custom to style dropzone
 
-	/**
-	 * Subscribes to updates from the `api_status` observable
-	 * This function also updates the `loadingBar` with the current status value.
-	 */
-	const unsubscribe = api_status.subscribe((value) => {
-		console.log(value.status); // Log the status value
-		console.log(typeof updateLoadingBar); // Should log 'function'
-		if (loadingBarComponent) {
-		loadingBarComponent.updateLoadingBar(value.status);
-		}
-	});
-
 	// ------------------------------------------ File Handling
 	let file;
 	let errorMessage = "";
@@ -79,6 +67,7 @@
 			});
 
 			//hide the audio box desc and show the loading bar
+			//TODO
 			showDropzone = false;
 		} else {
 		errorMessage =
@@ -90,15 +79,15 @@
 <!-- COMPONENT -->
 <div class= "flex items-center justify-center">
     <!-- upload-audio-box -->
-    <div class= "bg-light-blue box-border flex flex-col justify-center p-0 gap-16 w-7/12 h-48 max-w-2xl max-h-48 border-2 border-medium-blue rounded-md flex-none order-0 flex-grow-0">
+    <div class= "bg-light-blue box-border flex flex-col justify-center p-0 w-7/12 h-48 max-w-2xl max-h-48 border-2 border-medium-blue rounded-md flex-none order-0 flex-grow-0">
 		{#if showDropzone}
 			<Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav" containerStyles={dropzoneStyles}>
 
 				<!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
 				<div class="text-center flex flex-col items-center text-center">
-					<img id="icon" class="w-12 h-20 max-w-12 max-h-12 flex-none order-0 flex-grow-0" src={micIcon} alt="Icon" />
-					<span class="font-inter w-72 font-medium text-xl text-blue-800 flex-none order-0 flex-grow-0">Upload meeting audio</span>
-					<span class="font-inter w-64 font-normal text-lg text-gray-400 flex-none order-1 flex-grow-0">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
+					<img id="icon" class="w-12 h-20 max-w-12 max-h-12 flex-none order-0 flex-grow-0 mb-3" src={micIcon} alt="Icon" />
+					<span class="font-bold w-72 text-xl text-blue-800 order-0 flex-grow-0 mb-1">Upload meeting audio</span>
+					<span class="w-64 font-normal text-lg text-gray-400 order-1 flex-grow-0">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
 				</div>
 
 			</Dropzone>
@@ -115,17 +104,3 @@
       {/if}
   	</div>
 </div>
-
-
-
-<!-- Styling -->
-<style>
-    <!-- need to check before deleting-->
-	.upload-audio-status-message {
-		text-align: center;
-		padding: 10px;
-		color: #333;
-		font-size: 60px;
-		margin-top: 100px;
-	}
-</style>
