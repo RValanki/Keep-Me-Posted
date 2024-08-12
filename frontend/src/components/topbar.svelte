@@ -69,10 +69,10 @@
             
             <div class="w-full border-t border-gray-300"></div>
             
-            <div class="items-start px-1 pt-3">
+            <div class="flex w-full float-start items-start justify-start pt-3 pb-1">
               <button class="hover:bg-gray-100 rounded-lg font-sans justify-center items-center flex w-full h-8" on:click={() => handleLogout()}>
-                <div class="justify-center items-center flex flex-row w-full">
-                  <img class="h-4" src={logOutIcon} alt="Log Out Icon" />
+                <div class="justify-start items-center flex flex-row w-full ms-2">
+                  <img class="h-4 pr-1" src={logOutIcon} alt="Log Out Icon" />
                   <div class="text-gray-700 text-base px-1">Log Out</div>
                 </div>
               </button>
