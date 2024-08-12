@@ -13,11 +13,15 @@
   // importing image elements
   import kmpIcon from "../assets/kmp-icon.png";
   import profileIcon from "../assets/profile-icon.png";
+  import profileHoverIcon from "../assets/profile-icon-dark.png";
 
   let showDropdown = false;
+  let profileIcons = [profileIcon, profileHoverIcon];
+  let currentIconIndex = 0;
 
   function toggleDropdown() {
     showDropdown = !showDropdown;
+    currentIconIndex = (currentIconIndex + 1) % profileIcons.length;
   }
 
   function handleLogout() {
@@ -30,18 +34,18 @@
 
 </script>
 
-<div class="flex justify-between border-b">
-  <div class="py-4 px-8 m">
+<div class="flex justify-center items-center justify-between border-b h-20">
+  <div class="px-8 m">
     <button on:click={() => handleGoHome()}>
       <img class="h-12" src={kmpIcon} alt="KMP Icon" />
     </button>
   </div>
 
-  <div class="py-4 px-8">
+  <div class="px-8">
     <div>
       <button on:click={() => toggleDropdown()}>
-        <div class="py-2 px-8">
-          <img class="h-8" src={profileIcon} alt="Profile Icon" />
+        <div class="flex justify-center items-center px-8">
+          <img class="h-6" src={profileIcons[currentIconIndex]} alt="Profile Icon" />
         </div>
       </button>
       {#if showDropdown}
