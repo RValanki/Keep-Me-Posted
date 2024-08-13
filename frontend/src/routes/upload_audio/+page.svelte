@@ -22,8 +22,8 @@
     </head>
     <body>
         <Topbar/>
-        <h1>Upload Meeting Audio</h1>
-        <div class="subheading pb-16">Upload your meeting audio for us to summarise.</div>
+        <h1 class="mt-20 sm:mt-32">Upload Meeting Audio</h1>
+        <div class="subheading mb-16 mt-4">Upload your meeting audio for us to summarise.</div>
     
         <UploadBox simple={true} />
     </body>
