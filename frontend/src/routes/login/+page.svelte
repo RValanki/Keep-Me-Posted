@@ -122,7 +122,7 @@
 
          if (response.ok) {
             updateAuth(loginData.email, true);
-            goto("/email");
+            navigateToNextPage();
          }
 
          return responseData;
@@ -133,6 +133,10 @@
 
    function handleSignUpClick() {
       goto("/signup");
+   }
+
+   function navigateToNextPage(){
+      goto("/upload-audio");
    }
 </script>
 
@@ -157,7 +161,7 @@
       <!-- Bottom Row on Mobile / Right Column on Desktop -->
       <div class="w-full md:w-1/2 flex justify-center items-center h-full">
          <div class="h-full w-full md:w-full lg:w-2/3 flex justify-center items-center">
-            <div class="p-16 h-full md:h-3/4 lg:h-3/4 w-full sm:w-3/4 md:w-4/5 rounded-[16px] bg-white md:min-w-full lg:min-w-[450px] md:min-h-[550px] lg:min-h-[550px] ml-0 md:ml-16 mr-0 md:mr-16 max-h-[700px]">
+            <div class="py-10 px-16 h-full md:h-3/4 lg:h-3/4 w-full sm:w-3/4 md:w-4/5 rounded-[16px] bg-white md:min-w-full lg:min-w-[450px] md:min-h-[635px] lg:min-h-[635px] ml-0 md:ml-16 mr-0 md:mr-16 max-h-[700px]">
                <!-- Content here -->
                <div class="w-full h-full">
                   <LoginCardHeader
@@ -194,7 +198,7 @@
 
                   <div>
                      <form
-                        class="w-full h-[20px] mb-10"
+                        class="w-full h-[20px] mb-8"
                         method="post"
                         action="?/OAuth2"
                      >
@@ -206,6 +210,33 @@
                         />
                      </form>
                   </div>
+
+                  
+                  <div class="flex w-full h-[30px] mb-2">
+                     <div class="relative flex items-center basis-[45%]">
+                       <span></span>
+                       <div class="absolute inset-0 flex items-center justify-center">
+                         <div class="w-full h-[1px] bg-gray-300"></div>
+                       </div>
+                     </div>
+                     <div class="basis-[10%] flex items-center justify-center text-sm text-bold text-gray-600">or</div>
+                     <div class="relative flex items-center basis-[45%]">
+                       <span></span>
+                       <div class="absolute inset-0 flex items-center justify-center">
+                         <div class="w-full h-[1px] bg-gray-300"></div>
+                       </div>
+                     </div>
+                   </div>
+                   
+                   <div class="w-full h-[20px] mb-10">
+                     <Button
+                        fullWidth={true}
+                        type="tertiary"
+                        text="Continue Without an Account"
+                        handleClick={navigateToNextPage}
+                     />
+                  </div>
+                   
 
                   <div class="w-full flex justify-center">
                      <LoginPrompt
