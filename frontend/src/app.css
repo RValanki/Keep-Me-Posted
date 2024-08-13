@@ -3,7 +3,7 @@
 
     Author: Ahmed Almasry
     Edited By: Angelina Leung
-    Last modified: 31/07/2024
+    Last modified: 13/08/2024
 */
 
 @tailwind base;
@@ -20,34 +20,22 @@ html{
     font-family: 'Inter', sans-serif; /* Custom font */
 }
 body {
-    @apply text-xl font-normal;
-    /* 20px based on 16px default font size */
-    /* 400, scale [1,1000] */
+    @apply text-base font-normal;
 }
 h1 {
-    @apply text-5xl font-bold;
-    /* 48px based on 16px default font size */
-    /* 700, scale [1,1000] */
+    @apply text-3xl font-bold text-center mt-14 mb-2 sm:text-4xl md:text-5xl md:mt-32 md:mb-4 lg:text-6xl ;
 }
 h2 {
-    @apply text-3xl;
-    font-weight: var(--semi-bold); /* Custom font weight */
-    /* 30px based on 16px default font size */
-    /* 550, scale [1,1000] */
+    @apply text-2xl font-semibold text-center sm:text-3xl md:text-4xl lg:text-5xl;
 }
 h3 {
-    @apply text-2xl;
-    font-weight: var(--semi-bold); /* Custom font weight */
-    /* 24px based on 16px default font size */
-    /* 550, scale [1,1000] */
+    @apply text-xl font-semibold text-center sm:text-2xl md:text-3xl lg:text-4xl;
 }
 .subheading {
-    @apply text-2xl font-normal;
-    /* 24px based on 16px default font size */
-    /* 400, scale [1,1000] */
+    @apply text-xl font-medium text-center sm:text-2xl md:text-3xl lg:text-4xl;
 }
 button {
-    @apply text-base;
+    @apply text-xs;
     font-weight: var(--semi-bold); /* Custom font weight */
     /* 16px based on 16px default font size */
     /* 550, scale [1,1000] */
