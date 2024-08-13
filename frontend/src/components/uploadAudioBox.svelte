@@ -28,6 +28,12 @@
 	let loadingBarComponent; // pointer for loading bar
 	const dropzoneStyles = "background-color: rgba(255, 0, 0, 0)"; // define custom to style dropzone
 
+	const uploadAudioBox = document.getElementById('upload-audio-box');
+	const icon = document.getElementById('icon');
+	const uploadAudioBoxFirstLine = document.getElementById('upload-audio-box-first-line');
+	const uploadAudioBoxSecondLine = document.getElementById('upload-audio-box-second-line');
+	let isConditionMet = false;
+
 	// ------------------------------------------ File Handling
 	let file;
 	let errorMessage = "";
@@ -74,20 +80,67 @@
 			"Invalid audio format! Your meeting audio must be in MP3 or WAV format";
 		}
   	}
+
+	// Function to update Tailwind styles based on a condition
+	function updateStyles(isConditionMet) {
+		if (isConditionMet) {
+			// Apply styles for the success state
+			uploadAudioBox.classList.remove(
+				'bg-light-blue', 'border-medium-blue'); // Remove previous styles
+			uploadAudioBox.classList.add(
+				'bg-success-25', 'border-success-300'); // Add success styles
+			
+			icon.classList.remove(
+				'w-12', 'h-12');
+			icon.classList.add(
+				'w-12', 'h-12'); // Keep same size for success state
+			
+			uploadAudioBoxFirstLine.classList.remove(
+				'text-blue-800');
+			uploadAudioBoxFirstLine.classList.add(
+				'text-success-700');
+			
+			uploadAudioBoxSecondLine.classList.remove(
+				'text-gray-400');
+			uploadAudioBoxSecondLine.classList.add(
+				'text-success-700');
+		} else {
+			// Apply styles for the initial state
+			uploadAudioBox.classList.remove(
+				'bg-success-25', 'border-success-300'); // Remove success styles
+			uploadAudioBox.classList.add(
+				'bg-light-blue', 'border-medium-blue'); // Add initial styles
+			
+			icon.classList.remove(
+				'w-12', 'h-12');
+			icon.classList.add(
+				'w-12', 'h-12'); // Keep same size for initial state
+			
+			uploadAudioBoxFirstLine.classList.remove(
+				'text-success-700');
+			uploadAudioBoxFirstLine.classList.add(
+				'text-blue-800');
+			
+			uploadAudioBoxSecondLine.classList.remove(
+				'text-success-700');
+			uploadAudioBoxSecondLine.classList.add(
+				'text-gray-400');
+		}
+	}
 </script>
 
 <!-- COMPONENT -->
 <div class= "flex items-center justify-center">
     <!-- upload-audio-box -->
-    <div class= "bg-light-blue box-border flex flex-col justify-center p-0 w-7/12 h-48 max-w-2xl max-h-48 border-2 border-medium-blue rounded-md flex-none order-0 flex-grow-0">
+    <div id="upload-audio-box" class= "bg-light-blue box-border flex flex-col justify-center p-0 w-7/12 h-48 max-w-2xl max-h-48 border-2 border-medium-blue rounded-md flex-none order-0 flex-grow-0">
 		{#if showDropzone}
 			<Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav" containerStyles={dropzoneStyles}>
 
 				<!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
 				<div class="text-center flex flex-col items-center text-center">
-					<img id="icon" class="w-12 h-20 max-w-12 max-h-12 flex-none order-0 flex-grow-0 mb-3" src={micIcon} alt="Icon" />
-					<span class="font-bold w-72 text-xl text-blue-800 order-0 flex-grow-0 mb-1">Upload meeting audio</span>
-					<span class="w-64 font-normal text-lg text-gray-400 order-1 flex-grow-0">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
+					<img id="icon" class="w-12 h-12 flex-none order-0 flex-grow-0 mb-3" src={micIcon} alt="Icon" />
+					<span id="upload-audio-box-first-line" class="font-bold w-72 text-xl text-blue-800 order-0 flex-grow-0 mb-1">Upload meeting audio</span>
+					<span id="upload-audio-box-second-line" class="w-64 font-normal text-lg text-gray-400 order-1 flex-grow-0">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
 				</div>
 
 			</Dropzone>
