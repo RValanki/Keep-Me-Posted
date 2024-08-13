@@ -17,6 +17,7 @@
 <!-- JavaScript -->
 <script>
 	import micIcon from "../assets/mic-icon.png";
+	import checkIcon from "../assets/check-icon.png";
 	import Dropzone from "svelte-file-dropzone";
 	import LoadingBar from "./loadingBar.svelte";
 	import { simple_pathway } from "../api-functions/simple_pathway";
@@ -28,11 +29,10 @@
 	let loadingBarComponent; // pointer for loading bar
 	const dropzoneStyles = "background-color: rgba(255, 0, 0, 0)"; // define custom to style dropzone
 
-	const uploadAudioBox = document.getElementById('upload-audio-box');
-	const icon = document.getElementById('icon');
-	const uploadAudioBoxFirstLine = document.getElementById('upload-audio-box-first-line');
-	const uploadAudioBoxSecondLine = document.getElementById('upload-audio-box-second-line');
 	let isConditionMet = false;
+	let firstLine = "Upload meeting audio";
+	let secondLine = "Must be under 120 minutes.";
+	let thirdLine = "MP3 or WAV formats accepted.";
 
 	// ------------------------------------------ File Handling
 	let file;
@@ -83,6 +83,11 @@
 
 	// Function to update Tailwind styles based on a condition
 	function updateStyles(isConditionMet) {
+		const uploadAudioBox = document.getElementById('upload-audio-box');
+		const icon = document.getElementById('icon');
+		const uploadAudioBoxFirstLine = document.getElementById('upload-audio-box-first-line');
+		const uploadAudioBoxSecondLine = document.getElementById('upload-audio-box-second-line');
+
 		if (isConditionMet) {
 			// Apply styles for the success state
 			uploadAudioBox.classList.remove(
@@ -90,10 +95,7 @@
 			uploadAudioBox.classList.add(
 				'bg-success-25', 'border-success-300'); // Add success styles
 			
-			icon.classList.remove(
-				'w-12', 'h-12');
-			icon.classList.add(
-				'w-12', 'h-12'); // Keep same size for success state
+			icon.src = checkIcon;
 			
 			uploadAudioBoxFirstLine.classList.remove(
 				'text-blue-800');
@@ -104,6 +106,10 @@
 				'text-gray-400');
 			uploadAudioBoxSecondLine.classList.add(
 				'text-success-700');
+			
+			firstLine = "Your summary has been generated!";
+			secondLine = "View the summary by clicking 'View Summary";
+			thirdLine = "";
 		} else {
 			// Apply styles for the initial state
 			uploadAudioBox.classList.remove(
@@ -111,10 +117,7 @@
 			uploadAudioBox.classList.add(
 				'bg-light-blue', 'border-medium-blue'); // Add initial styles
 			
-			icon.classList.remove(
-				'w-12', 'h-12');
-			icon.classList.add(
-				'w-12', 'h-12'); // Keep same size for initial state
+			icon.src = micIcon;
 			
 			uploadAudioBoxFirstLine.classList.remove(
 				'text-success-700');
@@ -125,6 +128,10 @@
 				'text-success-700');
 			uploadAudioBoxSecondLine.classList.add(
 				'text-gray-400');
+
+			firstLine = "Upload meeting audio";
+			secondLine = "Must be under 120 minutes.";
+			thirdLine = "MP3 or WAV formats accepted.";
 		}
 	}
 </script>
@@ -132,15 +139,16 @@
 <!-- COMPONENT -->
 <div class= "flex items-center justify-center">
     <!-- upload-audio-box -->
-    <div id="upload-audio-box" class= "bg-light-blue box-border flex flex-col justify-center p-0 w-7/12 h-48 max-w-2xl max-h-48 border-2 border-medium-blue rounded-md flex-none order-0 flex-grow-0">
+    <div id="upload-audio-box" class= "bg-light-blue flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2 border-medium-blue rounded-md">
 		{#if showDropzone}
 			<Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav" containerStyles={dropzoneStyles}>
 
 				<!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
 				<div class="text-center flex flex-col items-center text-center">
-					<img id="icon" class="w-12 h-12 flex-none order-0 flex-grow-0 mb-3" src={micIcon} alt="Icon" />
-					<span id="upload-audio-box-first-line" class="font-bold w-72 text-xl text-blue-800 order-0 flex-grow-0 mb-1">Upload meeting audio</span>
-					<span id="upload-audio-box-second-line" class="w-64 font-normal text-lg text-gray-400 order-1 flex-grow-0">Must be under 120 minutes. MP3 or WAV formats accepted.</span>
+					<img id="icon" class="w-12 h-12 m-3" src={micIcon} alt="Icon" />
+					<p id="upload-audio-box-first-line" class="sm:text-xl font-bold text-blue-800 mb-1">{firstLine}</p>
+					<p id="upload-audio-box-second-line" class="text-xs sm:text-base text-gray-400">{secondLine}</p>
+					<p class="text-xs sm:text-base text-gray-400">{thirdLine}</p>
 				</div>
 
 			</Dropzone>
