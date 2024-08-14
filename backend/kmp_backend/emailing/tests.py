@@ -141,29 +141,29 @@ class TestEmailSent(TestCase):
         test_login_SMTP_Helo_Error test raises an exception for when the Helo command is not supported
         """
         #SMTP Helo Error
-            mock_context = MagicMock()
-            mock_create_default_context.return_value = mock_context
+        mock_context = MagicMock()
+        mock_create_default_context.return_value = mock_context
 
-            # mocking the SMTP Helo command and the server
-            mock_server = MagicMock()
-            mock_server.login.side_effect = smtplib.SMTPHeloError(500, 'Helo command failed')
-            mock_smtp_ssl.return_value = mock_server
-            
-            mock_server.__enter__.return_value = mock_server
-            mock_server.__exit__.return_value = False
+        # mocking the SMTP Helo command and the server
+        mock_server = MagicMock()
+        mock_server.login.side_effect = smtplib.SMTPHeloError(500, 'Helo command failed')
+        mock_smtp_ssl.return_value = mock_server
+        
+        mock_server.__enter__.return_value = mock_server
+        mock_server.__exit__.return_value = False
 
-            request = HttpRequest()
-            request.method = 'POST'
-            request.POST['message'] = "Testing message"
-            request.POST['subject'] = "Testing Subject"
-            request.POST['contacts'] = "at@test.com"
+        request = HttpRequest()
+        request.method = 'POST'
+        request.POST['message'] = "Testing message"
+        request.POST['subject'] = "Testing Subject"
+        request.POST['contacts'] = "at@test.com"
 
-            response = send_email(request)
+        response = send_email(request)
 
-            #determining if the HELO command is asserted as expected
-            self.assertEqual(response.status_code, 500)
-            response_content = json.loads(response.content.decode('utf-8'))
-            self.assertEqual(response_content['error'], "HELO error occurred: (500, 'Helo command failed')")
+        #determining if the HELO command is asserted as expected
+        self.assertEqual(response.status_code, 500)
+        response_content = json.loads(response.content.decode('utf-8'))
+        self.assertEqual(response_content['error'], "HELO error occurred: (500, 'Helo command failed')")
 
 
     @patch('emailing.views.smtplib.SMTP_SSL')
