@@ -46,11 +46,11 @@
 
 	async function handleFilesSelect(e) {
 		const { acceptedFiles } = e.detail;
-		console.log(e.detail)
+		// console.log(e.detail)
 
 		if (acceptedFiles.length > 0) {
 			const selectedFile = acceptedFiles[0];
-			console.log(selectedFile);
+			// console.log(selectedFile);
 
 			// Initial file type check before loading it as an audio source
 			if (
