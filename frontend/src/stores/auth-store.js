@@ -53,3 +53,14 @@ export function getAuth() {
 
   return currentValue;
 }
+
+// Function to clear the session storage and reset the store
+export function clearAuth() {
+  
+  sessionStorage.removeItem(STORAGE_KEY);
+  
+  authStore.set({
+    email: "",
+    loggedIn: false
+  });
+}
