@@ -19,7 +19,6 @@
 	import checkIcon from "../assets/check-icon.png";
 	import Dropzone from "svelte-file-dropzone";
 	import LoadingBar from "./loadingBar.svelte";
-	import ErrorPopup from "./errorPopup.svelte";
 	import { transcribe_audio } from "../api-functions/transcribe_audio";
 	// import { send_summary } from "../api-functions/send_summary";
 
@@ -28,18 +27,6 @@
 	let uploadComplete = false;
 	let loadingBarComponent; // pointer for loading bar
 	const dropzoneStyles = "background-color: rgba(255, 0, 0, 0)"; // define custom to style dropzone
-
-	// Error Handling
-	let ifError = false;
-	let errorHeadingText = "";
-	let errorSubheadingText = "";
-	let errorButtonText = "";
-
-	const errorMessage = {
-		DURATION_EXCEEDED: ["Meeting duration exceeded", "Your meeting audio should be less than 120 minutes.", "Re-upload"],
-		INVALID_FORMAT: ["Invalid audio format!", "Your meeting audio must be in MP3 or WAV format.", "Re-upload"],
-		ASSEMBLYAI_ERROR: ["AssemblyAI Error name", "Some description of the error. Please try again later", "Close"],
-	};
 
 	// File Handling
 	const MAX_DURATION_SECONDS = 7200; // 7200 seconds = 120 minutes, used to check limit on files
@@ -90,10 +77,7 @@
 
 	// Function to give popup correct messages
 	function raiseError(errorType) {
-		ifError = !ifError;
-		errorHeadingText = errorMessage[errorType][0];
-		errorSubheadingText = errorMessage[errorType][1];
-		errorButtonText = errorMessage[errorType][2];
+		//TODO raise popups
   	}
 </script>
 
@@ -128,7 +112,4 @@
 	 		<LoadingBar bind:this={loadingBarComponent}/>
 		</div>
 	 {/if}
-	<ErrorPopup errorHeadingText={errorHeadingText} errorSubHeadingText={errorSubheadingText} errorButtonText={errorButtonText} isVisible={ifError}/>
 </div>
-
-<!-- <button on:click={() => ifError = !ifError}>click to cause error</button>  -->
