@@ -73,7 +73,7 @@
         precision={2}
         tweenDuration={1500}
         easing={sineOut}
-        size="h-6"
+        size="h-2"
         class="self-center"
         color="blue"
     />
