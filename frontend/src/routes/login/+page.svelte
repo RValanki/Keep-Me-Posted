@@ -140,6 +140,7 @@
    }
 </script>
 
+<title>Keep Me Posted</title>
 <div class="m-0 h-screen bg-gradient-to-l from-[#53b1fd] to-[#1570ef] flex justify-center items-center text-white">
    <div class="flex flex-col md:flex-row h-screen w-full">
       <!-- Top Row on Mobile / Left Column on Desktop -->
