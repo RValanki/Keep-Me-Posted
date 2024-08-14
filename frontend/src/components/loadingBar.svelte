@@ -19,7 +19,7 @@
     import {Progressbar} from 'flowbite-svelte';
     import { sineOut } from 'svelte/easing';
 
-    let progress = 0;
+    export let progress = 0;
     let targetProgress = 0; // Target value for the progress bar, used for animating
     let description = "Uploading Meeting Audio...";
     let iconSrc = uploadIcon;
@@ -27,7 +27,7 @@
     /**
      * Function to update the progress based on value input
     */ 
-    function updateLoadingBar(value) {
+    export function updateLoadingBar(value) {
         if (value >= progress){
             progress = value
             targetProgress = value

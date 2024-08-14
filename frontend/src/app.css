@@ -23,7 +23,7 @@ body {
     @apply text-base font-normal;
 }
 h1 {
-    @apply text-3xl font-bold text-center mt-14 mb-2 sm:text-4xl md:text-5xl md:mt-32 md:mb-4 lg:text-6xl ;
+    @apply text-3xl font-bold text-center sm:text-4xl md:text-5xl lg:text-6xl ;
 }
 h2 {
     @apply text-2xl font-semibold text-center sm:text-3xl md:text-4xl lg:text-5xl;
