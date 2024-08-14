@@ -24,15 +24,10 @@
 	// import { send_summary } from "../api-functions/send_summary";
 
 	// content
-	let showDropzone = true;
+	let fileUploaded = false;
+	let uploadComplete = false;
 	let loadingBarComponent; // pointer for loading bar
 	const dropzoneStyles = "background-color: rgba(255, 0, 0, 0)"; // define custom to style dropzone
-
-	// styling contents
-	let isConditionMet = false;
-	let firstLine = "Upload meeting audio";
-	let secondLine = "Must be under 120 minutes.";
-	let thirdLine = "MP3 or WAV formats accepted.";
 
 	// Error Handling
 	let ifError = false;
@@ -47,15 +42,15 @@
 	};
 
 	// File Handling
-	let file;
 	const MAX_DURATION_SECONDS = 7200; // 7200 seconds = 120 minutes, used to check limit on files
 
 	async function handleFilesSelect(e) {
 		const { acceptedFiles } = e.detail;
-		file = null; // Reset the file each time new files are selected
+		console.log(e.detail)
 
 		if (acceptedFiles.length > 0) {
 			const selectedFile = acceptedFiles[0];
+			console.log(selectedFile);
 
 			// Initial file type check before loading it as an audio source
 			if (
@@ -65,37 +60,32 @@
 				raiseError(errorMessage.INVALID_FORMAT);
 				return; // Exit the function early if file type is incorrect
 			}
-
+			
 			// check duration of audio file
 			const audio = new Audio(URL.createObjectURL(selectedFile)); // Create new Audio HTML object, create URL used as source for audio element
 
 			audio.addEventListener("loadedmetadata", async () => {
-				if (audio.duration <= MAX_DURATION_SECONDS) {
-				file = selectedFile;
-				} else {
+				if (audio.duration >= MAX_DURATION_SECONDS) {
 					raiseError(errorMessage.DURATION_EXCEEDED);
-				file = null;
 				}
 			});
-
 			// File has passed all checks
-			showDropzone = false;
-			startUpload();
+			startUpload(selectedFile);
   		}
 	}
 
 	// Function that calls transcribe_audio API
-	async function startUpload(){
+	async function startUpload(file) {
 		console.log('start upload');
-		const response = await transcribe_audio(file, "http://127.0.0.1:8000");
-		console.log(response);
-		loadingBarComponent.updateLoadingBar(50);
-		completeUpload();
-	}
+		const transcript = await transcribe_audio(file, "http://127.0.0.1:8000"); //
+		console.log(transcript);
 
-	// Function that completes upload once summary is generated
-	function completeUpload(){
-		updateStyles(); // change to green styling
+		// TODO
+		// loadingBarComponent.updateLoadingBar(50);
+		// sent_summary api
+		// loadingBarComponent.updateLoadingBar(99);
+		// fileUploaded = true;
+		// uploadComplete = true;
 	}
 
 	// Function to give popup correct messages
@@ -105,82 +95,40 @@
 		errorSubheadingText = errorMessage[errorType][1];
 		errorButtonText = errorMessage[errorType][2];
   	}
-
-	// Function to update Tailwind styles based on a condition
-	function updateStyles(isConditionMet) {
-		const uploadAudioBox = document.getElementById('upload-audio-box');
-		const icon = document.getElementById('icon');
-		const uploadAudioBoxFirstLine = document.getElementById('upload-audio-box-first-line');
-		const uploadAudioBoxSecondLine = document.getElementById('upload-audio-box-second-line');
-
-		if (isConditionMet) {
-			// Apply styles for the success state
-			uploadAudioBox.classList.remove(
-				'bg-light-blue', 'border-medium-blue'); // Remove previous styles
-			uploadAudioBox.classList.add(
-				'bg-success-25', 'border-success-300'); // Add success styles
-			
-			icon.src = checkIcon;
-			
-			uploadAudioBoxFirstLine.classList.remove(
-				'text-blue-800');
-			uploadAudioBoxFirstLine.classList.add(
-				'text-success-700');
-			
-			uploadAudioBoxSecondLine.classList.remove(
-				'text-gray-400');
-			uploadAudioBoxSecondLine.classList.add(
-				'text-success-700');
-			
-			firstLine = "Your summary has been generated!";
-			secondLine = "View the summary by clicking 'View Summary'";
-			thirdLine = "";
-		} else {
-			// Apply styles for the initial state
-			uploadAudioBox.classList.remove(
-				'bg-success-25', 'border-success-300'); // Remove success styles
-			uploadAudioBox.classList.add(
-				'bg-light-blue', 'border-medium-blue'); // Add initial styles
-			
-			icon.src = micIcon;
-			
-			uploadAudioBoxFirstLine.classList.remove(
-				'text-success-700');
-			uploadAudioBoxFirstLine.classList.add(
-				'text-blue-800');
-			
-			uploadAudioBoxSecondLine.classList.remove(
-				'text-success-700');
-			uploadAudioBoxSecondLine.classList.add(
-				'text-gray-400');
-
-			firstLine = "Upload meeting audio";
-			secondLine = "Must be under 120 minutes.";
-			thirdLine = "MP3 or WAV formats accepted.";
-		}
-	}
 </script>
 
 <!-- COMPONENT -->
 <div class= "flex items-center justify-center">
     <!-- upload-audio-box -->
-    <div id="upload-audio-box" class= "bg-light-blue flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2 border-medium-blue rounded-md">
-		{#if showDropzone}
+	 {#if !fileUploaded}
+	 	<!-- BLUE with dropzone -->
+	 	<div id="upload-audio-box" class= "bg-light-blue flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2  border-medium-blue rounded-md">
 			<Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav" containerStyles={dropzoneStyles}>
 
 				<!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
 				<div class="text-center flex flex-col items-center text-center">
 					<img id="icon" class="w-12 h-12 m-3" src={micIcon} alt="Icon" />
-					<p id="upload-audio-box-first-line" class="sm:text-xl font-bold text-blue-800 mb-1">{firstLine}</p>
-					<p id="upload-audio-box-second-line" class="text-xs sm:text-base text-gray-400">{secondLine}</p>
-					<p class="text-xs sm:text-base text-gray-400">{thirdLine}</p>
+					<p id="upload-audio-box-first-line" class="sm:text-xl font-bold text-blue-800 mb-1">Upload meeting audio</p>
+					<p id="upload-audio-box-second-line" class="text-xs sm:text-base text-gray-400">Must be under 120 minutes.</p>
+					<p class="text-xs sm:text-base text-gray-400">MP3 or WAV formats accepted.</p>
 				</div>
-
 			</Dropzone>
-		{:else}
-			<LoadingBar bind:this={loadingBarComponent}/>
-		{/if}
-	</div>
+		</div>
+	 {:else if fileUploaded && uploadComplete}
+		<!-- GREEN no dropzone -->
+		 <div id="upload-audio-box" class= "bg-success-25 flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2 border-success-300 rounded-md">
+			<div class="text-center flex flex-col items-center text-center">
+				<img id="icon" class="w-12 h-12 m-3" src={checkIcon} alt="Icon" />
+				<p id="upload-audio-box-first-line" class="sm:text-xl font-bold text-success-700 mb-1">Your summary has been generated!</p>
+				<p id="upload-audio-box-second-line" class="text-xs sm:text-base text-success-700">View the summary by clicking 'View Summary'</p>
+			</div>
+		</div>
+	 {:else} <!--file has been uploaded awaiting api-->
+	 	<div id="upload-audio-box" class= "bg-light-blue flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2  border-medium-blue rounded-md">
+	 		<LoadingBar bind:this={loadingBarComponent}/>
+		</div>
+	 {/if}
 	<ErrorPopup errorHeadingText={errorHeadingText} errorSubHeadingText={errorSubheadingText} errorButtonText={errorButtonText} isVisible={ifError}/>
-  	</div>
 </div>
+
+<!-- <button on:click={() => ifError = !ifError}>click to cause error</button>  -->
