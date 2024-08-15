@@ -116,7 +116,7 @@ class TranscribeTestCase(APITestCase):
         MockTranscribe.assert_called_once()
         MockTranscribe.assert_called_with(views.UPLOAD_DIRECTORY_PATH + mock_storage.save.return_value)
     
-    # Test 5: API Module transcribe()
+    # Test 5: API Module transcribe
     @patch('assemblyaimodule.assemblyAI_module.aai.Transcriber')
     def test_transcribe_api(self, MockTranscriber):
         # Mock Transcriber
@@ -136,7 +136,37 @@ class TranscribeTestCase(APITestCase):
         transcript.text = success
         self.assertEqual(tai.transcribe("Test"), success)
     
-    
+    # Test 6: API Module transcribe_with_speakers
+    @patch('assemblyaimodule.assemblyAI_module.aai.Transcriber')
+    def test_transcribe_with_speakers_api(self, MockTranscriber):
+        # Mock Transcriber
+        mock_transcriber = MockTranscriber.return_value
+        transcript = MagicMock()
+        mock_transcriber.transcribe.return_value = transcript
+
+        # False Assert 
+        transcript.status = tai.aai.TranscriptStatus.error
+        error = "Error"
+        transcript.error = error
+        self.assertEqual(tai.transcribe("Test"), error)
+
+        # Successful Assert
+        transcript.status = tai.aai.TranscriptStatus.completed
+        utterance1 = MagicMock()
+        utterance2 = MagicMock()
+        utterance3 = MagicMock()
+        utterance1.text = "Success 1"
+        utterance1.speaker = "John"
+        utterance2.text = "Success 2"
+        utterance2.speaker = "Sally"
+        utterance3.text = "Skibidi Toilet"
+        utterance3.speaker = "Uvindu"
+        transcript.utterances = [utterance1, utterance2, utterance3]
+        success = ""
+        for utterance in transcript.utterances:
+            success += f"Speaker {utterance.speaker}: {utterance.text}\n"
+        self.assertEqual(tai.transcribe_with_speakers("Test"), success)
+
    
 
 
