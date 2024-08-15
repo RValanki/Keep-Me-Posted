@@ -16,26 +16,16 @@
   import profileHoverIcon from "../assets/profile-icon-dark.png";
   import logOutIcon from "../assets/log-out-icon.png";
   import Button from "../components/button.svelte";
-  import { getAuth, authStore } from "../stores/auth-store.js";
+  import { getAuth, authStore, clearAuth } from "../stores/auth-store.js";
   import { goto } from "$app/navigation";
 
   let showDropdown = false; // Boolean to dictate whether dropdown is visible
   let profileIcons = [profileIcon, profileHoverIcon]; // Array holding 2 forms of profile picture [default, on:hover]
   let currentIconIndex = 0; // Current profile icon form
-  const auth = getAuth();
+  const auth = getAuth(); //
   
   let email = auth.email // Retrieve current email that is logged in
   
-  // If email changes, then update
-  $: email = $authStore["email"];
-
-  
-  console.log(auth.email); // Prints the current email
-  console.log(auth.loggedIn);
-
-  console.log("hi")
-  
-
   // Function to toggle dropdown
   function toggleDropdown() {
     showDropdown = !showDropdown;
@@ -44,6 +34,8 @@
 
   // Function to handle logging out
   function handleLogout() {
+    clearAuth();
+    goto("/login");
     console.log("todo - handle logout");
   }
 
