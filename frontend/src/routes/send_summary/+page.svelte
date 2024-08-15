@@ -39,10 +39,10 @@
   
   <!-- The div for the recipients section of the page -->
   <div class="flex pt-10 gap-3.125">
-    <div class="font-bold pr-8">Recipients:</div>
-    <div class="flex flex-wrap">
+    <h3 class="text-xl font-bold pr-8">Recipients:</h3>
+    <h3 class="font-normal flex flex-wrap">
       <Recipients></Recipients>
-    </div>
+    </h3>
   </div>
 </div>
 
