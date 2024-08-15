@@ -12,6 +12,7 @@
     //required imports
     import Topbar from '../../components/topbar.svelte';
     import UploadBox from "../../components/uploadAudioBox.svelte";
+    import Toggle from '../../components/toggle.svelte';
 </script>
 
 <html lang="en">
@@ -26,5 +27,6 @@
         <div class="subheading mb-16 mt-4">Upload your meeting audio for us to summarise.</div>
     
         <UploadBox/>
+        <Toggle/>
     </body>
 </html>
