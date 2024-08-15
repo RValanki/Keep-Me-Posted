@@ -12,9 +12,19 @@
     import Button from "./button.svelte"
     import { summaryStore } from "../stores/summary-store"
     import { onMount, onDestroy } from "svelte"
+    import regenerateIcon from "../assets/regenerate-icon.png"
 
     export let emailSubject = ""
     export let summaryGenerated = ""
+
+    let dots = ""
+    setInterval(() => {
+        if (dots.length < 3) {
+            dots += '.';
+        } else {
+            dots = '';
+        }
+    }, 500);
 
     // Remove internal scrolling in text area and expand outer div instead
     function autoResize(event) {
@@ -24,8 +34,12 @@
 
     function loadSummaryContent() {
         const unsubscribe = summaryStore.subscribe(value => {
-            summaryGenerated = value.summary;
-            emailSubject = value.subject;
+            if (!summaryGenerated) {
+                summaryGenerated = value.summary;
+            }
+            if (!emailSubject) {
+                emailSubject = value.subject;
+            }
         });
         if (summaryGenerated && emailSubject) {
             unsubscribe();
@@ -37,19 +51,33 @@
     });
 
     export const saveSummaryToStore = () => {
-        // bind not working for some reason so I have to get the content manually
-        const updatedSubject = document.getElementById("emailSubject").value
-        const updatedSummary = document.getElementById("summaryGenerated").value
-        
-        // only overwrite store if the edit fields have been populated
-        if (updatedSubject && updatedSummary) {
-            summaryStore.set({
-            summary: updatedSubject,
-            subject: updatedSummary,
-        });
+        // must do separately in case one hasn't generated yet
+        if (emailSubject) {
+            // bind not working for some reason so I have to get the content manually
+            const updatedSubject = document.getElementById("emailSubject").value         
+            // only overwrite store if the edit fields have been populated
+            if (updatedSubject) {
+                summaryStore.update(current => {
+                    return {
+                        ...current,
+                        subject: updatedSubject
+                    };
+                });
+            }
+        }
+        if (summaryGenerated) {
+            const updatedSummary = document.getElementById("summaryGenerated").value
+            if (updatedSummary) {
+                summaryStore.update(current => {
+                    return {
+                        ...current,
+                        summary: updatedSummary
+                    };
+                });
+            }
         }
 
-        // for testing
+        //for testing
         // summaryStore.subscribe(value => {
         //     console.log(value.summary);
         //     console.log(value.subject)
@@ -80,7 +108,7 @@
 
 <div class="rounded-lg p-4 w-9/12 mx-auto" style="background-color: #F5FAFF;">
     <div class="flex justify-end ml-auto">
-        <Button type="secondary"></Button>
+        <Button type="secondary-with-border" text="Regenerate" icon={regenerateIcon}></Button>
     </div>
     <div class="flex flex-col gap-0	 mb-4">
         <label 
@@ -98,12 +126,9 @@
                 bind:value={emailSubject} 
                 placeholder="Your subject will be generated here..." />
         {:else}
-            <input 
-                class="w-full p-2 rounded subject-placeholder" 
-                style="background-color: #F5FAFF;" 
-                type="text" 
-                id="emailSubject" 
-                placeholder="Your subject will be generated here..." />
+        <div class="w-full p-2 rounded text-slate-400 font-bold">
+            Your subject will be generated here{dots}
+        </div>
         {/if}
     </div>
     <div class="flex flex-col gap-0 mb-4">
@@ -123,13 +148,9 @@
                 on:input={autoResize}
             ></textarea>
         {:else}
-            <textarea
-                class="w-full p-2 rounded text-base summary-placeholder"
-                style="background-color: #F5FAFF;"
-                id="summaryGenerated"
-                placeholder="Your summary will be generated here..."
-                on:input={autoResize}
-            ></textarea>
+            <div class="w-full p-2 rounded text-slate-400 text-base">
+                Your subject will be generated here{dots}
+            </div>
         {/if}
     </div>
 </div>
