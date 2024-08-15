@@ -1,6 +1,6 @@
 from django.urls import reverse
-from assemblyaimodule import views
-from unittest.mock import patch
+from assemblyaimodule import views, assemblyAI_module as tai
+from unittest.mock import patch, MagicMock
 from rest_framework.test import APITestCase
 from rest_framework import status
 
@@ -9,7 +9,6 @@ class TranscribeTestCase(APITestCase):
     # Test 1: Test transcribe() invalid
     @patch('assemblyaimodule.views.AudioFileSerializer')
     def test_transcribe_invalid(self, MockSerializer):
-
         # Mock serializer object as invalid with error
         mock_serializer = MockSerializer.return_value
         mock_serializer.is_valid.return_value = False
@@ -31,7 +30,6 @@ class TranscribeTestCase(APITestCase):
     @patch('assemblyaimodule.views.FileSystemStorage')
     @patch('assemblyaimodule.views.AudioFileSerializer')
     def test_transcribe_valid(self, MockSerializer, MockStorage, MockTranscribe):
-
         # Mock serializer object as valid
         mock_serializer = MockSerializer.return_value
         mock_serializer.is_valid.return_value = True
@@ -66,7 +64,6 @@ class TranscribeTestCase(APITestCase):
     # Test 3: Test transcribe_with_speakers() invalid
     @patch('assemblyaimodule.views.AudioFileSerializer')
     def test_transcribe_speaker_invalid(self, MockSerializer):
-
         # Mock serializer object as invalid with error
         mock_serializer = MockSerializer.return_value
         mock_serializer.is_valid.return_value = False
@@ -82,13 +79,12 @@ class TranscribeTestCase(APITestCase):
 
         # Assert function calls
         MockSerializer.assert_called_once()
-    
+
     # Test 4: Test transcribe_with_speakers() valid
     @patch('assemblyaimodule.views.TS.transcribe_with_speakers')
     @patch('assemblyaimodule.views.FileSystemStorage')
     @patch('assemblyaimodule.views.AudioFileSerializer')
     def test_transcribe_speaker_valid(self, MockSerializer, MockStorage, MockTranscribe):
-
         # Mock serializer object as valid
         mock_serializer = MockSerializer.return_value
         mock_serializer.is_valid.return_value = True
@@ -119,6 +115,30 @@ class TranscribeTestCase(APITestCase):
         mock_storage.delete.assert_called_with(mock_storage.save.return_value)
         MockTranscribe.assert_called_once()
         MockTranscribe.assert_called_with(views.UPLOAD_DIRECTORY_PATH + mock_storage.save.return_value)
+    
+    # Test 5: API Module transcribe()
+    @patch('assemblyaimodule.assemblyAI_module.aai.Transcriber')
+    def test_transcribe_api(self, MockTranscriber):
+        # Mock Transcriber
+        mock_transcriber = MockTranscriber.return_value
+        transcript = MagicMock()
+        mock_transcriber.transcribe.return_value = transcript
+
+        # False Assert 
+        transcript.status = tai.aai.TranscriptStatus.error
+        error = "Error"
+        transcript.error = error
+        self.assertEqual(tai.transcribe("Test"), error)
+
+        # Successful Assert
+        transcript.status = tai.aai.TranscriptStatus.completed
+        success = "Test Successful"
+        transcript.text = success
+        self.assertEqual(tai.transcribe("Test"), success)
+    
+    
+   
+
 
 
 
