@@ -34,7 +34,7 @@
     </div>
     <!-- the heading and subheading of the page -->
     <h1 class="pt-3">Your Summary and Transcript Will Be Sent..</h1>
-    <p class=" text-center pt-5">After the summary has been completely generated, it will be sent automatically with the transcript.</p>
+    <p class="subheading text-xl sm:text-xl md:text-2xl lg:text-3xl text-center pt-5">After the summary has been completely generated, it will be sent automatically with the transcript.</p>
   </div>
   
   <!-- The div for the recipients section of the page -->
