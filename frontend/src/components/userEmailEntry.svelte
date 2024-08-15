@@ -47,7 +47,7 @@
             <div class="h2 text-center text-gray-900 font-semibold p-2">Would you like to recieve a copy of the summary?</div>
 
       <div class="h3 text-center text-gray-500 text-base p-1">
-        Add your email to receive the summary.
+        Since you are not logged in, we require you to add in your email.
       </div>
 
       <div class="text-left font-medium text-sm text-gray-700 px-4 py-2">Email address</div>
@@ -60,22 +60,18 @@
       />
 
       <div class="flex shrink justify-evenly object-cover pb-1 pt-8 items-center">
-        <div class = "w-5/12">
-            <Button
-              type="secondary"
-              text="Cancel"
-              fullWidth={true}
-              handleClick={handleCancel}
-            ></Button>
-        </div>
-        <div class = "w-5/12">
+        <Button
+          type="secondary"
+          text="Cancel"
+          fullWidth={true}
+          handleClick={handleCancel}
+        ></Button>
         <Button
           type="primary"
           text="Add myself"
           fullWidth={true}
           handleClick={handleAddEmail}
         ></Button>
-        </div>
       </div>
     </div>
     </div>
