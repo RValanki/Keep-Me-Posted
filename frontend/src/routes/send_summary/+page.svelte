@@ -16,7 +16,7 @@
     //the next page in the sequence
     let nextPage = () => {
         console.log("clicked");
-        goto("/upload-audio")
+        goto("/upload_audio")
     } 
   
 </script>
