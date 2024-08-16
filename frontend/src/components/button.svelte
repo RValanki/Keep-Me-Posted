@@ -2,19 +2,22 @@
 
     Contains modifiable button
 
-    Author: Diya Ramesh, Brenda Dang
+    Author: Diya Ramesh, Brenda Dang, Benjamin Cherian
     Last modified: 9/05/2024
 
 -->
 
-<!--  -->
 <script>
-    import '../app.css';
     export let type = 'primary';
     export let handleClick = () => {};
     export let icon = ''; // Default empty string for icon URL
+    export let iconSvg = ''; // Default empty string for inline SVG
+    export let iconPos = 'left'; // Default icon position is on left of the button
     export let text = 'Button';
-	export let fullWidth = false; // Default to false for not full width
+    export let fullWidth = false; // Default to false for not full width
+    export let fitContainerHeight = false; // New prop to fit container height
+    export let disabled = false;
+
 
     // Internal handleClick function that calls the passed handleClick prop
     function internalHandleClick() {
@@ -22,76 +25,41 @@
     }
 </script>
 
-<style>
-    .primary {
-        background-color: #1570EF;
-        color: #FFFFFF;
-    }
-    
-    .primary:hover {
-        background-color: #0C4EAE;
-    }
+<div class="flex justify-center sm:justify-start h-full">
+    <button 
+        class="flex items-center justify-center font-sans rounded-lg px-3 py-2 md:px-4 md:py-3 lg:px-5 lg:py-3.5 transition ease-in-out duration-300 min-h-11
+        {type === 'primary' ? 'bg-blue-600 text-white hover:bg-blue-800 border-none' : ''}
+        {type === 'secondary' ? 'bg-blue-50 text-blue-700 hover:bg-blue-100 border-none' : ''}
+        {type === 'secondary-with-border' ? 'bg-blue-50 text-blue-700 hover:bg-blue-100 border-blue-600 border-2' : ''}
+        {type === 'tertiary' ? 'bg-white text-gray-800 border-[1px] border-gray-300 hover:bg-gray-300' : ''}
+        {type === 'disabled' ? 'bg-gray-200 text-white cursor-not-allowed border-none' : ''}
+        {type === 'error' ? 'bg-red-600 text-white border-none' : ''}
+        {fullWidth ? 'w-full text-center' : ''}
+        {fitContainerHeight ? 'h-full' : ''}"
+        on:click="{internalHandleClick}">
 
-    .secondary {
-        background-color: #EFF8FF;
-        color: #175CD3;
-    }
+        {#if iconPos === 'right'}
+            {text}
+        {/if}
 
-    .secondary:hover {
-        background-color: #CBE3F5;
-    }
-    
-    .tertiary {
-        background-color: #FFFFFF;
-        color: #344054;
-        border: #D0D5DD solid 1px;
+        {#if icon}
+            <!-- svelte-ignore a11y-missing-attribute -->
+            <img src="{icon}" class="max-w-4 md:max-w-5 lg:max-w-6
+            {iconPos === 'left' ? "mr-2" : ""}
+            {iconPos === 'right' ? "ml-2" : ""}">
+        {:else if iconSvg}
+            <!-- svelte-ignore a11y-missing-attribute -->
+            <div src="{icon}" class="sm:mr-2 lg:mr-6 2xl:mr-[2vw] max-w-6
+            {iconPos === 'left' ? "mr-2" : ""}
+            {iconPos === 'right' ? "ml-2" : ""}">
+                {@html iconSvg}
+            </div>
+        {/if}
 
-    }
+        {#if iconPos === 'left'}
+            {text}
+        {/if}
 
-    .disabled {
-        background-color: #EAECF0;
-        color: #FFFFFF;
-        cursor: not-allowed;
-    }
-
-    .error {
-        background-color: #D92D20;
-        color: #FFFFFF;
-    }
-
-
-    button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-		font-family: Inter, sans-serif;
-        border: none;
-        border-radius: 8px;
-        padding: 10px 20px;
-        cursor: pointer;
-        transition: 0.3s ease-in-out;
-		min-height: 44px;
-    }
-
-	.full-width {
-		width: 100%; /* Set width to 100% when fullWidth prop is true */
-		text-align: center;
-    }
-
-    img {
-        margin-right: 0.5rem;
-		max-width: 1.5rem;
-    }
-    
-</style>
-
-<button class="{type}" on:click="{internalHandleClick}" text="{text}" class:full-width="{fullWidth}">
-    {#if icon}
-        <!-- svelte-ignore a11y-missing-attribute -->
-        <img src="{icon}">
-    {/if}
-
-    {text}
-    
-    <slot></slot>
-</button>
+        <slot></slot>
+    </button>
+</div>

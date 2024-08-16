@@ -2,8 +2,8 @@
     This file is used to define global styles for the application's typescales.
 
     Author: Ahmed Almasry
-
-    Last modified: 12/05/2024
+    Edited By: Angelina Leung
+    Last modified: 13/08/2024
 */
 
 @tailwind base;
@@ -14,45 +14,40 @@
     --semi-bold: 550;
 }
 *{
-    color: black;
-    margin-block-start: 0em;
-    margin-block-end: 0em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
+    @apply text-black m-0;
 }
 html{
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', sans-serif; /* Custom font */
+}
+body {
+    @apply text-base font-normal;
+}
+h1 {
+    @apply text-3xl font-bold text-center sm:text-4xl md:text-5xl lg:text-6xl ;
+}
+h2 {
+    @apply text-2xl font-semibold text-center sm:text-3xl md:text-4xl lg:text-5xl;
+}
+h3 {
+    @apply text-xl font-semibold text-center sm:text-2xl md:text-3xl lg:text-4xl;
+}
+.subheading {
+    @apply text-xl font-medium text-center sm:text-2xl md:text-3xl lg:text-4xl;
+}
+button {
+    @apply text-xs;
+    font-weight: var(--semi-bold); /* Custom font weight */
+    /* 16px based on 16px default font size */
+    /* 550, scale [1,1000] */
+}
+.caption {
+    @apply text-base font-normal;
+    /* 16px based on 16px default font size */
+    /* 400, scale [1,1000] */
 }
 
-body{
-    font-size: 1.25rem; /* 20px based on 16px default font size */
-    font-weight: normal; /* 400, scale [1,1000] */
-}
-h1{
-    font-size: 3rem; /* 48px based on 16px default font size */
-    font-weight: bold; /* 700, scale [1,1000] */
-}
-h2{
-    font-size: 1.875rem; /* 30px based on 16px default font size */
-    font-weight: var(--semi-bold); /* 550, scale [1,1000] */
-}
-h3{
-    font-size: 1.5rem; /* 24px based on 16px default font size */
-    font-weight: var(--semi-bold); /* 550, scale [1,1000] */
-}
-.subheading{
-    font-size: 1.5rem; /* 24px based on 16px default font size */
-    font-weight: normal; /* 400, scale [1,1000] */
-}
-button{
-    font-size: 1rem; /* 16px based on 16px default font size */
-    font-weight: var(--semi-bold); /* 550, scale [1,1000] */
-}
-.caption{
-    font-size: 1rem; /* 16px based on 16px default font size */
-    font-weight: normal; /* 400, scale [1,1000] */
-}
-.token{
-    font-size: 0.7rem; /* 14px based on 16px default font size */
-    font-weight: normal; /* 400, scale [1,1000] */
+.token {
+    @apply text-[0.7rem] font-normal;
+    /* 14px based on 16px default font size */
+    /* 400, scale [1,1000] */
 }

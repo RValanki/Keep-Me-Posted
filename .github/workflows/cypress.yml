@@ -1,0 +1,36 @@
+name: Cypress CI
+
+on:
+  push:
+    branches: [ "develop", "main" ]
+  pull_request:
+    branches: [ "develop", "main" ]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Start Application
+        run: |
+          cd frontend
+          npm run dev &
+
+      - name: Wait for Application
+        run: |
+          cd frontend
+          npx wait-on http://localhost:5173 --timeout 60000
+          
+      - name: Run Cypress Tests
+        run: |
+          cd frontend
+          npx cypress run --browser chrome
+
+        
