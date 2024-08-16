@@ -101,17 +101,13 @@ def generate_summary(request):
 
 def handle_api_error(error):
     """Handles any error codes that Gemini may return."""
-    if error.status_code == 400:
-        return error.status_code,HttpResponse("Invalid request. Please check the request format and try again.", status=400)
-    elif error.status_code == 403:
-        return error.status_code,HttpResponse("Permission denied. Please check your API key and permissions.", status=403)
-    elif error.status_code == 404:
-        return error.status_code,HttpResponse("Resource not found. Please check the request URL and try again.", status=404)
-    elif error.status_code == 429:
-        return error.status_code,HttpResponse("Rate limit exceeded. Please wait and try again later.", status=429)
-    elif error.status_code == 500:
-        return error.status_code,HttpResponse("Internal server error. Please try again later.", status=500)
-    elif error.status_code == 503:
-        return error.status_code,HttpResponse("Service unavailable. Please try again later.", status=503)
-    else:
-        return error.status_code,HttpResponse("An unexpected error occurred. Please try again later.", status=500)
+    error_responses = {
+        400: HttpResponse("Invalid request. Please check the request format and try again.", status=400),
+        403: HttpResponse("Permission denied. Please check your API key and permissions.", status=403),
+        404: HttpResponse("Resource not found. Please check the request URL and try again.", status=404),
+        429: HttpResponse("Rate limit exceeded. Please wait and try again later.", status=429),
+        500: HttpResponse("Internal server error. Please try again later.", status=500),
+        503: HttpResponse("Service unavailable. Please try again later.", status=503),
+    }
+    #return the error, if the error is not in the list of error responses, return a generic response
+    return error.status_code,error_responses.get(error.status_code, HttpResponse("An unexpected error occurred. Please try again later.", status=500))
