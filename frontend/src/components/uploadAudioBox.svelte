@@ -9,7 +9,7 @@
 		includes an icon, a header (bolded line), second and third line
 
 	Authors: Parul Garg (pgar0011)
-	Editied by: Benjamin Cherian, Zihao Wang, Angelina Leung, Maureen Pham
+	Editied by: Benjamin Cherian, Zihao Wang, Angelina Leung, Maureen Pham, Danny Leung
 	Last Modified: 14/08/24
 
 -->
@@ -21,6 +21,8 @@
 	import LoadingBar from "./loadingBar.svelte";
 	import { transcribe_audio } from "../api-functions/transcribe_audio";
 	// import { send_summary } from "../api-functions/send_summary";
+	import PopUpModal from "./popUpModal.svelte"; // Import the PopUpModal component
+	import errorIcon from "../assets/error-icon.png"; // Import the error icon
 
 	// content
 	let fileUploaded = false;
@@ -33,8 +35,12 @@
 	const errorMessage = {
 		DURATION_EXCEEDED: ["Meeting duration exceeded", "Your meeting audio should be less than 120 minutes.", "Re-upload"],
 		INVALID_FORMAT: ["Invalid audio format!", "Your meeting audio must be in MP3 or WAV format.", "Re-upload"],
-		ASSEMBLYAI_ERROR: ["AssemblyAI Error name", "Some description of the error. Please try again later", "Close"],
+		ASSEMBLYAI_ERROR: ["AssemblyAI Error name", "Some description of the error. Please try again later", "Close"],	
 	};
+
+	let showError = false; // State for showing the error popup
+	let popupHeader = ''; // Header for the popup
+	let popupMainText = ''; // Main text for the popup
 
 	async function handleFilesSelect(e) {
 		const { acceptedFiles } = e.detail;
@@ -82,8 +88,14 @@
 
 	// Function to give popup correct messages
 	function raiseError(errorType) {
-		//TODO raise popups
+		popupHeader = errorType[0];
+		popupMainText = errorType[1];
+		showError = true;
   	}
+
+	function dismissError() {
+		showError = false;
+	}
 </script>
 
 <!-- COMPONENT -->
@@ -92,7 +104,7 @@
 	 {#if !fileUploaded}
 	 	<!-- BLUE with dropzone -->
 	 	<div id="upload-audio-box" class= "bg-light-blue flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2  border-medium-blue rounded-md">
-			<Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav" containerStyles={dropzoneStyles}>
+			<Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav, .pdf" containerStyles={dropzoneStyles}>
 
 				<!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
 				<div class="text-center flex flex-col items-center text-center">
@@ -118,3 +130,17 @@
 		</div>
 	 {/if}
 </div>
+
+<!-- Error Pop-Up Modal -->
+{#if showError}
+	<PopUpModal 
+		type="error"
+		header={popupHeader}
+		mainText={popupMainText}
+		iconPath={errorIcon}
+		firstButtonText="Re-upload"
+		firstHandleClick={dismissError}
+		width="96"
+		visible={showError}
+	/>
+{/if}
