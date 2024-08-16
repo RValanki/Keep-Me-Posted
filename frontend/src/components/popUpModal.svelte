@@ -35,28 +35,37 @@
             <div class="flex items-center justify-center text-gray-900 text-lg font-bold">
                 {header}
             </div>
-            <div class="flex items-center justify-center text-gray-500 text-sm pb-5 pt-2">
+            <div class="flex items-center justify-center text-gray-500 text-sm pt-2">
                 {mainText}
             </div>
             {#if type === 'secondary'}
-                <div class="flex items-center justify-between flex-row">
-                    <Button type="secondary" text={secondButtonText} handleClick={secondHandleClick} />
-                    <Button type=
-                    {type === 'error' ? 'error' : 'primary'}
-                    fullWidth= {type === 'primary' || type === 'error' ? true : false}
-                    text={firstButtonText} 
-                    handleClick={firstHandleClick}
+            <div class="flex shrink justify-evenly object-cover pb-1 pt-8 items-center">
+                <div class = "w-5/12">
+                    <Button
+                        type="secondary"
+                        text={secondButtonText}
+                        fullWidth={true}
+                        handleClick={secondHandleClick}
                     />
                 </div>
+                <div class = "w-5/12">
+                    <Button
+                        type="primary"
+                        text={firstButtonText}
+                        fullWidth={true}
+                        handleClick={firstHandleClick}
+                    />
+                </div>
+            </div>
             {:else}
-                <div class="w-full">
-                    <Button type=
-                    {type === 'error' ? 'error' : 'primary'}
-                    fullWidth= {type === 'primary' || type === 'error' ? true : false}
-                    text={firstButtonText} 
+            <div class="justify-center pb-1 pt-8 items-center w-full">
+                <Button
+                    type="primary"
+                    text={firstButtonText}
+                    fullWidth={true}
                     handleClick={firstHandleClick}
-                    />
-                </div>
+                />
+            </div>
             {/if}
         </div>
     </div>
