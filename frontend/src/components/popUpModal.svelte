@@ -12,7 +12,7 @@
     import Button from "./button.svelte";
     import errorIcon from "../assets/error-icon.png";
 
-    export let type = 'error';  // Default type is primary (blue with 1 button)
+    export let type = 'primary';  // Default type is primary (blue with 1 button)
     export let firstHandleClick = () => {};  // Click function for primary button (dark blue, or red)
     export let secondHandleClick = () => {};  // Click function for secondary button (light blue)
     export let header = 'Pop-Up Modal';  // Header of popup modal
@@ -21,7 +21,7 @@
     export let secondButtonText = 'Button';  // Text for secondary button (light blue)
     export let iconPath = ''; // path for image icon
     export let width = '64'; // default width of pop up
-    export let visible = true; // Default state of popup is not visible
+    export let visible = false; // Default state of popup is not visible
 
     export function togglePopUp() {
         visible = !visible;
