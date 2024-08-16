@@ -41,5 +41,5 @@ export const GET = async ({ url}) => {
         console.log('Error logging in with OAuth2 user', err);
     }
 
-    throw redirect(303, '/upload-audio');
+    throw redirect(303, '/upload_audio');
 };
