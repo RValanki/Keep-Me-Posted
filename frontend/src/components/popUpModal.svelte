@@ -42,7 +42,7 @@
             <div class="flex shrink justify-evenly object-cover pb-1 pt-8 items-center">
                 <div class = "w-5/12">
                     <Button
-                        type="secondary"
+                        {type === 'error' ? 'error' : 'secondary'}
                         text={secondButtonText}
                         fullWidth={true}
                         handleClick={secondHandleClick}
@@ -50,7 +50,7 @@
                 </div>
                 <div class = "w-5/12">
                     <Button
-                        type="primary"
+                        {type === 'error' ? 'error' : 'primary'}
                         text={firstButtonText}
                         fullWidth={true}
                         handleClick={firstHandleClick}
@@ -60,7 +60,7 @@
             {:else}
             <div class="justify-center pb-1 pt-8 items-center w-full">
                 <Button
-                    type="primary"
+                    {type === 'error' ? 'error' : 'primary'}
                     text={firstButtonText}
                     fullWidth={true}
                     handleClick={firstHandleClick}
