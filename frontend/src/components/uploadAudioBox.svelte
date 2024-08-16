@@ -22,7 +22,7 @@
 	import { transcribe_audio } from "../api-functions/transcribe_audio";
 	import { send_summary } from "../api-functions/send_summary";
 	import { apiStatusStore } from "../stores/api-status-store"
-	import backendURL from "../api-functions/base-URL"
+	import { backendURL } from "../api-functions/base-URL"
 
 	// content
 	const dropzoneStyles = "background-color: rgba(255, 0, 0, 0)"; // define custom to style dropzone
