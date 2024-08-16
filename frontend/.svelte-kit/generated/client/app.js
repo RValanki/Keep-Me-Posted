@@ -9,7 +9,8 @@ export const nodes = [
 	() => import('./nodes/5'),
 	() => import('./nodes/6'),
 	() => import('./nodes/7'),
-	() => import('./nodes/8')
+	() => import('./nodes/8'),
+	() => import('./nodes/9')
 ];
 
 export const server_loads = [];
@@ -18,10 +19,6 @@ export const dictionary = {
 		"/": [2],
 		"/choose_pathway": [3],
 		"/email": [4],
-		"/login": [~5],
-		"/sent": [6],
-		"/signup": [~7],
-		"/upload-audio": [8]
 		"/generate_summary": [5],
 		"/login": [~6],
 		"/sent": [7],
