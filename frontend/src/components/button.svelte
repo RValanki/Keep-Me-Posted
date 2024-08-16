@@ -36,7 +36,7 @@
         {type === 'error' ? 'bg-red-600 text-white border-none' : ''}
         {fullWidth ? 'w-full text-center' : ''}
         {fitContainerHeight ? 'h-full' : ''}"
-        on:click="{internalHandleClick}">
+        on:click={internalHandleClick}>
 
         {#if iconPos === 'right'}
             {text}
