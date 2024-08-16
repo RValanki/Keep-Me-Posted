@@ -86,8 +86,9 @@
 		// uploadComplete = true;
 	}
 
-	// Function to give popup correct messages
+	// Function to trigger the appropriate error popup modal based on the error type
 	function raiseError(errorType) {
+		// Setting the popup modal properties based on the error type
 		popupHeader = errorType[0];
 		popupMainText = errorType[1];
 		showError = true;
@@ -131,7 +132,8 @@
 	 {/if}
 </div>
 
-<!-- Error Pop-Up Modal -->
+<!-- Error Pop-Up Modal with dynamic header, text, button, icon, and visibility control based on error type -->
+
 {#if showError}
 	<PopUpModal 
 		type="error"
