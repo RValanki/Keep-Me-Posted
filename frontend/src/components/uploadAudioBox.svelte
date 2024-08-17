@@ -63,10 +63,12 @@
 			audio.addEventListener("loadedmetadata", async () => {
 				if (audio.duration >= MAX_DURATION_SECONDS) {
 					raiseError(errorMessage.DURATION_EXCEEDED);
+					return; // Exit the function early if file duration is too long
 				}
+				// File has passed all checks
+				startUpload(selectedFile);
 			});
-			// File has passed all checks
-			startUpload(selectedFile);
+			
   		}
 	}
 
@@ -77,7 +79,7 @@
 
 	// Function that calls transcribe_audio API
 	async function startUpload(file) {
-		console.log('start upload');
+		console.log('Upload successful');
 		const transcript = await transcribe_audio(file, "http://127.0.0.1:8000"); //
 		console.log(transcript);
 
