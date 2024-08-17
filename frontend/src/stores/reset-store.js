@@ -17,7 +17,7 @@ export function resetStores() {
     transcriptStore.set({
         transcript: ""
     })
-    sendWithTranscriptStore.set(false)
+    sendWithTranscriptStore.set(true)
     isOpen.set(false)
     isCancelled.set(false)
 

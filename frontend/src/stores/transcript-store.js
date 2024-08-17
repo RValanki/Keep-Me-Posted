@@ -4,4 +4,4 @@ export const transcriptStore = writable({
     transcript: ""
 })
 
-export const sendWithTranscriptStore = writable(false)
+export const sendWithTranscriptStore = writable(true)
