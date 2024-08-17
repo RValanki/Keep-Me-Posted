@@ -14,6 +14,7 @@
   import Topbar from "../../components/topbar.svelte";
   import UploadBox from "../../components/uploadAudioBox.svelte";
   import { goto } from "$app/navigation";
+  import { apiStatusStore } from "../../stores/api-status-store";
 
   let nextPage = () => {
     goto("/generate_summary");
@@ -39,6 +40,8 @@
         handleClick={nextPage}
         icon="../../src/assets/arrow-right.png"
         text="View Summary"
+        disabled={ $apiStatusStore == "" }
+        type={ $apiStatusStore == "" ? "disabled" : "primary" }
       ></Button>
     </div>
   </body>
