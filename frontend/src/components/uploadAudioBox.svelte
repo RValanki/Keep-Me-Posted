@@ -22,14 +22,14 @@
 	import { transcribe_audio } from "../api-functions/transcribe_audio";
 	// import { send_summary } from "../api-functions/send_summary";
 	import PopUpModal from "./popUpModal.svelte"; // Import the PopUpModal component
-	import errorIcon from "../assets/error-icon.png"; // Import the error icon
 
 	// content
 	let fileUploaded = false;
 	let uploadComplete = false;
 	let loadingBarComponent; // pointer for loading bar
+	let popUpModalComponent; // Pointer for the PopUpModal component
 	const dropzoneStyles = "background-color: rgba(255, 0, 0, 0)"; // define custom to style dropzone
-
+	
 	// File Handling
 	const MAX_DURATION_SECONDS = 7200; // 7200 seconds = 120 minutes, used to check limit on files
 	const errorMessage = {
@@ -38,7 +38,7 @@
 		ASSEMBLYAI_ERROR: ["AssemblyAI Error name", "Some description of the error. Please try again later", "Close"],	
 	};
 
-	let showError = false; // State for showing the error popup
+	
 	let popupHeader = ''; // Header for the popup
 	let popupMainText = ''; // Main text for the popup
 
@@ -94,11 +94,15 @@
 		// Setting the popup modal properties based on the error type
 		popupHeader = errorType[0];
 		popupMainText = errorType[1];
-		showError = true;
+
+		// Toggle the popup modal visibility
+		popUpModalComponent.togglePopUp();
   	}
 
+	// Function to dismiss the error popup modal
 	function dismissError() {
-		showError = false;
+		// Toggle the popup modal visibility
+		popUpModalComponent.togglePopUp();
 	}
 </script>
 
@@ -140,16 +144,13 @@
 </div>
 
 <!-- Error Pop-Up Modal with dynamic header, text, button, icon, and visibility control based on error type -->
+<PopUpModal 
+	bind:this={popUpModalComponent}
+	type="error"
+	header={popupHeader}
+	mainText={popupMainText}
+	firstButtonText="Re-upload"
+	firstHandleClick={dismissError}
+	width="96"
+/>
 
-{#if showError}
-	<PopUpModal 
-		type="error"
-		header={popupHeader}
-		mainText={popupMainText}
-		iconPath={errorIcon}
-		firstButtonText="Re-upload"
-		firstHandleClick={dismissError}
-		width="96"
-		visible={showError}
-	/>
-{/if}
