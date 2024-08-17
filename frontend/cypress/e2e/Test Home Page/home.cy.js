@@ -1,12 +1,8 @@
 // Test the home page
-
 describe('Home Page', () => {
-    // Define the base URL if not set in Cypress config
-    const baseUrl = 'http://localhost:5173';
-  
-    // Run before each test
+      // Run before each test
     beforeEach(() => {
-      cy.visit(baseUrl+"/login"); // Visit the home page
+      cy.visit("/login"); // Visit the home page
     });
   
     it('should redirect to login page', () => {

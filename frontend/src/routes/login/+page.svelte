@@ -169,26 +169,30 @@
                      heading="Log in to your account"
                      subheading="Welcome back! Please enter your details."
                   />
-                  <InputFieldWithValidation
-                     label="Email"
-                     placeholder="name@email.com"
-                     bind:value={email}
-                     validationMessage={emailValidationString}
-                     validationActive={emailValidationActive}
-                  />
-                  <InputFieldWithValidation
-                     label="Password"
-                     isPasswordType={true}
-                     placeholder="••••••••"
-                     bind:value={password}
-                     validationMessage={passwordValidationString}
-                     validationActive={passwordValidationActive}
-                  />
+                  <div id = "email-input">
+                     <InputFieldWithValidation
+                        label="Email"
+                        placeholder="name@email.com"
+                        bind:value={email}
+                        validationMessage={emailValidationString}
+                        validationActive={emailValidationActive}
+                     />
+                  </div>
+                  <div id = "password-input">
+                     <InputFieldWithValidation
+                        label="Password"
+                        isPasswordType={true}
+                        placeholder="••••••••"
+                        bind:value={password}
+                        validationMessage={passwordValidationString}
+                        validationActive={passwordValidationActive}
+                     />
+                  </div>
                   <div class="w-full mb-5 flex justify-end text-xs text-gray-500 font-bold hover:text-purple-500 cursor-pointer">
                      Forgot Password
                   </div>
 
-                  <div class="w-full h-[20px] mb-9">
+                  <div id = "login-button" class="w-full h-[20px] mb-9">
                      <Button
                         fullWidth={true}
                         type="primary"
@@ -241,7 +245,7 @@
 
                   <div class="w-full flex justify-center">
                      <LoginPrompt
-                        text="Don’t have an account?"
+                        text="Don't have an account?"
                         linkText="Sign Up"
                         handleClick={handleSignUpClick}
                      />
