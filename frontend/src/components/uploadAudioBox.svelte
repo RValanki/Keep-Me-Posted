@@ -55,6 +55,7 @@
 				!selectedFile.name.endsWith(".mp3") &&
 				!selectedFile.name.endsWith(".wav")
 			) {
+				console.log("not good");
 				raiseError(errorMessage.INVALID_FORMAT);
 				return; // Exit the function early if file type is incorrect
 			}
@@ -70,6 +71,10 @@
 			// File has passed all checks
 			startUpload(selectedFile);
   		}
+	}
+
+	async function handleFileRejection({handleFileRejection}){
+		raiseError(errorMessage.INVALID_FORMAT);
 	}
 
 	// Function that calls transcribe_audio API
@@ -105,7 +110,12 @@
 	 {#if !fileUploaded}
 	 	<!-- BLUE with dropzone -->
 	 	<div id="upload-audio-box" class= "bg-light-blue flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2  border-medium-blue rounded-md">
-			<Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav" containerStyles={dropzoneStyles}>
+			<Dropzone 
+				on:drop={handleFilesSelect} 
+				on:droprejected = {handleFileRejection}
+				accept=".mp3, .wav" 
+				containerStyles={dropzoneStyles}
+			>
 
 				<!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
 				<div class="text-center flex flex-col items-center text-center">
