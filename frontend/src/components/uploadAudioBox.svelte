@@ -44,18 +44,15 @@
 
 	async function handleFilesSelect(e) {
 		const { acceptedFiles } = e.detail;
-		// console.log(e.detail)
 
 		if (acceptedFiles.length > 0) {
 			const selectedFile = acceptedFiles[0];
-			// console.log(selectedFile);
 
 			// Initial file type check before loading it as an audio source
 			if (
 				!selectedFile.name.endsWith(".mp3") &&
 				!selectedFile.name.endsWith(".wav")
 			) {
-				console.log("not good");
 				raiseError(errorMessage.INVALID_FORMAT);
 				return; // Exit the function early if file type is incorrect
 			}
@@ -73,6 +70,7 @@
   		}
 	}
 
+	// Function to handle event where incorrect file formats are uploaded
 	async function handleFileRejection({handleFileRejection}){
 		raiseError(errorMessage.INVALID_FORMAT);
 	}
