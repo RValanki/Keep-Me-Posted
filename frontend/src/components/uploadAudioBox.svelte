@@ -116,7 +116,6 @@
 				accept=".mp3, .wav" 
 				containerStyles={dropzoneStyles}
 			>
-
 				<!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
 				<div class="text-center flex flex-col items-center text-center">
 					<img id="icon" class="w-12 h-12 m-3" src={micIcon} alt="Icon" />
