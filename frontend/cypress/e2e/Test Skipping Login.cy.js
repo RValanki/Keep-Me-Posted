@@ -12,6 +12,10 @@ describe('Login Page', () => {
       cy.wait(10000)
       // Click the button labelled "Continue Without an Account"
       cy.contains('Continue Without an Account').click()
+
+      // Wait for the page to load
+      cy.wait(2000)
+      
       // Verify that the URL contains "/upload_audio" after clicking the button
       cy.url().should('include', '/upload_audio')
     })
