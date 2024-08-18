@@ -10,6 +10,13 @@
   import UserEmailEntry from "../../components/userEmailEntry.svelte";
   import { onMount } from "svelte";
 
+  onMount(() => {
+    if ($authStore["loggedIn"] == true) {
+      ContactsStore.update((prev) => [...prev, $authStore["email"]]);
+    }
+  })
+
+  
   let nextPage = () => {
     if ($authStore.email.length == 0 && !($isCancelled)) {
       isOpen.set(true)
