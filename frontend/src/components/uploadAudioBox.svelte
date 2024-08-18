@@ -20,7 +20,9 @@
 	import Dropzone from "svelte-file-dropzone";
 	import LoadingBar from "./loadingBar.svelte";
 	import { transcribe_audio } from "../api-functions/transcribe_audio";
-	// import { send_summary } from "../api-functions/send_summary";
+	import { send_summary } from "../api-functions/send_summary";
+	import { apiStatusStore } from "../stores/api-status-store"
+	import { backendURL } from "../api-functions/base-URL"
 	import PopUpModal from "./popUpModal.svelte"; // Import the PopUpModal component
 
 	// content
@@ -68,7 +70,6 @@
 				// File has passed all checks
 				startUpload(selectedFile);
 			});
-			
   		}
 	}
 
@@ -79,16 +80,15 @@
 
 	// Function that calls transcribe_audio API
 	async function startUpload(file) {
-		console.log('Upload successful');
-		const transcript = await transcribe_audio(file, "http://127.0.0.1:8000"); //
-		console.log(transcript);
-
-		// TODO
-		// loadingBarComponent.updateLoadingBar(50);
-		// sent_summary api
-		// loadingBarComponent.updateLoadingBar(99);
-		// fileUploaded = true;
-		// uploadComplete = true;
+		apiStatusStore.set("Transcribe")
+		transcribe_audio(file, backendURL).then(transcript => {
+			apiStatusStore.set("Summary")
+			console.log('Transcript received')
+			send_summary(transcript, backendURL).then(summary => {
+				apiStatusStore.set("Complete")
+				console.log('Summary Received')
+			})
+		})
 	}
 
 	// Function to trigger the appropriate error popup modal based on the error type
@@ -111,7 +111,7 @@
 <!-- COMPONENT -->
 <div class= "flex items-center justify-center">
     <!-- upload-audio-box -->
-	 {#if !fileUploaded}
+	 {#if $apiStatusStore == ""}
 	 	<!-- BLUE with dropzone -->
 	 	<div id="upload-audio-box" class= "bg-light-blue flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2  border-medium-blue rounded-md">
 			<Dropzone 
@@ -121,7 +121,7 @@
 				containerStyles={dropzoneStyles}
 			>
 				<!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
-				<div class="text-center flex flex-col items-center text-center">
+				<div class="text-center flex flex-col items-center">
 					<img id="icon" class="w-12 h-12 m-3" src={micIcon} alt="Icon" />
 					<p id="upload-audio-box-first-line" class="sm:text-xl font-bold text-blue-800 mb-1">Upload meeting audio</p>
 					<p id="upload-audio-box-second-line" class="text-xs sm:text-base text-gray-400">Must be under 120 minutes.</p>
@@ -129,10 +129,10 @@
 				</div>
 			</Dropzone>
 		</div>
-	 {:else if fileUploaded && uploadComplete}
+	 {:else if $apiStatusStore == "Complete"}
 		<!-- GREEN no dropzone -->
 		 <div id="upload-audio-box" class= "bg-success-25 flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2 border-success-300 rounded-md">
-			<div class="text-center flex flex-col items-center text-center">
+			<div class="text-center flex flex-col items-center">
 				<img id="icon" class="w-12 h-12 m-3" src={checkIcon} alt="Icon" />
 				<p id="upload-audio-box-first-line" class="sm:text-xl font-bold text-success-700 mb-1">Your summary has been generated!</p>
 				<p id="upload-audio-box-second-line" class="text-xs sm:text-base text-success-700">View the summary by clicking 'View Summary'</p>
@@ -140,7 +140,7 @@
 		</div>
 	 {:else} <!--file has been uploaded awaiting api-->
 	 	<div id="upload-audio-box" class= "bg-light-blue flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2  border-medium-blue rounded-md">
-	 		<LoadingBar bind:this={loadingBarComponent}/>
+	 		<LoadingBar/>
 		</div>
 	 {/if}
 </div>

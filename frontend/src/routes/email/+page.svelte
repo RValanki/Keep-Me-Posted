@@ -10,17 +10,29 @@
   import UserEmailEntry from "../../components/userEmailEntry.svelte";
   import { onMount } from "svelte";
 
+  onMount(() => {
+    if ($authStore["loggedIn"] == true) {
+      ContactsStore.update((prev) => {
+        if (prev.includes($authStore["email"])) {
+          return prev;
+        } else {
+          return [...prev, $authStore["email"]];
+        }
+      })
+    }
+  })
+
+  
   let nextPage = () => {
     if ($authStore.email.length == 0 && !($isCancelled)) {
       isOpen.set(true)
     } else {
-      goto("/choose_pathway")
+      goto("/send_summary")
     }
   };
 
   let previousPage = () => {
-    // todo
-    console.log("todo go to previous page");
+    goto("/generate_summary")
   };
 </script>
 
@@ -46,16 +58,17 @@
     <Button
       handleClick={nextPage}
       icon="../../src/assets/arrow-right.png"
-      text="Choose Pathway"
-      disabled={$ContactsStore.length == 0}
+      text="Send Email"
+      disabled={$ContactsStore.length == 0 && $isCancelled == true}
+      type={($ContactsStore.length == 0 && $isCancelled == true) ? "disabled" : "primary"}
     ></Button>
   </div>
 </div>
 
-<!-- <div class="absolute bottom-8 left-8">
+<div class="absolute bottom-8 left-8">
   <Button
     handleClick={previousPage}
     icon="../../src/assets/arrow-left.png"
     text="View Summary"
   ></Button>
-</div> -->
+</div>

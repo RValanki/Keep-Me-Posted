@@ -137,7 +137,6 @@
 
    function navigateToNextPage(){
       goto("/upload_audio");
-
    }
 
    function handleLoginWithoutAccount(){
