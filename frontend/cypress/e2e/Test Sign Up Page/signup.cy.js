@@ -51,6 +51,7 @@ describe('Sign Up Flow', () => {
 
     it('should handle Google sign-in successfully and redirect to the welcome page', () => {
         // Simulate successful Google sign-in
+        //uses mocking to simulate different server responses during the google sign-in process 
         cy.intercept('POST', '**/auth/google/callback', {
             statusCode: 200,
             body: { message: 'Sign in successful' },
