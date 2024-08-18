@@ -31,7 +31,7 @@
 </script>
 
 <body>
-    <!-- {#if visible} -->
+    {#if visible}
     <div class="justify-center items-center font-sans h-full transition ease-in-out duration-300">
         <div class="fixed inset-0 flex items-center justify-center w-full h-full bg-black backdrop-blur md:bg-opacity-70">
             <div class="bg-white rounded-lg p-4 w-{width}">
@@ -51,8 +51,10 @@
                     {mainText}
                 </div>
                 {#if type === 'loading'}
-                <div class="flex flex-col items-center pt-4 gap-4">
-                    <Progressbar progress="50" color="blue" />
+                <div class="justify-center pb-1 pt-4 items-center w-full">
+                    <div class="pb-4"> 
+                        <Progressbar progress="50" color="blue" />
+                    </div>
                     <Button
                         type='primary'
                         text='Cancel'
@@ -92,7 +94,7 @@
             </div>
         </div>
     </div>
-    <!-- {/if} -->
+    {/if}
 </body>
 
 <!--
