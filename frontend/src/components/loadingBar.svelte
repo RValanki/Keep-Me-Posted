@@ -21,6 +21,7 @@
   import { Progressbar } from "flowbite-svelte";
   import { sineOut } from "svelte/easing";
   import { apiStatusStore } from "../stores/api-status-store";
+  import { resetStores } from "../stores/reset-store";
 
   export let progress = 0;
   let targetProgress = 0; // Target value for the progress bar, used for animating
@@ -72,6 +73,14 @@
       }, 50);
     }
   }
+
+  /**
+   * Handle cancelling of upload
+  */
+ function handleCancel() {
+  progress = 0;
+  resetStores()
+ }
 </script>
 
 <!-- COMPONENT -->
@@ -91,6 +100,12 @@
     >{Math.round(progress)}%</span
   >
   <!-- progress-number -->
+  <Button 
+    type="no-bg"
+    icon={cancelIcon}
+    text=""
+    handleClick={handleCancel}
+  />
 </div>
 
 <div class="flex space-x-5 justify-center">
