@@ -2,7 +2,7 @@
 
     Page that shows the summary generated
 
-    Author:Brenda Dang, Diya Ramesh
+    Author: Brenda Dang, Diya Ramesh
     Last Modified: 1/08/2024
 -->
 
@@ -12,6 +12,7 @@
     import SummaryBox from "../../components/summary-box.svelte";
     import { goto } from "$app/navigation";
     import { summaryStore } from "../../stores/summary-store";
+    import PopUpModal from "../../components/popUpModal.svelte";
 
     export let title;
     export let subTitle;
@@ -41,6 +42,14 @@
         goto("/email");
     };
 
+    let displayPopUp = false;
+
+    function togglePopUp() {
+        displayPopUp = !displayPopUp;
+    }
+
+
+
     // onMount(() => {
     //     const interval = setInterval(hasSummaryGenerated, 1000);
 
@@ -57,6 +66,19 @@
 
 <body>
     <TopBar />
+    
+    <!-- REGENERATING POPUP MODAL
+    <button on:click={togglePopUp}>Show Loading Modal</button>
+    
+    {#if displayPopUp}
+        <PopUpModal 
+        header="Regenerating..."
+        mainText=""
+        type='loading'
+        firstHandleClick={togglePopUp}
+        width='96'/>
+    {/if} -->
+    
 
     <div class="text-4xl font-inter font-bold mb-4 text-black flex flex-col justify-center items-center mt-20">
         {hasSummaryGenerated ? "Summary Generated!" : "Your Summary is Being Generated..."}
