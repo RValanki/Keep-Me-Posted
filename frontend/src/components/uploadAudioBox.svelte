@@ -9,7 +9,7 @@
 		includes an icon, a header (bolded line), second and third line
 
 	Authors: Parul Garg (pgar0011)
-	Editied by: Benjamin Cherian, Zihao Wang, Angelina Leung, Maureen Pham
+	Editied by: Benjamin Cherian, Zihao Wang, Angelina Leung, Maureen Pham, Danny Leung
 	Last Modified: 14/08/24
 
 -->
@@ -21,28 +21,32 @@
 	import LoadingBar from "./loadingBar.svelte";
 	import { transcribe_audio } from "../api-functions/transcribe_audio";
 	// import { send_summary } from "../api-functions/send_summary";
+	import PopUpModal from "./popUpModal.svelte"; // Import the PopUpModal component
 
 	// content
 	let fileUploaded = false;
 	let uploadComplete = false;
 	let loadingBarComponent; // pointer for loading bar
+	let popUpModalComponent; // Pointer for the PopUpModal component
 	const dropzoneStyles = "background-color: rgba(255, 0, 0, 0)"; // define custom to style dropzone
-
+	
 	// File Handling
 	const MAX_DURATION_SECONDS = 7200; // 7200 seconds = 120 minutes, used to check limit on files
 	const errorMessage = {
 		DURATION_EXCEEDED: ["Meeting duration exceeded", "Your meeting audio should be less than 120 minutes.", "Re-upload"],
 		INVALID_FORMAT: ["Invalid audio format!", "Your meeting audio must be in MP3 or WAV format.", "Re-upload"],
-		ASSEMBLYAI_ERROR: ["AssemblyAI Error name", "Some description of the error. Please try again later", "Close"],
+		ASSEMBLYAI_ERROR: ["AssemblyAI Error name", "Some description of the error. Please try again later", "Close"],	
 	};
+
+	
+	let popupHeader = ''; // Header for the popup
+	let popupMainText = ''; // Main text for the popup
 
 	async function handleFilesSelect(e) {
 		const { acceptedFiles } = e.detail;
-		// console.log(e.detail)
 
 		if (acceptedFiles.length > 0) {
 			const selectedFile = acceptedFiles[0];
-			// console.log(selectedFile);
 
 			// Initial file type check before loading it as an audio source
 			if (
@@ -59,16 +63,23 @@
 			audio.addEventListener("loadedmetadata", async () => {
 				if (audio.duration >= MAX_DURATION_SECONDS) {
 					raiseError(errorMessage.DURATION_EXCEEDED);
+					return; // Exit the function early if file duration is too long
 				}
+				// File has passed all checks
+				startUpload(selectedFile);
 			});
-			// File has passed all checks
-			startUpload(selectedFile);
+			
   		}
+	}
+
+	// Function to handle event where incorrect file formats are uploaded
+	async function handleFileRejection({handleFileRejection}){
+		raiseError(errorMessage.INVALID_FORMAT);
 	}
 
 	// Function that calls transcribe_audio API
 	async function startUpload(file) {
-		console.log('start upload');
+		console.log('Upload successful');
 		const transcript = await transcribe_audio(file, "http://127.0.0.1:8000"); //
 		console.log(transcript);
 
@@ -80,10 +91,21 @@
 		// uploadComplete = true;
 	}
 
-	// Function to give popup correct messages
+	// Function to trigger the appropriate error popup modal based on the error type
 	function raiseError(errorType) {
-		//TODO raise popups
+		// Setting the popup modal properties based on the error type
+		popupHeader = errorType[0];
+		popupMainText = errorType[1];
+
+		// Toggle the popup modal visibility
+		popUpModalComponent.togglePopUp();
   	}
+
+	// Function to dismiss the error popup modal
+	function dismissError() {
+		// Toggle the popup modal visibility
+		popUpModalComponent.togglePopUp();
+	}
 </script>
 
 <!-- COMPONENT -->
@@ -92,8 +114,12 @@
 	 {#if !fileUploaded}
 	 	<!-- BLUE with dropzone -->
 	 	<div id="upload-audio-box" class= "bg-light-blue flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2  border-medium-blue rounded-md">
-			<Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav" containerStyles={dropzoneStyles}>
-
+			<Dropzone 
+				on:drop={handleFilesSelect} 
+				on:droprejected = {handleFileRejection}
+				accept=".mp3, .wav" 
+				containerStyles={dropzoneStyles}
+			>
 				<!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
 				<div class="text-center flex flex-col items-center text-center">
 					<img id="icon" class="w-12 h-12 m-3" src={micIcon} alt="Icon" />
@@ -118,3 +144,15 @@
 		</div>
 	 {/if}
 </div>
+
+<!-- Error Pop-Up Modal with dynamic header, text, button, icon, and visibility control based on error type -->
+<PopUpModal 
+	bind:this={popUpModalComponent}
+	type="error"
+	header={popupHeader}
+	mainText={popupMainText}
+	firstButtonText="Re-upload"
+	firstHandleClick={dismissError}
+	width="96"
+/>
+
