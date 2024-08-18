@@ -7,6 +7,7 @@
 -->
 
 <script>
+
   import TopBar from "../../components/topbar.svelte";
   import Button from "../../components/button.svelte";
   import SummaryBox from "../../components/summary-box.svelte";
@@ -26,20 +27,31 @@
     }
     goto("/email");
   };
+  
+  $: hasSummaryGenerated = $summaryStore["summary"] && $summaryStore["subject"];
+  $: {
+      if (hasSummaryGenerated) {
+          title = "Summary Generated!";
+          subTitle = "Your summary is ready to be sent.";
+      } else {
+          title = "Your Summary is Being Generated...";
+          subTitle = "We are still generating your summary...";
+      }
+  }
 </script>
 
 <body>
   <TopBar />
-
-  <div
-    class="text-4xl font-inter font-bold mb-4 text-black flex flex-col justify-center items-center mt-20"
-  >
-    {title}
+  
+  <div 
+       class="text-4xl font-inter font-bold mb-4 text-black flex flex-col justify-center items-center mt-20"
+     >
+      {hasSummaryGenerated ? "Summary Generated!" : "Your Summary is Being Generated..."}
   </div>
-  <div
-    class="text-xl font-inter font-thin text-black flex flex-col justify-center items-center mt-6"
-  >
-    {subTitle}
+  <div 
+       class="text-xl font-inter font-thin text-black flex flex-col justify-center items-center mt-6"
+     >
+      {hasSummaryGenerated ? "Your summary is ready to be sent." : "We are still generating your summary..."}
   </div>
 
   <div class="mt-10">
@@ -65,6 +77,3 @@
     />
   </div>
 </body>
-
-<style>
-</style>
