@@ -114,6 +114,6 @@
 <!-- The button for sending another summary -->
 <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
   <div class="button-holder">
-    <Button handleClick={nextPage} text="Send Another Summary"></Button>
+    <Button handleClick={nextPage} type={$emailStatusStore == "Sent" ? "primary" : "disabled"} text="Send Another Summary"></Button>
   </div>
 </div>
