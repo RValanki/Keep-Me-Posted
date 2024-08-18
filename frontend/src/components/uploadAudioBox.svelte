@@ -70,7 +70,6 @@
 				// File has passed all checks
 				startUpload(selectedFile);
 			});
-			startUpload(selectedFile);
   		}
 	}
 
