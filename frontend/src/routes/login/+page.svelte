@@ -1,7 +1,7 @@
 <script>
    import { onMount } from "svelte";
    import { goto } from "$app/navigation";
-   import { updateAuth } from "../../stores/auth-store.js";
+   import { updateAuth, clearAuth } from "../../stores/auth-store.js";
    import Logo from "../../components/logo.svelte";
    import LandingPageTitle from "../../components/landingPageTitle.svelte";
    import InputFieldWithValidation from "../../components/input-field-with-validation.svelte";
@@ -137,7 +137,14 @@
 
    function navigateToNextPage(){
       goto("/upload_audio");
+
    }
+
+   function handleLoginWithoutAccount(){
+      clearAuth();
+      navigateToNextPage();
+   }
+  
 </script>
 
 <title>Keep Me Posted</title>
@@ -234,7 +241,7 @@
                         fullWidth={true}
                         type="tertiary"
                         text="Continue Without an Account"
-                        handleClick={navigateToNextPage}
+                        handleClick={handleLoginWithoutAccount}
                      />
                   </div>
                    

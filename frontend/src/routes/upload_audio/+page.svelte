@@ -12,6 +12,13 @@
     //required imports
     import Topbar from '../../components/topbar.svelte';
     import UploadBox from "../../components/uploadAudioBox.svelte";
+
+    import { authStore } from '../../stores/auth-store';
+
+  // Use $authStore to get the current value
+  authStore.subscribe(value => {
+    console.log(value);
+  });
 </script>
 
 <html lang="en">
