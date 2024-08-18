@@ -12,7 +12,13 @@
 
   onMount(() => {
     if ($authStore["loggedIn"] == true) {
-      ContactsStore.update((prev) => [...prev, $authStore["email"]]);
+      ContactsStore.update((prev) => {
+        if (prev.includes($authStore["email"])) {
+          return prev;
+        } else {
+          return [...prev, $authStore["email"]];
+        }
+      })
     }
   })
 
