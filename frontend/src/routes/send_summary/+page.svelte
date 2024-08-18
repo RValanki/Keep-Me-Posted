@@ -1,9 +1,9 @@
-<!-- Summary and Transcipt will be sent after generation page
+<!-- Summary will be sent after generation page
 
-    The end page when user reaches the end before the summary has generated with transcipt attached
+    The end page when user reaches the end before the summary has generated
 
     Author: Parul Garg
-    Last Modified: 10/08/2024
+    Last Modified: 15/08/2024
 -->
 
 <script>
@@ -33,8 +33,8 @@
       <img class="flex flex-row justify-center items-center p-0 bg-indigo-200 flex-none order-none flex-grow-0 w-24 h-24" src={clock} alt="Clock" />
     </div>
     <!-- the heading and subheading of the page -->
-    <h1 class="pt-3">Your Summary and Transcript Will Be Sent..</h1>
-    <p class="subheading text-xl sm:text-xl md:text-2xl lg:text-3xl text-center pt-5">After the summary has been completely generated, it will be sent automatically with the transcript.</p>
+    <h1 class="pt-3">Your Summary Will Be Sent..</h1>
+    <p class="subheading text-xl sm:text-xl md:text-2xl lg:text-3xl text-center pt-5">After the summary has been completely generated, it will be sent automatically.</p>
   </div>
   
   <!-- The div for the recipients section of the page -->

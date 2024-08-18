@@ -11,6 +11,6 @@
     import '../app.css'
 </script>
 
-<title>Keep Me Posted</title>
+
 
 <slot />

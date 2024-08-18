@@ -6,7 +6,7 @@ describe('Home Page', () => {
   
     // Run before each test
     beforeEach(() => {
-      cy.visit(baseUrl); // Visit the home page
+      cy.visit(baseUrl+"/login"); // Visit the home page
     });
   
     it('should redirect to login page', () => {
