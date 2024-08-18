@@ -203,13 +203,13 @@
                      />
                   </div>
 
-                  <div>
+                  <div id = "google-button">
                      <form
                         class="w-full h-[20px] mb-8"
                         method="post"
                         action="?/OAuth2"
                      >
-                        <Button
+                        <Button 
                            fullWidth={true}
                            type="tertiary"
                            text="Sign in with Google"
