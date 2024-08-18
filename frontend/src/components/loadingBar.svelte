@@ -16,6 +16,8 @@
 <script>
   import uploadIcon from "../assets/upload-icon.png";
   import fileIcon from "../assets/file-icon.png";
+  import cancelIcon from "../assets/cancel-icon.png";
+  import Button from "./button.svelte";
   import { Progressbar } from "flowbite-svelte";
   import { sineOut } from "svelte/easing";
   import { apiStatusStore } from "../stores/api-status-store";
