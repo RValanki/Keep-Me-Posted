@@ -3,13 +3,14 @@
 import { emailStatusStore } from "../stores/email-status-store"
 
 
-export let send_email = async (message, subject, contacts, baseURL) => {
+export let send_email = async (transcript, message, subject, contacts, baseURL) => {
     const postRequestString = baseURL + "/api/sendemail" 
 
     let data = new FormData()
     data.append('message', message)
     data.append('subject', subject)
     data.append('contacts', contacts)
+    data.append('transcript', transcript)
 
     try {
         const response = await fetch(postRequestString, { method: "POST", body: data})

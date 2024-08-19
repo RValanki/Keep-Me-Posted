@@ -43,8 +43,9 @@
         
         let subject = $summaryStore.subject;
         let contacts = $ContactsStore;
+        let transcript = $transcriptStore.transcript;
 
-        await send_email(summary, subject, contacts, backendURL);
+        await send_email(transcript, summary, subject, contacts, backendURL);
         sending = false;
       } else {
         setTimeout(() => {
