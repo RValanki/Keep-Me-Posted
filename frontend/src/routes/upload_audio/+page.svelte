@@ -15,7 +15,6 @@
   import UploadBox from "../../components/uploadAudioBox.svelte";
   import { goto } from "$app/navigation";
   import { apiStatusStore } from "../../stores/api-status-store";
-    import UploadAudioBox from "../../components/uploadAudioBox.svelte";
 
   let nextPage = () => {
     goto("/generate_summary");
@@ -35,7 +34,7 @@
       Upload your meeting audio for us to summarise.
     </div>
 
-    <UploadAudioBox/>
+    <UploadBox />
     <div class="absolute bottom-8 right-8">
       <Button
         handleClick={nextPage}
