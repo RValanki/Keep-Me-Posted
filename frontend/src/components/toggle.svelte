@@ -8,7 +8,13 @@
 -->
 
 <script>
-    export let isChecked = false;
+
+    import { sendWithTranscriptStore } from "../stores/transcript-store";
+    import { get } from "svelte/store";
+    
+    let isChecked = get(sendWithTranscriptStore);
+
+    $: sendWithTranscriptStore.set(isChecked);
 </script>
 
 <div class="flex items-center justify-center p-10">
@@ -27,13 +33,4 @@
   </label>
 </div>
 
-<!--
-<p> checkbox is : {isChecked}</p>
-
-{#if isChecked}
-    send transcript
-{:else}
-    pass
-{/if}
--->
 
