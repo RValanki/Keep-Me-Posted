@@ -34,7 +34,9 @@
   <Button
     handleClick={addEmail}
     icon="../../src/assets/add-icon-blue.png"
-    text="Add recipient"
+    text=""
     type="secondary"
-  ></Button>
+  >
+    <span class="hidden sm:inline sm:ml-2 text-blue-700">Add Recipient</span>
+  </Button>
 </div>

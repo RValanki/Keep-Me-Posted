@@ -58,6 +58,7 @@
     <Button
       handleClick={nextPage}
       icon="../../src/assets/arrow-right.png"
+      iconPos='right'
       text="Send Email"
       disabled={$ContactsStore.length == 0 && $isCancelled == true}
       type={($ContactsStore.length == 0 && $isCancelled == true) ? "disabled" : "primary"}
