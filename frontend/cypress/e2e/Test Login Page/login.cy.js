@@ -2,26 +2,19 @@
  * The file contains the test cases for the login page.
  */
 
-// Test the login page
-describe("Access login page", () => {
+
+describe("Test login page", () => {
     beforeEach(() => {
         cy.visit("/login");
-    }
-    );
+    });
+
 
     it("should have the correct page title", () => {
         cy.title().should("include", "Keep Me Posted");
-    }
-    );
-}
-);
+    });
 
 
-// Test login with valid cerdentials
-describe("Mocking Valid Login", () => {
-    it("mock valid login with credentials", () => {
-        // Visit the login page
-        cy.visit("/login");
+    it("should pass if credentials are valid", () => {
 
         // Intercept the backend login request to return a successful response
         cy.intercept("POST", 'http://127.0.0.1:8000/login', {
@@ -50,17 +43,9 @@ describe("Mocking Valid Login", () => {
 
         // Check that the user is redirected to the upload audio page
         cy.url().should("include", "/upload_audio");
-    }
-    );
+    });
 
-});
-
-// Test login with invalid cerdentials (wrong email or password)
-describe("Mocking Invalid Login", () => {
-    it("mock invalid login with credentials", () => {
-        // Visit the login page
-        cy.visit("/login");
-
+    it("should show error message if credentials are invalid", () => {
         // Intercept the backend login request to return an error response
         cy.intercept("POST", 'http://127.0.0.1:8000/login', {
             statusCode: 404,
@@ -88,12 +73,8 @@ describe("Mocking Invalid Login", () => {
         cy.get('#password-input > #login-form-container > #validation-message').should('be.visible').contains('Incorrect Email or Password');
 
     });
-});
 
-// Test login with invalid email (e.g. missing .com)
-describe("Testing Invalid Email", () => {
-    it("mock invalid email", () => {
-        // Visit the login page
+    it("should show error message if email is invalid", () => {
         cy.visit("/login");
 
         cy.wait(200);
@@ -104,12 +85,8 @@ describe("Testing Invalid Email", () => {
 
         cy.get('#email-input > #login-form-container > #validation-message').should('be.visible').contains('Please Enter Valid Email');
     });
-});
 
-// Test login with missing email
-describe("Testing Missing Email", () => {
-    it("mock invalid password", () => {
-        // Visit the login page
+    it("should show error message if email is missing", () => {
         cy.visit("/login");
 
         cy.wait(200);
@@ -120,12 +97,8 @@ describe("Testing Missing Email", () => {
         cy.get('#email-input > #login-form-container > #validation-message').should('be.visible').contains('Please Enter Email');
 
     });
-});
 
-// Test login with missing password
-describe("Testing Missing Password", () => {
-    it("mock invalid password", () => {
-        // Visit the login page
+    it("should show error message if password is missing", () => {
         cy.visit("/login");
 
         cy.wait(200);
