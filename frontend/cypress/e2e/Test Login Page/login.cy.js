@@ -89,3 +89,48 @@ describe("Mocking Invalid Login", () => {
 
     });
 });
+
+describe("Testing Invalid Email", () => {
+    it("mock invalid email", () => {
+        // Visit the login page
+        cy.visit("/login");
+
+        cy.wait(200);
+
+        cy.get("#email-input").should('be.visible').type("test@example");
+        cy.get("#password-input").should('be.visible').type("password");
+        cy.get("#login-button").click();
+
+        cy.get('#email-input > #login-form-container > #validation-message').should('be.visible').contains('Please Enter Valid Email');
+    });
+});
+
+describe("Testing Missing Email", () => {
+    it("mock invalid password", () => {
+        // Visit the login page
+        cy.visit("/login");
+
+        cy.wait(200);
+
+        cy.get("#password-input").should('be.visible').type("password");
+        cy.get("#login-button").click();
+
+        cy.get('#email-input > #login-form-container > #validation-message').should('be.visible').contains('Please Enter Email');
+
+    });
+});
+
+describe("Testing Missing Password", () => {
+    it("mock invalid password", () => {
+        // Visit the login page
+        cy.visit("/login");
+
+        cy.wait(200);
+
+        cy.get("#email-input").should('be.visible').type("test@example.com");
+        cy.get("#login-button").click();
+
+        cy.get('#password-input > #login-form-container > #validation-message').should('be.visible').contains('Please Enter Password');
+
+    });
+});
