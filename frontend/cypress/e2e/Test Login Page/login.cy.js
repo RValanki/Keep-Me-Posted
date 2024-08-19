@@ -13,6 +13,34 @@ describe("Test login page", () => {
         cy.title().should("include", "Keep Me Posted");
     });
 
+    it("should show error message if credentials are invalid", () => {
+        // Intercept the backend login request to return an error response
+        cy.intercept("POST", 'http://127.0.0.1:8000/login', {
+            statusCode: 404,
+            body: {
+                detail: "Not found!",
+            }
+        }).as("loginRequest");
+
+        // wait for the page to load
+        cy.wait(200);
+
+        // Fill in the login form
+        cy.get("#email-input").should('be.visible').type("test@example.com");
+        cy.get("#password-input").should('be.visible').type("password");
+        cy.get("#login-button").click();
+
+        // Wait for the mocked login request to complete
+        cy.wait("@loginRequest")
+
+        // Check that the user is not redirected to the upload audio page
+        cy.url().should("include", "/login");
+
+        // Check that the error message is displayed
+        cy.get('#email-input > #login-form-container > #validation-message').should('be.visible').contains('Incorrect Email or Password');
+        cy.get('#password-input > #login-form-container > #validation-message').should('be.visible').contains('Incorrect Email or Password');
+
+    });
 
     it("should pass if credentials are valid", () => {
 
@@ -44,36 +72,7 @@ describe("Test login page", () => {
         // Check that the user is redirected to the upload audio page
         cy.url().should("include", "/upload_audio");
     });
-
-    it("should show error message if credentials are invalid", () => {
-        // Intercept the backend login request to return an error response
-        cy.intercept("POST", 'http://127.0.0.1:8000/login', {
-            statusCode: 404,
-            body: {
-                detail: "Not found!",
-            }
-        }).as("loginRequest");
-
-        // wait for the page to load
-        cy.wait(200);
-
-        // Fill in the login form
-        cy.get("#email-input").should('be.visible').type("test@example.com");
-        cy.get("#password-input").should('be.visible').type("password");
-        cy.get("#login-button").click();
-
-        // Wait for the mocked login request to complete
-        cy.wait("@loginRequest")
-
-        // Check that the user is not redirected to the upload audio page
-        cy.url().should("include", "/login");
-
-        // Check that the error message is displayed
-        cy.get('#email-input > #login-form-container > #validation-message').should('be.visible').contains('Incorrect Email or Password');
-        cy.get('#password-input > #login-form-container > #validation-message').should('be.visible').contains('Incorrect Email or Password');
-
-    });
-
+    
     it("should show error message if email is invalid", () => {
         cy.visit("/login");
 
