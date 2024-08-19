@@ -3,8 +3,8 @@
     The page where user uploads the audio file for Send Summary ASAP pathway.
 
     Author: Parul Garg (pgar0011)
-    Edited By: Angelina Leung (aleu0007)
-    Last Modified: 13/08/24
+    Edited By: Angelina Leung (aleu0007), Maureen Pham (mpha0039)
+    Last Modified: 19/08/24
 
 -->
 
@@ -12,6 +12,7 @@
   //required imports
   import Button from "../../components/button.svelte";
   import Topbar from "../../components/topbar.svelte";
+  import Toggle from '../../components/toggle.svelte';
   import UploadBox from "../../components/uploadAudioBox.svelte";
   import { goto } from "$app/navigation";
   import { apiStatusStore } from "../../stores/api-status-store";
@@ -35,6 +36,7 @@
     </div>
 
     <UploadBox />
+    <Toggle/>
     <div class="absolute bottom-8 right-8">
       <Button
         handleClick={nextPage}
