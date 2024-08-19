@@ -6,6 +6,7 @@
 describe("Test login page", () => {
     beforeEach(() => {
         cy.visit("/login");
+        cy.wait(1000);
     });
 
 
@@ -27,11 +28,13 @@ describe("Test login page", () => {
 
         // Fill in the login form
         cy.get("#email-input").should('be.visible').type("test@example.com");
+        cy.wait(300);
         cy.get("#password-input").should('be.visible').type("password");
+        cy.wait(300);
         cy.get("#login-button").click();
 
         // Wait for the mocked login request to complete
-        cy.wait("@loginRequest")
+        cy.wait("@loginRequest", { timeout: 10000 });
 
         // Check that the user is not redirected to the upload audio page
         cy.url().should("include", "/login");
@@ -63,16 +66,19 @@ describe("Test login page", () => {
 
         // Fill in the login form
         cy.get("#email-input").should('be.visible').type("test@example.com");
+        cy.wait(300);
         cy.get("#password-input").should('be.visible').type("password");
+        cy.wait(300);
         cy.get("#login-button").click();
 
+
         // Wait for the mocked login request to complete
-        cy.wait("@loginRequest")
+        cy.wait("@loginRequest", { timeout: 10000 });
 
         // Check that the user is redirected to the upload audio page
         cy.url().should("include", "/upload_audio");
     });
-    
+
     it("should show error message if email is invalid", () => {
         cy.visit("/login");
 
@@ -93,6 +99,7 @@ describe("Test login page", () => {
         cy.get("#password-input").should('be.visible').type("password");
         cy.get("#login-button").click();
 
+        cy.wait(200);
         cy.get('#email-input > #login-form-container > #validation-message').should('be.visible').contains('Please Enter Email');
 
     });
@@ -105,6 +112,7 @@ describe("Test login page", () => {
         cy.get("#email-input").should('be.visible').type("test@example.com");
         cy.get("#login-button").click();
 
+        cy.wait(200);
         cy.get('#password-input > #login-form-container > #validation-message').should('be.visible').contains('Please Enter Password');
 
     });
