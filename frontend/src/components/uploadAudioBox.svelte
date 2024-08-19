@@ -16,7 +16,7 @@
 <!-- JavaScript -->
 <script>
 	import micIcon from "../assets/mic-icon.png";
-	import checkIcon from "../assets/check-icon.png";
+	import checkIcon from "../assets/green-tick.png";
 	import Dropzone from "svelte-file-dropzone";
 	import LoadingBar from "./loadingBar.svelte";
 	import { transcribe_audio } from "../api-functions/transcribe_audio";

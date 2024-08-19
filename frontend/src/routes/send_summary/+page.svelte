@@ -74,7 +74,7 @@
     <!-- styling of the clock icon -->
     <div class="flex justify-center">
       <img
-        class="flex flex-row justify-center items-center p-0 bg-indigo-200 flex-none order-none flex-grow-0 w-24 h-24"
+        class="flex flex-row justify-center items-center p-0 flex-none order-none flex-grow-0 w-24 h-24"
         src={$emailStatusStore == "Sent" ? green_tick : clock}
         alt={$emailStatusStore == "Sent" ? "Green Tick" : "Clock"}
       />
