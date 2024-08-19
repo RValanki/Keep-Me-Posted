@@ -1,13 +1,19 @@
 <script>
   import Button from "../components/button.svelte";
-  import { ContactsStore } from "../stores/contacts-store"
+  import { ContactsStore } from "../stores/contacts-store";
   let emailString = "";
   let emailErrorString = "";
 
   let addEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (emailRegex.test(emailString)) {
-      ContactsStore.update((prev) => [...prev, emailString]);
+      ContactsStore.update((prev) => {
+        if (prev.includes(emailString)) {
+          return prev;
+        } else {
+          return [...prev, emailString];
+        }
+      });
       emailString = "";
     } else {
       emailErrorString = "Please enter a valid email address.";
