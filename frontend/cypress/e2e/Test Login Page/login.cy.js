@@ -75,6 +75,8 @@ describe("Test login page", () => {
         // Wait for the mocked login request to complete
         cy.wait("@loginRequest", { timeout: 10000 });
 
+        // Wait for the page to load
+        cy.wait(2000);
         // Check that the user is redirected to the upload audio page
         cy.url().should("include", "/upload_audio");
     });
