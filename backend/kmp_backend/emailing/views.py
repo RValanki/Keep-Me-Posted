@@ -1,3 +1,4 @@
+from email.mime.application import MIMEApplication
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 
@@ -22,9 +23,9 @@ def send_email(request):
     contacts = request.POST.get('contacts')
     transcript = request.POST.get('transcript')
 
-    path = "emailing/static/Meeting_Transcript_Template.pdf"
+    path = "emailing/static/Transcript_Template.pdf"
 
-    create_pdf(path, transcript)
+    transcript_pdf = create_pdf(path, transcript)
 
     if not contacts:
         raise ValueError("Contacts list is empty.")
@@ -49,6 +50,11 @@ def send_email(request):
             # The email client will try to render the last part first
             email.attach(part1)
             email.attach(part2)
+
+            # Attach the PDF file
+            attachment = MIMEApplication(transcript_pdf.read(), _subtype="pdf")
+            attachment.add_header('Content-Disposition', 'attachment', filename='Meeting_Transcript.pdf')
+            email.attach(attachment)
 
     try:
             # Create secure connection with server and send email
