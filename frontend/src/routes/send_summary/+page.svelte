@@ -82,19 +82,19 @@
     <!-- the heading and subheading of the page -->
     <h1 class="pt-3">
       {$emailStatusStore == "Sent"
-        ? "Your Summary Has Been Sent."
-        : "Your Summary Will Be Sent."}
+        ? "Your Summary Has Been Sent"
+        : "Your Summary Will Be Sent"}
     </h1>
     {#if $emailStatusStore == "Sent"}
       <p
-        class="subheading text-xl sm:text-xl md:text-2xl lg:text-3xl text-center pt-5"
+        class="subheading pt-4"
       >
         Your summary{$sendWithTranscriptStore ? " and transcript" : ""} has been
         sent to the recipients below.
       </p>
     {:else}
       <p
-        class="subheading text-xl sm:text-xl md:text-2xl lg:text-3xl text-center pt-5"
+        class="subheading pt-4"
       >
         After the summary has been completely generated, it will be sent
         automatically{$sendWithTranscriptStore ? " with the transcript" : ""}.

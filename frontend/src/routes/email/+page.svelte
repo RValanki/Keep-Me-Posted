@@ -45,9 +45,9 @@
   <div class="flex flex-col text-center">
     <div class="flex flex-col p-12 gap-4">
       <h1>Add Recipients</h1>
-      <h2 class="font-normal">
+      <div class="subheading">
         Add the emails you would like to send the summary to.
-      </h2>
+      </div>
     </div>
 
     <EmailEntry></EmailEntry>

@@ -24,7 +24,7 @@
   };
 </script>
 
-<div class="flex justify-center gap-2">
+<div class="flex justify-center gap-2 px-4">
   <input
     class="border border-slate-300 p-2 rounded-xl w-96"
     type="email"
