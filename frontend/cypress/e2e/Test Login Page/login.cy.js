@@ -90,6 +90,7 @@ describe("Mocking Invalid Login", () => {
     });
 });
 
+// Test login with invalid email (e.g. missing .com)
 describe("Testing Invalid Email", () => {
     it("mock invalid email", () => {
         // Visit the login page
@@ -105,6 +106,7 @@ describe("Testing Invalid Email", () => {
     });
 });
 
+// Test login with missing email
 describe("Testing Missing Email", () => {
     it("mock invalid password", () => {
         // Visit the login page
@@ -120,6 +122,7 @@ describe("Testing Missing Email", () => {
     });
 });
 
+// Test login with missing password
 describe("Testing Missing Password", () => {
     it("mock invalid password", () => {
         // Visit the login page
