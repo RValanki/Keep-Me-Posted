@@ -34,11 +34,6 @@
       if ($apiStatusStore == "Complete") {
         let summary = $summaryStore.summary 
 
-        // if ($sendWithTranscriptStore == true) {
-        //   console.log("adding transcript")
-        //   summary += '\n\nTranscript: ' + $transcriptStore.transcript
-        // }
-
         console.log(summary)
         
         let subject = $summaryStore.subject;
