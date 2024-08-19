@@ -3,7 +3,7 @@
     Contains pop-up modal
 
     Author: Brenda Dang
-    Modified by: Bowen Dong
+    Modified by: Bowen Dong, Diya Ramesh
     Last modified: 9/08/2024
 
 -->
@@ -11,6 +11,7 @@
 <script>
     import Button from "./button.svelte";
     import errorIcon from "../assets/error-icon.png";
+    import { Progressbar } from 'flowbite-svelte';
 
     export let type = 'primary';  // Default type is primary (blue with 1 button)
     export let firstHandleClick = () => {};  // Click function for primary button (dark blue, or red)
@@ -49,7 +50,19 @@
                 <div class="flex items-center justify-center text-gray-500 text-sm pt-2">
                     {mainText}
                 </div>
-                {#if type === 'secondary'}
+                {#if type === 'loading'}
+                <div class="justify-center pb-1 pt-4 items-center w-full">
+                    <div class="pb-4"> 
+                        <Progressbar progress="50" color="blue" />
+                    </div>
+                    <Button
+                        type='primary'
+                        text='Cancel'
+                        fullWidth={true}
+                        handleClick={firstHandleClick}
+                    />
+                </div>
+                {:else if type === 'secondary'}
                 <div class="flex shrink justify-evenly object-cover pb-1 pt-8 items-center">
                     <div class = "w-5/12">
                         <Button 
