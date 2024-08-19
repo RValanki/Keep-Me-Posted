@@ -23,10 +23,6 @@ def send_email(request):
     contacts = request.POST.get('contacts')
     transcript = request.POST.get('transcript')
 
-    path = "emailing/static/Transcript_Template.pdf"
-
-    transcript_pdf = create_pdf(path, transcript)
-
     if not contacts:
         raise ValueError("Contacts list is empty.")
     else:
@@ -51,10 +47,12 @@ def send_email(request):
             email.attach(part1)
             email.attach(part2)
 
-            # Attach the PDF file
-            attachment = MIMEApplication(transcript_pdf.read(), _subtype="pdf")
-            attachment.add_header('Content-Disposition', 'attachment', filename='Meeting_Transcript.pdf')
-            email.attach(attachment)
+            if transcript:  # Only attach PDF if transcript exists
+                path = "emailing/static/Transcript_Template.pdf"
+                transcript_pdf = create_pdf(path, transcript)
+                attachment = MIMEApplication(transcript_pdf.read(), _subtype="pdf")
+                attachment.add_header('Content-Disposition', 'attachment', filename='Meeting_Transcript.pdf')
+                email.attach(attachment)
 
     try:
             # Create secure connection with server and send email

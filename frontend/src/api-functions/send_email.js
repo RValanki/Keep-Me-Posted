@@ -10,7 +10,9 @@ export let send_email = async (transcript, message, subject, contacts, baseURL) 
     data.append('message', message)
     data.append('subject', subject)
     data.append('contacts', contacts)
-    data.append('transcript', transcript)
+    if (transcript) {
+        data.append('transcript', transcript);
+    }
 
     try {
         const response = await fetch(postRequestString, { method: "POST", body: data})
