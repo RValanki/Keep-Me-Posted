@@ -12,12 +12,6 @@ describe("Test login page", () => {
 
     it("should pass if credentials are valid", () => {
         // Intercept the backend login request to return a successful response
-
-        cy.visit("/upload_audio");
-        cy.wait(1000);
-        cy.visit("/login");
-        cy.wait(1000);
-
         cy.intercept("POST", 'http://127.0.0.1:8000/login', {
             statusCode: 200,
             body: {
