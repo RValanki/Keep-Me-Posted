@@ -16,8 +16,21 @@
   import UploadBox from "../../components/uploadAudioBox.svelte";
   import { goto } from "$app/navigation";
   import { apiStatusStore } from "../../stores/api-status-store";
+  import { onMount } from 'svelte';
+  import { getAuth } from '../../stores/auth-store.js';
+  import { updateNavigation } from '../../stores/navigation-store.js';
 
+  onMount(() => {
+    const auth = getAuth();
+    if (auth.email === "" || auth.email === null) {
+      if(!auth.guestMode){
+        goto("/login");
+      }
+    }
+  });
+  
   let nextPage = () => {
+    sessionStorage.setItem("fileUploaded", true);
     goto("/generate_summary");
   };
 </script>

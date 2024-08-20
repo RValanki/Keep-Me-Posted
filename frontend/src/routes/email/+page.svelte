@@ -5,12 +5,22 @@
   import EmailList from "../../components/emailList.svelte";
   import { goto } from "$app/navigation";
   import { ContactsStore } from "../../stores/contacts-store";
-  import { authStore } from "../../stores/auth-store"
+  import { authStore, getAuth } from "../../stores/auth-store"
   import { isOpen, isCancelled} from "../../stores/user-email-popup-store";
   import UserEmailEntry from "../../components/userEmailEntry.svelte";
   import { onMount } from "svelte";
 
   onMount(() => {
+    if (getAuth().email === "" || getAuth().email === null) {
+      if(!getAuth().guestMode){
+        goto("/login");
+      }
+    }
+
+    if (sessionStorage.getItem("fileUploaded") !== "true") {
+      goto("/upload_audio");
+    }
+
     if ($authStore["loggedIn"] == true) {
       ContactsStore.update((prev) => {
         if (prev.includes($authStore["email"])) {

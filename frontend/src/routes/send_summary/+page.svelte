@@ -23,9 +23,20 @@
   import { send_email } from "../../api-functions/send_email";
   import { backendURL } from "../../api-functions/base-URL";
   import { onDestroy, onMount } from "svelte";
+  import { getAuth } from "../../stores/auth-store";
 
   let sending = true;
   onMount(() => {
+    if (getAuth().email === "" || getAuth().email === null) {
+      if (!getAuth().guestMode) {
+        goto("/login");
+      }
+    }
+
+    if (sessionStorage.getItem("fileUploaded") !== "true") {
+      goto("/upload_audio");
+    }
+
     trySend()
   });
 
@@ -57,6 +68,7 @@
   //the next page in the sequence
   let nextPage = () => {
     resetStores();
+    sessionStorage.setItem("fileUploaded", false);
     goto("/upload_audio");
   };
 </script>
