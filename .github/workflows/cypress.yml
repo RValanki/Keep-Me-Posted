@@ -31,6 +31,6 @@ jobs:
       - name: Run Cypress Tests
         run: |
           cd frontend
-          npx cypress run --browser chrome --record --key d10099d3-90df-4ef3-b157-344e39101718
+          npx cypress run --browser chrome --record --key ${{ secrets.CYPRESS_KEY }}
 
         
