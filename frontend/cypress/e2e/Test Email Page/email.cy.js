@@ -16,35 +16,39 @@ describe("Access email page", () => {
     });
   
 // Test valid recipient add
-describe("Mocking ContactsStore", () => {
+describe("Valid recipient add", () => {
     beforeEach(() => {
       cy.visit("/email");
-  
-      // Mock the ContactsStore with a spy
-      cy.window().then((win) => {
-        const mockContactsStore = {
-          update: cy.spy().as("mockUpdate"), // Spy on the update method
-        };
 
-      // Replace the actual ContactsStore with the mock
-      win.ContactsStore = mockContactsStore;
-
-      // Capture console logs
-      cy.spy(win.console, 'log').as('consoleLog');
-      });
     });
   
     it("should call update on adding a valid email", () => {
-      const validEmail = "test@example.com";
-      
-      cy.get('input[type="email"]').type(validEmail);
+      cy.get('input[type="email"]').type("testsuccess@gmail.com");
+      cy.get('input[type="email"]').type("testsuccess@gmail.com").should('have.value', 'testsuccess@gmail.com');
+      cy.wait(1000);
       cy.contains("Add recipient").click();
-
-      // Verify console log
-      cy.get('@consoleLog').should('be.calledWith', 5);
   
-      // Check that the update method was called
-      cy.get("@mockUpdate").should("have.been.calledOnce");
+      // Check that valid email was added
+      cy.contains("testsuccess@gmail.com").should("be.visible");
     });
   });
+
+// Test invalid recipient add
+describe("Invalid recipient add", () => {
+    beforeEach(() => {
+      cy.visit("/email");
+
+    });
+  
+    it("should call update on adding a valid email", () => {
+      cy.get('input[type="email"]').type("testfail");
+      cy.get('input[type="email"]').type("testfail").should('have.value', 'testfail');
+      cy.wait(1000);
+      cy.contains("Add recipient").click();
+  
+      // Check that invalid email was not added
+      cy.contains("testfail").should("not.exist");
+    });
+  });
+  
   
