@@ -12,9 +12,11 @@
   import Button from "./button.svelte";
   import { ContactsStore } from "../stores/contacts-store";
   import { isOpen, isCancelled } from "../stores/user-email-popup-store";
+  import InputFieldWithValidation from "./input-field-with-validation.svelte";
 
   let emailString = "";
   let emailErrorString = "";
+  let showEmailError = false;
 
   let handleCancel = () => {
     isCancelled.set(true);
@@ -30,9 +32,7 @@
       isCancelled.set(true);
     } else {
       emailErrorString = "Please enter a valid email address.";
-      setTimeout(() => {
-        emailErrorString = "";
-      }, 3000);
+      showEmailError = true;
     }
   };
 </script>
@@ -49,7 +49,8 @@
       <div class="h3 text-center text-gray-500 text-base p-1">
         Add your email to receive the summary.
       </div>
-
+      
+      <!--
       <div class="text-left font-medium text-sm text-gray-700 px-4 py-2">Email address</div>
       <input
         class="border flex ml-5 border-slate-300 p-2 rounded-xl text-left w-11/12 text-sm text-gray-700"
@@ -58,6 +59,12 @@
         bind:value={emailString}
 
       />
+      -->
+      <div class = "w-full px-4 py-2">
+        <InputFieldWithValidation label = "Email Address" placeholder = "you@kmp.com" bind:value={emailString} validationMessage = {emailErrorString} validationActive = {showEmailError}/>
+      </div>
+      
+      
 
       <div class="flex shrink justify-evenly object-cover pb-1 pt-8 items-center">
         <div class = "w-5/12">

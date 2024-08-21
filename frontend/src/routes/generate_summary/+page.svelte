@@ -2,7 +2,7 @@
 
     Page that shows the summary generated
 
-    Author:Brenda Dang, Diya Ramesh
+    Author: Brenda Dang, Diya Ramesh
     Last Modified: 1/08/2024
 -->
 
@@ -43,16 +43,13 @@
 
 <body>
   <TopBar />
-  
-  <div 
-       class="text-4xl font-inter font-bold mb-4 text-black flex flex-col justify-center items-center mt-20"
-     >
-      {hasSummaryGenerated ? "Summary Generated!" : "Your Summary is Being Generated..."}
-  </div>
-  <div 
-       class="text-xl font-inter font-thin text-black flex flex-col justify-center items-center mt-6"
-     >
-      {hasSummaryGenerated ? "Your summary is ready to be sent." : "We are still generating your summary..."}
+  <div class="flex flex-col justify-center items-center pt-12">
+    <h1>
+        {hasSummaryGenerated ? "Summary Generated!" : "Your Summary is Being Generated"}
+    </h1>
+    <div class="subheading mt-4">
+        {hasSummaryGenerated ? "Your summary is ready to be sent." : "We are still generating your summary..."}
+    </div>
   </div>
 
   <div class="mt-10">
