@@ -24,6 +24,7 @@
 	import { apiStatusStore } from "../stores/api-status-store"
 	import { backendURL } from "../api-functions/base-URL"
 	import PopUpModal from "./popUpModal.svelte"; // Import the PopUpModal component
+    import { resetStores } from "../stores/reset-store";
 
 	// content
 	let fileUploaded = false;
@@ -82,8 +83,8 @@
 	async function startUpload(file) {
 		apiStatusStore.set("Transcribe");
 		if ($apiStatusStore == "Cancel") {
-			console.log("Upload cancelled");
-			apiStatusStore.set("")
+			console.log("Upload cancelled after upload");
+			resetStores();
 			console.log("Upload box reset")
 			return;
 		}
@@ -104,8 +105,8 @@
 			console.log('Summary Received');
 		}).catch(error => {
 			if (error == "Upload cancelled") {
-				apiStatusStore.set("")
-			console.log("Upload box reset")
+				resetStores();
+				console.log("Upload box reset");
 			}
 		})
 	}

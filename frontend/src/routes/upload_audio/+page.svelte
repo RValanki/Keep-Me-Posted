@@ -15,10 +15,16 @@
   import UploadBox from "../../components/uploadAudioBox.svelte";
   import { goto } from "$app/navigation";
   import { apiStatusStore } from "../../stores/api-status-store";
+    import { resetStores } from "../../stores/reset-store";
 
   let nextPage = () => {
     goto("/generate_summary");
   };
+
+  function handleReUpload() {
+    apiStatusStore.set("");
+    resetStores();
+  }
 </script>
 
 <html lang="en">
@@ -35,6 +41,17 @@
     </div>
 
     <UploadBox />
+
+    {#if ($apiStatusStore == "Complete")}
+      <div class="flex justify-center items-center p-3">
+        <Button 
+          type="secondary"
+          text="Re-Upload Audio"
+          handleClick={handleReUpload}
+        />
+      </div>
+    {/if}
+
     <div class="absolute bottom-8 right-8">
       <Button
         handleClick={nextPage}
