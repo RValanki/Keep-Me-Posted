@@ -35,8 +35,13 @@
         targetProgress = 0;
       } else if ($apiStatusStore == "Transcribe") {
         targetProgress = 40;
+        console.log("api changed to transcribe")
       } else if ($apiStatusStore == "Summary") {
         targetProgress = 90;
+        console.log("api changed to summary")
+      } else if ($apiStatusStore == "Cancel") {
+        targetProgress = 0;
+        console.log("api has been cancelled")
       } else {
         targetProgress = 100;
       }
@@ -78,8 +83,9 @@
    * Handle cancelling of upload
   */
  function handleCancel() {
+  console.log("Upload cancelled");
   progress = 0;
-  resetStores()
+  apiStatusStore.set("Cancel");
  }
 </script>
 
