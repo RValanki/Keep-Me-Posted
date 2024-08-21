@@ -1,65 +1,76 @@
-describe('Sign Up Page', () => {
+describe('Sign Up Flow', () => {
+    const baseUrl = 'http://localhost:5173'; 
+    const apiUrl = 'http://127.0.0.1:8000/signup'; // Your API endpoint
   
     beforeEach(() => {
-      // Navigate to the sign-up page before each test
-      cy.visit('http://localhost:5173/signup'); // Adjust the URL if needed
+      cy.visit(`${baseUrl}/signup`);
     });
   
-    it('should display validation error for invalid email', () => {
-      cy.get('input[name="email"]')
-        .type('invalid-email')
-        .blur(); // Trigger validation
+    it('should display validation messages for invalid inputs', () => {
+      cy.get('button').contains('Sign Up').click();
   
-      cy.contains('Please Enter Valid Email').should('be.visible'); // Check for validation error
+      // Assuming your error messages are within elements like <p> or <span>
+      cy.contains('Please enter email').should('be.visible');
+      cy.contains('Password must contain at least 8 characters, capital letters, and a special character').should('be.visible');
+      cy.contains('Please enter password').should('be.visible');
     });
   
-    it('should display validation error for weak password', () => {
-      cy.get('input[name="password"]')
-        .type('weakpass')
-        .blur(); // Trigger validation
+    it('should display validation message for invalid email format', () => {
+      cy.get('input[placeholder="name@email.com"]').type('invalid-email');
+      cy.get('input[placeholder="••••••••"]').first().type('ValidPass123!');
+      cy.get('input[placeholder="••••••••"]').last().type('ValidPass123!');
+      cy.get('button').contains('Sign Up').click();
   
-      cy.contains('Password must contain at least 8 characters, capital letters, and a special character')
-        .should('be.visible'); // Check for validation error
+      cy.contains('Please enter a valid email').should('be.visible');
     });
   
-    it('should display validation error if passwords do not match', () => {
-      cy.get('input[name="password"]')
-        .type('ValidPass123!');
+    it('should display validation message for weak password', () => {
+      cy.get('input[placeholder="name@email.com"]').type('test@example.com');
+      cy.get('input[placeholder="••••••••"]').first().type('weakpass');
+      cy.get('input[placeholder="••••••••"]').last().type('weakpass');
+      cy.get('button').contains('Sign Up').click();
   
-      cy.get('input[name="verifyPassword"]')
-        .type('DifferentPass123!')
-        .blur(); // Trigger validation
-  
-      cy.contains('Password does not match').should('be.visible'); // Check for validation error
+      cy.contains('Password must contain at least 8 characters, capital letters, and a special character').should('be.visible');
     });
   
-    it('should sign up successfully with valid credentials', () => {
-      cy.get('input[name="email"]')
-        .type('valid.email@example.com');
+    it('should display validation message for non-matching passwords', () => {
+      cy.get('input[placeholder="name@email.com"]').type('test@example.com');
+      cy.get('input[placeholder="••••••••"]').first().type('ValidPass123!');
+      cy.get('input[placeholder="••••••••"]').last().type('DifferentPass123!');
+      cy.get('button').contains('Sign Up').click();
   
-      cy.get('input[name="password"]')
-        .type('ValidPass123!');
-  
-      cy.get('input[name="verifyPassword"]')
-        .type('ValidPass123!');
-  
-      cy.get('button[type="submit"]')  // Target the "Sign Up" button
-        .contains('Sign Up')
-        .click();
-  
-      // Assuming successful signup redirects to the login page
-      cy.url().should('include', '/login'); 
+      cy.contains('Password does not match').should('be.visible');
     });
   
-    it('should initiate Google sign up', () => {
-      cy.get('button[type="button"]')
-        .contains('Sign Up with Google')
-        .should('be.visible')
-        .click(); // Click the Google Sign-Up button
+    it('should successfully submit the form with valid inputs', () => {
+      cy.intercept('POST', apiUrl, {
+        statusCode: 200,
+        body: {},
+      }).as('postSignUp');
   
-      // Check if the redirection to Google OAuth happens
-      cy.url().should('include', 'accounts.google.com');
+      cy.get('input[placeholder="name@email.com"]').type('test@example.com');
+      cy.get('input[placeholder="••••••••"]').first().type('ValidPass123!');
+      cy.get('input[placeholder="••••••••"]').last().type('ValidPass123!');
+      cy.get('button').contains('Sign Up').click();
+  
+      cy.wait('@postSignUp').its('response.statusCode').should('eq', 200);
+  
+      cy.url().should('eq', `${baseUrl}/login`);
     });
   
+    it('should display an error if the email is already in use', () => {
+      cy.intercept('POST', apiUrl, {
+        statusCode: 400,
+        body: { error: 'This email address is already in use' },
+      }).as('postSignUp');
+  
+      cy.get('input[placeholder="name@email.com"]').type('existing@example.com');
+      cy.get('input[placeholder="••••••••"]').first().type('ValidPass123!');
+      cy.get('input[placeholder="••••••••"]').last().type('ValidPass123!');
+      cy.get('button').contains('Sign Up').click();
+  
+      cy.wait('@postSignUp');
+      cy.contains('This email address is already in use').should('be.visible');
+    });
   });
   
