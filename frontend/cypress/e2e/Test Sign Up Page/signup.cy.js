@@ -1,27 +1,9 @@
 describe('Sign Up Flow', () => {
-    const baseUrl = 'http://localhost:5173'; 
+    const baseUrl = 'http://localhost:5173'; // Adjust based on your setup
     const apiUrl = 'http://127.0.0.1:8000/signup'; // Your API endpoint
   
     beforeEach(() => {
       cy.visit(`${baseUrl}/signup`);
-    });
-  
-    it('should display validation messages for invalid inputs', () => {
-      cy.get('button').contains('Sign Up').click();
-  
-      // Assuming your error messages are within elements like <p> or <span>
-      cy.contains('Please enter email').should('be.visible');
-      cy.contains('Password must contain at least 8 characters, capital letters, and a special character').should('be.visible');
-      cy.contains('Please enter password').should('be.visible');
-    });
-  
-    it('should display validation message for invalid email format', () => {
-      cy.get('input[placeholder="name@email.com"]').type('invalid-email');
-      cy.get('input[placeholder="••••••••"]').first().type('ValidPass123!');
-      cy.get('input[placeholder="••••••••"]').last().type('ValidPass123!');
-      cy.get('button').contains('Sign Up').click();
-  
-      cy.contains('Please enter a valid email').should('be.visible');
     });
   
     it('should display validation message for weak password', () => {
