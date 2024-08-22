@@ -44,7 +44,7 @@
     <!-- Popup Content -->
      <div class="fixed inset-0 flex items-center justify-center z-50">
         <div class="p-4 w-full max-w-md bg-white border rounded-xl">
-            <div class="h2 text-center text-gray-900 font-semibold p-2">Would you like to recieve a copy of the summary?</div>
+            <div class="h2 text-center text-gray-900 font-semibold p-2">Would you like to receive a copy of the summary?</div>
 
       <div class="h3 text-center text-gray-500 text-base p-1">
         Add your email to receive the summary.
@@ -60,22 +60,22 @@
 
       />
       -->
-      <div class = "w-full px-4 py-2">
+      <div class = "w-full px-4 py-4">
         <InputFieldWithValidation label = "Email Address" placeholder = "you@kmp.com" bind:value={emailString} validationMessage = {emailErrorString} validationActive = {showEmailError}/>
       </div>
       
       
 
-      <div class="flex shrink justify-evenly object-cover pb-1 pt-8 items-center">
-        <div class = "w-5/12">
+      <div class="flex shrink justify-between pb-1 pt-0 items-center">
+        <div class = "w-5/12 pl-4">
             <Button
               type="secondary"
-              text="Cancel"
+              text="No, thanks"
               fullWidth={true}
               handleClick={handleCancel}
             ></Button>
         </div>
-        <div class = "w-5/12">
+        <div class = "w-5/12 pr-4">
         <Button
           type="primary"
           text="Add myself"
