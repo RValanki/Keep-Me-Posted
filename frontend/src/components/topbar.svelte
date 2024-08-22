@@ -18,6 +18,7 @@
   import Button from "../components/button.svelte";
   import { getAuth, authStore, clearAuth } from "../stores/auth-store.js";
   import { goto } from "$app/navigation";
+  import { resetStores } from "../stores/reset-store.js";
 
   let showDropdown = false; // Boolean to dictate whether dropdown is visible
   let profileIcons = [profileIcon, profileHoverIcon]; // Array holding 2 forms of profile picture [default, on:hover]
@@ -35,6 +36,7 @@
   // Function to handle logging out
   function handleLogout() {
     clearAuth();
+    resetStores();
     goto("/login");
     console.log("todo - handle logout");
   }
