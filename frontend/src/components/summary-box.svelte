@@ -72,12 +72,11 @@
             const updatedSummary = document.getElementById("summaryGenerated").innerHTML
             const turndownService = new TurndownService();
             let markdownContent = turndownService.turndown(updatedSummary);
-            console.log(markdownContent)
             if (updatedSummary) {
                 summaryStore.update(current => {
                     return {
                         ...current,
-                        summary: updatedSummary
+                        summary: markdownContent
                     };
                 });
             }
