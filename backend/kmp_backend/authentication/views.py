@@ -111,6 +111,39 @@ def logout(request):
     return response
 
 @api_view(['POST'])
+def guest_login(request):
+    """
+    Endpoint for guest login.
+
+    This view receives a POST request to log in as a guest user.
+    it generates a cookie with a custom token and returns it
+
+    Args:
+        request (HttpRequest): The incoming HTTP request object.
+
+    Returns:
+        Response: JSON response with a custom token for guest user.
+    """
+    # Generate a custom token for guest
+    token = "guest_token"
+
+    # Create a response with the token
+    response = Response({
+        "token": token
+    })
+
+    # Set a cookie with the token (expires with the session)
+    response.set_cookie(
+        key='auth_token',
+        value=token,
+        httponly=True,
+        secure = False,  # if HTTPS -> True
+        samesite='Strict' # Strict, Lax, None
+    )
+    
+    return response
+
+@api_view(['POST'])
 def verify_token(request):
     """
     Endpoint for verifying user token.

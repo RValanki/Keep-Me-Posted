@@ -141,9 +141,23 @@
       goto("/upload_audio");
    }
 
-   function handleLoginWithoutAccount(){
+   async function handleLoginWithoutAccount(){
       clearAuth();
       setGuestMode();
+
+      try {
+         const url = `${backendURL}/guest_login`;
+         const response = await fetch(url, {
+            method: "POST",
+            headers: {
+               "Content-Type": "application/json",
+            },
+            credentials: 'include',
+         });
+      } catch (error) {
+         console.error("Error:", error);
+      }
+
       navigateToNextPage();
    }
   

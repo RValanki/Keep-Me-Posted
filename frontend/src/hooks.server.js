@@ -17,13 +17,18 @@ export async function handle({ event, resolve }) {
         // Check authentication status based on cookies
         const { isAuthenticated } = await getAuthFromCookies(cookieHeader);
 
-
         // Define protected routes
         const protectedRoutes = [
             '/upload_audio',
             '/generate_summary',
             '/email',
             'send_summary'
+        ];
+
+        // Define routes that should not be accessible for logged-in users
+        const restrictedRoutes = [
+            '/login',
+            '/signup'
         ];
 
         // Redirect to login if the user is not authenticated
@@ -34,6 +39,18 @@ export async function handle({ event, resolve }) {
                 status: 302,
                 headers: {
                     Location: '/login' // Redirect to the login page
+                }
+            });
+        }
+
+        // Redirect to upload_audio if the user is authenticated
+        if (isAuthenticated && restrictedRoutes.some(route => event.url.pathname.startsWith(route)) ) {
+            console.log('Redirecting to upload_audio');
+
+            return new Response(null, {
+                status: 302,
+                headers: {
+                    Location: '/upload_audio' // Redirect to the upload_audio page
                 }
             });
         }
