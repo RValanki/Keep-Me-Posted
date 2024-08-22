@@ -1,10 +1,8 @@
 // Test the Summary Sent Page 
 describe('Summary Sent Page', () => {
-    // Defining the base URL 
-    const baseUrl = 'http://localhost:5173';
     // Visit the summary sent page before each test
     beforeEach(() => {
-      cy.visit(baseUrl+"/sent"); 
+      cy.visit("/sent"); 
     });
     // Test the Send Summary Button
     it('should redirect to the send email page after clicking the "send another summary" button', () => {
