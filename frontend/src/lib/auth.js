@@ -6,7 +6,6 @@ export async function getAuthFromCookies(cookieHeader) {
     const authToken = cookies.get('auth_token');
 
     // Check if guest cookie is set
-    console.log('authToken:', authToken);
     if (authToken == 'guest_token') {
         return { isAuthenticated: true };
     }

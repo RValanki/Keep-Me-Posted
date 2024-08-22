@@ -11,7 +11,7 @@
   import { onMount } from "svelte";
 
   onMount(() => {
-    if (sessionStorage.getItem("fileUploaded") !== "true") {
+    if (import.meta.env.PROD && sessionStorage.getItem("fileUploaded") !== "true") {
       goto("/upload_audio");
     }
 

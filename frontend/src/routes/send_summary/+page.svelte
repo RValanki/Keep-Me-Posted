@@ -27,10 +27,11 @@
 
   let sending = true;
   onMount(() => {
-    if (sessionStorage.getItem("fileUploaded") !== "true") {
+    // if production environment, check if file has been uploaded
+    if (import.meta.env.PROD && sessionStorage.getItem("fileUploaded") !== "true") {
       goto("/upload_audio");
     }
-
+    
     trySend()
   });
 

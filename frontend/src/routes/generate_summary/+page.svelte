@@ -14,7 +14,6 @@
   import { goto } from "$app/navigation";
   import { summaryStore } from "../../stores/summary-store";
   import { onMount } from "svelte";
-  import { getAuth } from "../../stores/auth-store";
 
   export let title = "Your Summary is Being Generated...";
   export let subTitle = "We are still generating your summary...";
@@ -32,7 +31,7 @@
   };
 
   onMount(() => {
-    if (sessionStorage.getItem("fileUploaded") !== "true") {
+    if (import.meta.env.PROD && sessionStorage.getItem("fileUploaded") !== "true") {
       goto("/upload_audio");
     }
   });
