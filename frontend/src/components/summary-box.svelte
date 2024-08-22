@@ -14,6 +14,8 @@
     import { onMount, onDestroy } from "svelte"
     import regenerateIcon from "../assets/regenerate-icon.png"
     import PopUpModal from "./popUpModal.svelte";
+    import { marked } from 'marked';
+    import TurndownService from 'turndown';
 
     export let emailSubject = ""
     export let summaryGenerated = ""
@@ -36,7 +38,7 @@
     function loadSummaryContent() {
         const unsubscribe = summaryStore.subscribe(value => {
             if (!summaryGenerated) {
-                summaryGenerated = value.summary;
+                summaryGenerated = marked(value.summary);
             }
             if (!emailSubject) {
                 emailSubject = value.subject;
@@ -67,7 +69,10 @@
             }
         }
         if (summaryGenerated) {
-            const updatedSummary = document.getElementById("summaryGenerated").value
+            const updatedSummary = document.getElementById("summaryGenerated").innerHTML
+            const turndownService = new TurndownService();
+            let markdownContent = turndownService.turndown(updatedSummary);
+            console.log(markdownContent)
             if (updatedSummary) {
                 summaryStore.update(current => {
                     return {
@@ -85,12 +90,13 @@
         // })
     }
 
-    let popUpModalComponent;
     // let displayPopUp = false;
 
     // function togglePopUp() {
     //     displayPopUp = !displayPopUp;
     // }
+
+    let popUpModalComponent
 
     function openRegeneratePopUp() {
 		// Toggle the popup modal visibility
@@ -98,26 +104,6 @@
 	}
 
 </script>
-
-<style>
-    .subject-placeholder::placeholder {
-        color: #98A2B3;
-        opacity: 1;
-        font-weight: 600;
-        font-size: 20px;
-    }
-
-    .summary-placeholder::placeholder {
-        color: #98A2B3;
-        opacity: 1;
-        font-size: 16px;
-    }
-
-    textarea {
-        overflow: hidden; /* Remove scrollbars */
-        resize: none; /* Prevent manual resizing */
-    }
-</style>
 
 <div class="rounded-lg p-4 w-9/12 mx-auto" style="background-color: #F5FAFF;">
     <div class="flex justify-end ml-auto">
@@ -132,7 +118,7 @@
         </label>
         {#if emailSubject}
             <input 
-                class="w-full p-2 rounded subject-placeholder" 
+                class="w-full p-2 rounded" 
                 style="background-color: #F5FAFF;" 
                 type="text" 
                 id="emailSubject" 
@@ -152,14 +138,13 @@
             Summary
         </label>
         {#if summaryGenerated}
-            <textarea
-                class="w-full p-2 rounded text-base summary-placeholder"
+            <div
+                class="w-full p-2 rounded text-base"
                 style="background-color: #F5FAFF;"
                 id="summaryGenerated"
-                bind:value={summaryGenerated}
+                contenteditable=""
                 placeholder="Your summary will be generated here..."
-                on:input={autoResize}
-            ></textarea>
+            >{@html marked(summaryGenerated)}</div>
         {:else}
             <div class="w-full p-2 rounded text-slate-400 text-base">
                 Your subject will be generated here{dots}
