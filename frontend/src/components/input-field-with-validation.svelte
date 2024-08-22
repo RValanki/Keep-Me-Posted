@@ -7,6 +7,7 @@
   export let validationActive = false; // Default false state
   export let isPasswordType = false;
   export let onInput;
+  export let isWithIcon = false; // allows for icon padding
   
   function handleInput(event) {
     value = event.target.value;
@@ -25,6 +26,15 @@
       placeholder={placeholder}
       on:input={handleInput}
       class="border-gray-300 rounded-lg w-full py-3 px-3 text-gray-700 text-sm placeholder:text-sm leading-tight focus:outline-none focus:shadow-outline"
+      style="border-radius: 8px; border-width: 1px;"
+    />
+  {:else if isWithIcon}
+    <input
+      type="text"
+      bind:value={value}
+      placeholder={placeholder}
+      on:input={handleInput}
+      class="pl-10 border-gray-300 rounded-lg w-full py-3 px-3 text-gray-700 text-sm placeholder:text-sm leading-tight focus:outline-none focus:shadow-outline"
       style="border-radius: 8px; border-width: 1px;"
     />
   {:else}
