@@ -28,9 +28,32 @@ describe('Audio Upload Page without login', () => {
     it('should have audio upload button', () => {
         cy.get('div[role="button"].dropzone.svelte-817dg2').should('exist');
     });
-    //mocking click of the button
-    it('should click audio upload button', () => {
-        cy.get('div[role="button"].dropzone.svelte-817dg2').click();
-    }); 
+    
+    //checking if audio is transcribed
+    it('should transcribe audio', () => {
+      const audioFile = 'Meeting_Audio.mp3'; 
+  
+      // Intercept the API call to transcribe audio
+      cy.intercept('GET', 'http://localhost:5173/src/api-functions/transcribe_audio.js', {
+        statusCode: 304,
+        body: {
+          transcript: 'This is a mocked transcription of the audio file.',
+          summary: 'This is a mocked summary of the transcription.'
+        }
+      }).as('transcribeAudio');
+  
+  
+        // Click the upload button to trigger the file input dialog
+      cy.get('div[role="button"].dropzone.svelte-817dg2').click();
 
+      // Attach the file to the hidden file input without making it visible
+      cy.get('input[type="file"]').attachFile(audioFile);
+
+      // Waiting for the transcribe audio API call and verify the response
+      cy.wait('@transcribeAudio', { timeout: 10000 }).its('response.statusCode').should('eq', 304);
+      
+      
     });
+  });
+
+    
