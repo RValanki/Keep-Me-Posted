@@ -10,6 +10,7 @@ describe("Access email page", () => {
 
     it("contain correct fields", () => {
         cy.contains("Add Recipients").should("be.visible"); // Check for "Add Recipients" Label
+        cy.contains("Add Recipient").should("be.visible"); // Check for "Add Recipients" Label
         cy.get('input[type="email"]').should("be.visible"); // Check for Email Input
     }
     );
@@ -23,11 +24,11 @@ describe("Valid recipient add", () => {
     });
   
     it("should call update on adding a valid email", () => {
-      cy.get('input[type="email"]').type("testsuccess@gmail.com");
+      cy.get('input[type="email"]').type("success@gmail.com");
       cy.get('input[type="email"]').type("testsuccess@gmail.com").should('have.value', 'testsuccess@gmail.com');
       cy.wait(1000);
-      cy.contains("Add Recipient").click();
-  
+      cy.get('button').contains('Add Recipient').click();
+
       // Check that valid email was added
       cy.contains("testsuccess@gmail.com").should("be.visible");
     });
@@ -44,7 +45,7 @@ describe("Invalid recipient add", () => {
       cy.get('input[type="email"]').type("testfail");
       cy.get('input[type="email"]').type("testfail").should('have.value', 'testfail');
       cy.wait(1000);
-      cy.contains("Add Recipient").click();
+      cy.get('button').contains('Add Recipient').click();
   
       // Check that invalid email was not added
       cy.contains("testfail").should("not.exist");
