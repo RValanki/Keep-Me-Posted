@@ -17,7 +17,7 @@
   }
 </script>
 
-<div class="mb-4">
+<div id = "login-form-container" class="mb-4">
   <label class="block text-gray-700 text-sm mb-1">{label}</label>
   {#if isPasswordType}
     <input
@@ -48,7 +48,7 @@
     />
   {/if}
   {#if showValidation || validationActive || validationMessage}
-    <p class={validationActive ? "text-red-500 text-xs m-1" : "text-[#959595] text-xs m-1"}>
+    <p id = "validation-message" class={validationActive ? "text-red-500 text-xs m-1" : "text-[#959595] text-xs m-1"}>
       {validationMessage}
     </p>
   {/if}
