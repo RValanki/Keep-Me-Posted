@@ -22,6 +22,10 @@ urlpatterns = [
     path('login', views.login, name='login'),
     # Endpoint for user signup
     path('signup', views.signup, name='signup'),
+    # Endpoint for user logout
+    path('logout', views.logout, name='logout'),
+    # Endpoint for verifying user token
+    path('verify_token', views.verify_token, name='verify_token'),
     # Test endpoint for token authentication
     path('test_token', views.test_token, name='test_token'),
 ]
