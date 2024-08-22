@@ -6,6 +6,16 @@ describe('Sign Up Flow', () => {
       cy.visit(`${baseUrl}/signup`);
     });
   
+    it('should display validation message for invalid email format', () => {
+      cy.get('input[placeholder="name@email.com"]').type('invalid-email'); // Input invalid email
+      cy.get('input[placeholder="••••••••"]').first().type('ValidPass123!'); // Input valid password
+      cy.get('input[placeholder="••••••••"]').last().type('ValidPass123!'); // Input valid password
+      cy.get('button').contains('Sign Up').click(); // Attempt to submit
+  
+      // Check for the specific error message related to invalid email
+      cy.contains('Please Enter Valid Email').should('be.visible');
+    });
+  
     it('should display validation message for weak password', () => {
       cy.get('input[placeholder="name@email.com"]').type('test@example.com');
       cy.get('input[placeholder="••••••••"]').first().type('weakpass');
