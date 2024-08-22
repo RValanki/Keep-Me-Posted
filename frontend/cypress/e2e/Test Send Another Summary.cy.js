@@ -2,7 +2,7 @@
 describe('Summary Sent Page', () => {
     // Visit the summary sent page before each test
     beforeEach(() => {
-      cy.visit("/sent"); 
+      cy.visit("/send_summary"); 
       // Add a waiting period 
       cy.wait(10000)
     });
