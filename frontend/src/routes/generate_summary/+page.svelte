@@ -32,11 +32,6 @@
   };
 
   onMount(() => {
-    if (getAuth().email === "" || getAuth().email === null) {
-      if(!getAuth().guestMode){
-        goto("/login");
-      }
-    }
     if (sessionStorage.getItem("fileUploaded") !== "true") {
       goto("/upload_audio");
     }
