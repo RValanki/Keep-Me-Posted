@@ -18,6 +18,7 @@
   import Button from "../components/button.svelte";
   import { getAuth, authStore, clearAuth } from "../stores/auth-store.js";
   import { goto } from "$app/navigation";
+  import { backendURL } from "../api-functions/base-URL";
 
   let showDropdown = false; // Boolean to dictate whether dropdown is visible
   let profileIcons = [profileIcon, profileHoverIcon]; // Array holding 2 forms of profile picture [default, on:hover]
@@ -33,10 +34,25 @@
   }
 
   // Function to handle logging out
-  function handleLogout() {
+  async function handleLogout() {
+
+    try{
+      const logoutUrl = `${backendURL}/logout`;
+      const response = await fetch(logoutUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      console.log("Response: ", response);
+    } catch (error) {
+      console.log("Error logging out: ", error);
+    }
+
     clearAuth();
     goto("/login");
-    console.log("todo - handle logout");
   }
 
   // Function to handle going to main page (NOT sign in if they are signed in already)
