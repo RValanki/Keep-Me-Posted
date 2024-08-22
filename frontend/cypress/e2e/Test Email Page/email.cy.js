@@ -26,7 +26,7 @@ describe("Valid recipient add", () => {
       cy.get('input[type="email"]').type("testsuccess@gmail.com");
       cy.get('input[type="email"]').type("testsuccess@gmail.com").should('have.value', 'testsuccess@gmail.com');
       cy.wait(1000);
-      cy.contains("Add recipient").click();
+      cy.contains("Add Recipient").click();
   
       // Check that valid email was added
       cy.contains("testsuccess@gmail.com").should("be.visible");
@@ -44,7 +44,7 @@ describe("Invalid recipient add", () => {
       cy.get('input[type="email"]').type("testfail");
       cy.get('input[type="email"]').type("testfail").should('have.value', 'testfail');
       cy.wait(1000);
-      cy.contains("Add recipient").click();
+      cy.contains("Add Recipient").click();
   
       // Check that invalid email was not added
       cy.contains("testfail").should("not.exist");
