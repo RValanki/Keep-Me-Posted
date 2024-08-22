@@ -26,8 +26,16 @@
     class="sr-only peer"
     bind:checked={isChecked}
     />
-    <div class="cursor-pointer relative w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-600 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600"></div>
-    <span class="text-button text-black after:content-['*'] after:text-red-500">
+    <div class="cursor-pointer relative w-7 h-4 bg-gray-300
+        dark:peer-focus:ring-blue-800 rounded-full peer
+        dark:bg-gray-700 peer-checked:after:translate-x-3/4
+        rtl:peer-checked:after:-translate-x-3/4
+        peer-checked:after:border-blue-600 after:absolute
+        after:bg-white after:border-gray-300 after:border
+        after:rounded-full after:h-4 after:w-4 after:transition-all
+        dark:border-gray-600 peer-checked:bg-blue-600"></div>
+
+    <span class="p-[5px] text-base text-black after:content-['*'] after:text-red-500">
         Attach meeting transcript with email?
     </span>
   </label>

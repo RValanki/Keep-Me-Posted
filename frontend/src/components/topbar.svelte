@@ -19,6 +19,7 @@
   import { getAuth, authStore, clearAuth } from "../stores/auth-store.js";
   import { goto } from "$app/navigation";
   import { backendURL } from "../api-functions/base-URL";
+  import { resetStores } from "../stores/reset-store.js";
 
   let showDropdown = false; // Boolean to dictate whether dropdown is visible
   let profileIcons = [profileIcon, profileHoverIcon]; // Array holding 2 forms of profile picture [default, on:hover]
@@ -52,6 +53,7 @@
     }
 
     clearAuth();
+    resetStores();
     goto("/login");
   }
 

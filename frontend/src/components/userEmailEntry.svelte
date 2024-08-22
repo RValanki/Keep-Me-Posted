@@ -44,38 +44,44 @@
     <!-- Popup Content -->
      <div class="fixed inset-0 flex items-center justify-center z-50">
         <div class="p-4 w-full max-w-md bg-white border rounded-xl">
-            <div class="h2 text-center text-gray-900 font-semibold p-2">Would you like to recieve a copy of the summary?</div>
+            <div class="h2 text-center text-gray-900 font-semibold p-2">Would you like to receive a copy of the summary?</div>
 
       <div class="h3 text-center text-gray-500 text-base p-1">
         Add your email to receive the summary.
       </div>
-      
-      <!--
-      <div class="text-left font-medium text-sm text-gray-700 px-4 py-2">Email address</div>
-      <input
-        class="border flex ml-5 border-slate-300 p-2 rounded-xl text-left w-11/12 text-sm text-gray-700"
-        type="email"
-        placeholder="you@kmp.com"
-        bind:value={emailString}
 
-      />
-      -->
       <div class = "w-full px-4 py-2">
-        <InputFieldWithValidation label = "Email Address" placeholder = "you@kmp.com" bind:value={emailString} validationMessage = {emailErrorString} validationActive = {showEmailError}/>
+        <div class="relative">
+            <InputFieldWithValidation
+                isWithIcon={true}
+                label="Email Address"
+                placeholder="you@kmp.com"
+                bind:value={emailString}
+                validationMessage={emailErrorString}
+                validationActive={showEmailError}
+                />
+                <button
+                    class="absolute cursor-default h-5 w-5 left-3 top-9 py-2 flex items-center bg-white"
+                    type="button">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7" stroke="#667085" class="size-12">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                  </svg>
+                </button>
+        </div>
       </div>
-      
-      
 
-      <div class="flex shrink justify-evenly object-cover pb-1 pt-8 items-center">
-        <div class = "w-5/12">
+
+
+      <div class="flex shrink justify-between pb-1 pt-0 items-center">
+        <div class = "w-5/12 pl-4">
             <Button
               type="secondary"
-              text="Cancel"
+              text="No, thanks"
               fullWidth={true}
               handleClick={handleCancel}
             ></Button>
         </div>
-        <div class = "w-5/12">
+        <div class = "w-5/12 pr-4">
         <Button
           type="primary"
           text="Add myself"

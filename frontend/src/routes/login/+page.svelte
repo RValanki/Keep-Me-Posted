@@ -8,7 +8,7 @@
    import LoginCardHeader from "../../components/loginCardHeader.svelte";
    import Button from "../../components/button.svelte";
    import LoginPrompt from "../../components/loginPrompt.svelte";
-   import { backendURL } from "../../api-functions/base-URL";
+   import { backendURL } from "../../api-functions/base-URL"
 
    let googleIcon = `<svg
               xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +107,7 @@
 
    async function postData(loginData) {
       try {
-         const url = `${backendURL}/login`;
+         const url = backendURL + "/login";
          const data = loginData;
 
          const response = await fetch(url, {
@@ -192,26 +192,30 @@
                      heading="Log in to your account"
                      subheading="Welcome back! Please enter your details."
                   />
-                  <InputFieldWithValidation
-                     label="Email"
-                     placeholder="name@email.com"
-                     bind:value={email}
-                     validationMessage={emailValidationString}
-                     validationActive={emailValidationActive}
-                  />
-                  <InputFieldWithValidation
-                     label="Password"
-                     isPasswordType={true}
-                     placeholder="••••••••"
-                     bind:value={password}
-                     validationMessage={passwordValidationString}
-                     validationActive={passwordValidationActive}
-                  />
+                  <div id = "email-input">
+                     <InputFieldWithValidation
+                        label="Email"
+                        placeholder="name@email.com"
+                        bind:value={email}
+                        validationMessage={emailValidationString}
+                        validationActive={emailValidationActive}
+                     />
+                  </div>
+                  <div id = "password-input">
+                     <InputFieldWithValidation
+                        label="Password"
+                        isPasswordType={true}
+                        placeholder="••••••••"
+                        bind:value={password}
+                        validationMessage={passwordValidationString}
+                        validationActive={passwordValidationActive}
+                     />
+                  </div>
                   <div class="w-full mb-5 flex justify-end text-xs text-gray-500 font-bold hover:text-purple-500 cursor-pointer">
                      Forgot Password
                   </div>
 
-                  <div class="w-full h-[20px] mb-9">
+                  <div id = "login-button" class="w-full h-[20px] mb-9">
                      <Button
                         fullWidth={true}
                         type="primary"

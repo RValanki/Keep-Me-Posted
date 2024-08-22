@@ -128,7 +128,7 @@
 
   async function postData(signUpData) {
     try {
-      const url = `${backendURL}/signup`;
+      const url = backendURL + "/signup";
       const data = signUpData;
 
       const response = await fetch(url, {

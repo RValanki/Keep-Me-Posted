@@ -16,9 +16,12 @@
 <script>
   import uploadIcon from "../assets/upload-icon.png";
   import fileIcon from "../assets/file-icon.png";
+  import cancelIcon from "../assets/cancel-icon.png";
+  import Button from "./button.svelte";
   import { Progressbar } from "flowbite-svelte";
   import { sineOut } from "svelte/easing";
   import { apiStatusStore } from "../stores/api-status-store";
+  import { resetStores } from "../stores/reset-store";
 
   export let progress = 0;
   let targetProgress = 0; // Target value for the progress bar, used for animating
@@ -32,8 +35,13 @@
         targetProgress = 0;
       } else if ($apiStatusStore == "Transcribe") {
         targetProgress = 40;
+        console.log("api changed to transcribe")
       } else if ($apiStatusStore == "Summary") {
         targetProgress = 90;
+        console.log("api changed to summary")
+      } else if ($apiStatusStore == "Cancel") {
+        targetProgress = 0;
+        console.log("api has been cancelled")
       } else {
         targetProgress = 100;
       }
@@ -70,6 +78,15 @@
       }, 50);
     }
   }
+
+  /**
+   * Handle cancelling of upload
+  */
+ function handleCancel() {
+  console.log("Upload cancelled");
+  progress = 0;
+  apiStatusStore.set("Cancel");
+ }
 </script>
 
 <!-- COMPONENT -->
@@ -89,6 +106,12 @@
     >{Math.round(progress)}%</span
   >
   <!-- progress-number -->
+  <Button 
+    type="no-bg"
+    icon={cancelIcon}
+    text=""
+    handleClick={handleCancel}
+  />
 </div>
 
 <div class="flex space-x-5 justify-center">

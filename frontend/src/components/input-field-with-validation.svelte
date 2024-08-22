@@ -7,6 +7,7 @@
   export let validationActive = false; // Default false state
   export let isPasswordType = false;
   export let onInput;
+  export let isWithIcon = false; // allows for icon padding
   
   function handleInput(event) {
     value = event.target.value;
@@ -16,7 +17,7 @@
   }
 </script>
 
-<div class="mb-4">
+<div id = "login-form-container" class="mb-4">
   <label class="block text-gray-700 text-sm mb-1">{label}</label>
   {#if isPasswordType}
     <input
@@ -25,6 +26,15 @@
       placeholder={placeholder}
       on:input={handleInput}
       class="border-gray-300 rounded-lg w-full py-3 px-3 text-gray-700 text-sm placeholder:text-sm leading-tight focus:outline-none focus:shadow-outline"
+      style="border-radius: 8px; border-width: 1px;"
+    />
+  {:else if isWithIcon}
+    <input
+      type="text"
+      bind:value={value}
+      placeholder={placeholder}
+      on:input={handleInput}
+      class="pl-10 border-gray-300 rounded-lg w-full py-3 px-3 text-gray-700 text-sm placeholder:text-sm leading-tight focus:outline-none focus:shadow-outline"
       style="border-radius: 8px; border-width: 1px;"
     />
   {:else}
@@ -38,7 +48,7 @@
     />
   {/if}
   {#if showValidation || validationActive || validationMessage}
-    <p class={validationActive ? "text-red-500 text-xs m-1" : "text-[#959595] text-xs m-1"}>
+    <p id = "validation-message" class={validationActive ? "text-red-500 text-xs m-1" : "text-[#959595] text-xs m-1"}>
       {validationMessage}
     </p>
   {/if}
