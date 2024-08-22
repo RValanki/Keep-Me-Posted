@@ -13,6 +13,7 @@
   import SummaryBox from "../../components/summary-box.svelte";
   import { goto } from "$app/navigation";
   import { summaryStore } from "../../stores/summary-store";
+  import { onMount } from "svelte";
 
   export let title = "Your Summary is Being Generated...";
   export let subTitle = "We are still generating your summary...";
@@ -28,6 +29,12 @@
     }
     goto("/email");
   };
+
+  onMount(() => {
+    if (import.meta.env.PROD && sessionStorage.getItem("fileUploaded") !== "true") {
+      goto("/upload_audio");
+    }
+  });
   
   $: hasSummaryGenerated = $summaryStore["summary"] && $summaryStore["subject"];
   $: {

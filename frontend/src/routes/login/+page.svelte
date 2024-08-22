@@ -1,7 +1,7 @@
 <script>
    import { onMount } from "svelte";
    import { goto } from "$app/navigation";
-   import { updateAuth, clearAuth } from "../../stores/auth-store.js";
+   import { updateAuth, clearAuth, setGuestMode } from "../../stores/auth-store.js";
    import Logo from "../../components/logo.svelte";
    import LandingPageTitle from "../../components/landingPageTitle.svelte";
    import InputFieldWithValidation from "../../components/input-field-with-validation.svelte";
@@ -102,7 +102,7 @@
 
    // Optional: Fetch initial data or perform other tasks on component mount
    onMount(async () => {
-      // Fetch initial data or perform other async tasks here
+      clearAuth();
    });
 
    async function postData(loginData) {
@@ -116,6 +116,7 @@
                "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
+            credentials: 'include',
          });
 
          const responseData = await response.json();
@@ -140,8 +141,23 @@
       goto("/upload_audio");
    }
 
-   function handleLoginWithoutAccount(){
+   async function handleLoginWithoutAccount(){
       clearAuth();
+      setGuestMode();
+
+      try {
+         const url = `${backendURL}/guest_login`;
+         const response = await fetch(url, {
+            method: "POST",
+            headers: {
+               "Content-Type": "application/json",
+            },
+            credentials: 'include',
+         });
+      } catch (error) {
+         console.error("Error:", error);
+      }
+
       navigateToNextPage();
    }
   

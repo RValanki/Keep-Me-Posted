@@ -19,6 +19,7 @@
     import { resetStores } from "../../stores/reset-store";
 
   let nextPage = () => {
+    sessionStorage.setItem("fileUploaded", true);
     goto("/generate_summary");
   };
 

@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+import datetime
 
 @api_view(['POST'])
 def login(request):
@@ -36,7 +37,24 @@ def login(request):
 
     token, created = Token.objects.get_or_create(user=user)
     serializer = UserSerializer(instance=user)
-    return Response({"token": token.key, "user": serializer.data})
+
+    # Create a response with the token and user details
+    response = Response({
+        "token": token.key,
+        "user": serializer.data
+    })
+
+    # Set a cookie with the token
+    cookie_expires = datetime.datetime.now() + datetime.timedelta(days=1)  # expires after 1 day
+    response.set_cookie(
+        key='auth_token',
+        value=token.key,
+        expires=cookie_expires,
+        httponly=True,  
+        secure = False,  # if HTTPS -> True
+        samesite='Strict' # Strict, Lax, None
+    )
+    return response
 
 @api_view(['POST'])
 def signup(request):
@@ -69,6 +87,91 @@ def signup(request):
 
     # Return error if serializer data is not valid
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def logout(request):
+    """
+    Endpoint for user logout.
+
+    This view receives a POST request to log out the user.
+    It clears the authentication token cookie to log the user out.
+
+    Args:
+        request (HttpRequest): The incoming HTTP request object.
+
+    Returns:
+        Response: JSON response with a success message indicating successful logout.
+    """
+    response = Response({"message": "Logged out successfully."}, status=status.HTTP_200_OK)
+    
+    # Clear the cookie
+    response.delete_cookie('auth_token')
+    
+    return response
+
+@api_view(['POST'])
+def guest_login(request):
+    """
+    Endpoint for guest login.
+
+    This view receives a POST request to log in as a guest user.
+    it generates a cookie with a custom token and returns it
+
+    Args:
+        request (HttpRequest): The incoming HTTP request object.
+
+    Returns:
+        Response: JSON response with a custom token for guest user.
+    """
+    # Generate a custom token for guest
+    token = "guest_token"
+
+    # Create a response with the token
+    response = Response({
+        "token": token
+    })
+
+    # Set a cookie with the token (expires with the session)
+    response.set_cookie(
+        key='auth_token',
+        value=token,
+        httponly=True,
+        secure = False,  # if HTTPS -> True
+        samesite='Strict' # Strict, Lax, None
+    )
+    
+    return response
+
+@api_view(['POST'])
+def verify_token(request):
+    """
+    Endpoint for verifying user token.
+
+    This view receives a POST request with a user token.
+    It checks if the provided token is valid and returns a success message if it is.
+
+    Args:
+        request (HttpRequest): The incoming HTTP request object containing user token.
+
+    Returns:
+        Response: JSON response with a success message indicating successful token verification,
+                  or an error message with HTTP status code if token is invalid.
+
+    """
+    data = request.data
+    token = data.get('token')
+    if token is None:
+        return Response({"error": "No token provided."}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        print('Trying to get token')
+        token = Token.objects.get(key=token)
+        print('Got token', token)
+    except Token.DoesNotExist:
+        return Response({"error": "Invalid token."}, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response({"message": "Token is valid."}, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])

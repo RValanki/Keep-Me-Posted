@@ -1,2 +1,2 @@
-export const backendURL = "http://127.0.0.1:8000";
-export const frontendURL = "http://127.0.0.1:5173";
+export const backendURL = "http://localhost:8000";
+export const frontendURL = "http://localhost:5173";

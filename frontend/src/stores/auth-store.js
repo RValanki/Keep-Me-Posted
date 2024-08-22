@@ -9,13 +9,15 @@ function getInitialState() {
     const storedState = sessionStorage.getItem(STORAGE_KEY);
     return storedState ? JSON.parse(storedState) : {
       email: "",
-      loggedIn: false
+      loggedIn: false,
+      guestMode: false
     };
   }
   // Fallback state for non-browser environments
   return {
     email: "",
-    loggedIn: false
+    loggedIn: false,
+    guestMode: false
   };
 }
 
@@ -35,7 +37,8 @@ export function updateAuth(email, loggedIn) {
   authStore.update(state => ({
     ...state,
     email,
-    loggedIn
+    loggedIn,
+    guestMode: false
   }));
 }
 
@@ -61,6 +64,14 @@ export function clearAuth() {
   
   authStore.set({
     email: "",
-    loggedIn: false
+    loggedIn: false,
+    guestMode: false
   });
+}
+
+export function setGuestMode() {
+  authStore.update(state => ({
+    ...state,
+    guestMode: true
+  }));
 }
