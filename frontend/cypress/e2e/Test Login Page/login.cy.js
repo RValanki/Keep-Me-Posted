@@ -12,7 +12,7 @@ describe("Test login page", () => {
 
     it("should pass if credentials are valid", () => {
         // Intercept the backend login request to return a successful response
-        cy.intercept("POST", 'http://127.0.0.1:8000/login', {
+        cy.intercept("POST", 'http://localhost:8000/login', {
             statusCode: 200,
             body: {
                 token: "1234",
@@ -51,7 +51,7 @@ describe("Test login page", () => {
 
     it("should show error message if credentials are invalid", () => {
         // Intercept the backend login request to return an error response
-        cy.intercept("POST", 'http://127.0.0.1:8000/login', {
+        cy.intercept("POST", 'http://localhost:8000/login', {
             statusCode: 404,
             body: {
                 detail: "Not found!",
