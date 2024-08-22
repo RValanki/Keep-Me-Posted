@@ -10,10 +10,11 @@ describe("Access email page", () => {
 
     it("contain correct fields", () => {
         cy.contains("Add Recipients").should("be.visible"); // Check for "Add Recipients" Label
-        cy.contains("Add Recipient").should("be.visible"); // Check for "Add Recipients" Label
+        cy.get('button').contains("Add Recipient").should("be.visible"); // Check for "Add Recipient" Button
         cy.get('input[type="email"]').should("be.visible"); // Check for Email Input
     }
     );
+
     });
   
 // Test valid recipient add
@@ -32,6 +33,7 @@ describe("Valid recipient add", () => {
       // Check that valid email was added
       cy.contains("testsuccess@gmail.com").should("be.visible");
     });
+
   });
 
 // Test invalid recipient add
@@ -50,6 +52,7 @@ describe("Invalid recipient add", () => {
       // Check that invalid email was not added
       cy.contains("testfail").should("not.exist");
     });
+
   });
   
   
