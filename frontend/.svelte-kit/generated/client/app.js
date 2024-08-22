@@ -19,11 +19,11 @@ export const dictionary = {
 		"/": [2],
 		"/choose_pathway": [3],
 		"/email": [4],
-		"/generate_summary": [5],
-		"/login": [~6],
-		"/sent": [7],
-		"/signup": [~8],
-		"/upload-audio": [9]
+		"/generate_summary": [7],
+		"/login": [~5],
+		"/send_summary": [9],
+		"/signup": [~6],
+		"/upload_audio": [8]
 	};
 
 export const hooks = {
