@@ -24,7 +24,7 @@
   };
 </script>
 
-<div class="flex justify-center gap-2">
+<div class="flex justify-center gap-2 px-4">
   <input
     class="border border-slate-300 p-2 rounded-xl w-96"
     type="email"
@@ -34,7 +34,9 @@
   <Button
     handleClick={addEmail}
     icon="../../src/assets/add-icon-blue.png"
-    text="Add recipient"
+    text=""
     type="secondary"
-  ></Button>
+  >
+    <span class="hidden sm:inline sm:ml-2 text-blue-700">Add Recipient</span>
+  </Button>
 </div>

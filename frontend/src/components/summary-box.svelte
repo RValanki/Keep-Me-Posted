@@ -13,6 +13,7 @@
     import { summaryStore } from "../stores/summary-store"
     import { onMount, onDestroy } from "svelte"
     import regenerateIcon from "../assets/regenerate-icon.png"
+    import PopUpModal from "./popUpModal.svelte";
 
     export let emailSubject = ""
     export let summaryGenerated = ""
@@ -84,6 +85,18 @@
         // })
     }
 
+    let popUpModalComponent;
+    // let displayPopUp = false;
+
+    // function togglePopUp() {
+    //     displayPopUp = !displayPopUp;
+    // }
+
+    function openRegeneratePopUp() {
+		// Toggle the popup modal visibility
+		popUpModalComponent.togglePopUp();
+	}
+
 </script>
 
 <style>
@@ -108,7 +121,7 @@
 
 <div class="rounded-lg p-4 w-9/12 mx-auto" style="background-color: #F5FAFF;">
     <div class="flex justify-end ml-auto">
-        <Button type="secondary-with-border" text="Regenerate" icon={regenerateIcon}></Button>
+        <Button handleClick={openRegeneratePopUp} type="secondary-with-border" text="Regenerate" icon={regenerateIcon}></Button>    
     </div>
     <div class="flex flex-col gap-0	 mb-4">
         <label 
@@ -152,5 +165,15 @@
                 Your subject will be generated here{dots}
             </div>
         {/if}
+        
     </div>
 </div>
+
+<PopUpModal 
+    bind:this={popUpModalComponent}
+    header="Regenerating..."
+    mainText=""
+    type='loading'
+    firstHandleClick={openRegeneratePopUp}
+    width='96'
+/>

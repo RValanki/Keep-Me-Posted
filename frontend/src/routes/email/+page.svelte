@@ -45,9 +45,9 @@
   <div class="flex flex-col text-center">
     <div class="flex flex-col p-12 gap-4">
       <h1>Add Recipients</h1>
-      <h2 class="font-normal">
+      <div class="subheading">
         Add the emails you would like to send the summary to.
-      </h2>
+      </div>
     </div>
 
     <EmailEntry></EmailEntry>
@@ -58,6 +58,7 @@
     <Button
       handleClick={nextPage}
       icon="../../src/assets/arrow-right.png"
+      iconPos='right'
       text="Send Email"
       disabled={$ContactsStore.length == 0 && $isCancelled == true}
       type={($ContactsStore.length == 0 && $isCancelled == true) ? "disabled" : "primary"}

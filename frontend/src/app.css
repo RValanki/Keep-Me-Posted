@@ -32,7 +32,7 @@ h3 {
     @apply text-xl font-semibold text-center sm:text-2xl md:text-3xl lg:text-4xl;
 }
 .subheading {
-    @apply text-xl font-medium text-center sm:text-2xl md:text-3xl lg:text-4xl;
+    @apply text-xl font-light text-center sm:text-xl md:text-2xl lg:text-3xl;
 }
 button {
     @apply text-xs;

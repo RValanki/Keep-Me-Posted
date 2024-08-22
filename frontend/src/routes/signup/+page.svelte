@@ -7,6 +7,7 @@
   import LoginCardHeader from "../../components/loginCardHeader.svelte";
   import Button from "../../components/button.svelte";
   import LoginPrompt from "../../components/loginPrompt.svelte";
+  import { backendURL } from "../../api-functions/base-URL"
 
   let googleIcon = `<svg
               xmlns="http://www.w3.org/2000/svg"
@@ -127,7 +128,7 @@
 
   async function postData(signUpData) {
     try {
-      const url = "http://127.0.0.1:8000/signup";
+      const url = backendURL + "/signup";
       const data = signUpData;
 
       const response = await fetch(url, {
