@@ -11,6 +11,6 @@ describe('Summary Sent Page', () => {
       // Click the button labelled "Send Another Summary"
       cy.contains('button','Send Another Summary').click()
       // Verify that the URL contains "/email" after clicking the button
-      cy.url().should('include', '/email')
+      cy.url().should('include', '/upload_audio')
     })
   });  
