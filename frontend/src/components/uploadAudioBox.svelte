@@ -24,6 +24,7 @@
 	import { apiStatusStore } from "../stores/api-status-store"
 	import { backendURL } from "../api-functions/base-URL"
 	import PopUpModal from "./popUpModal.svelte"; // Import the PopUpModal component
+    import { resetStores } from "../stores/reset-store";
 
 	// content
 	let fileUploaded = false;
@@ -80,14 +81,33 @@
 
 	// Function that calls transcribe_audio API
 	async function startUpload(file) {
-		apiStatusStore.set("Transcribe")
+		apiStatusStore.set("Transcribe");
+		if ($apiStatusStore == "Cancel") {
+			console.log("Upload cancelled after upload");
+			resetStores();
+			console.log("Upload box reset")
+			return;
+		}
 		transcribe_audio(file, backendURL).then(transcript => {
-			apiStatusStore.set("Summary")
-			console.log('Transcript received')
-			send_summary(transcript, backendURL).then(summary => {
-				apiStatusStore.set("Complete")
-				console.log('Summary Received')
-			})
+			if ($apiStatusStore == "Cancel") {
+				console.log("Upload cancelled after transcription");
+				return Promise.reject("Upload cancelled");
+			}
+			apiStatusStore.set("Summary");
+			console.log('Transcript received');
+			return send_summary(transcript, backendURL);  // Return the next promise
+		}).then(summary => {
+			if ($apiStatusStore == "Cancel") {
+				console.log("Upload cancelled after summary");
+				return Promise.reject("Upload cancelled")
+			}
+			apiStatusStore.set("Complete");
+			console.log('Summary Received');
+		}).catch(error => {
+			if (error == "Upload cancelled") {
+				resetStores();
+				console.log("Upload box reset");
+			}
 		})
 	}
 
@@ -111,7 +131,7 @@
 <!-- COMPONENT -->
 <div class= "flex items-center justify-center">
     <!-- upload-audio-box -->
-	 {#if $apiStatusStore == ""}
+	 {#if $apiStatusStore == "" || $apiStatusStore == "Cancel"}
 	 	<!-- BLUE with dropzone -->
 	 	<div id="upload-audio-box" class= "bg-light-blue flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2  border-medium-blue rounded-md">
 			<Dropzone 

@@ -35,6 +35,7 @@
         {type === 'tertiary' ? 'bg-white text-gray-800 border-[1px] border-gray-300 hover:bg-gray-300' : ''}
         {type === 'disabled' ? 'bg-gray-200 text-white cursor-not-allowed border-none' : ''}
         {type === 'error' ? 'bg-red-600 text-white border-none' : ''}
+        {type === 'no-bg' ? '' : ''}
         {fullWidth ? 'w-full text-center' : ''}
         {fitContainerHeight ? 'h-full' : ''}"
         on:click={internalHandleClick}
