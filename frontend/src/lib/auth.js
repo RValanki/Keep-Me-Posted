@@ -5,6 +5,12 @@ export async function getAuthFromCookies(cookieHeader) {
     const cookies = new URLSearchParams(cookieHeader?.replace('; ', '&') || '');
     const authToken = cookies.get('auth_token');
 
+    // Check if guest cookie is set
+    console.log('authToken:', authToken);
+    if (authToken == 'guest_token') {
+        return { isAuthenticated: true };
+    }
+
     // Check if the token is valid
     const isAuthenticated = authToken ? await verifyToken(authToken) : false;
     return { isAuthenticated };

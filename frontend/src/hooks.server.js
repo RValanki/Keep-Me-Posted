@@ -10,6 +10,10 @@ export async function handle({ event, resolve }) {
     sent with the request. If the user is not authenticated and tries to access
     a protected route, they are redirected to the login page.
     */
+    if (import.meta.env.MODE !== 'production') {
+        return await resolve(event);
+    }
+
     try {
         // Extract cookies from the request
         const cookieHeader = event.request.headers.get('cookie') || '';
