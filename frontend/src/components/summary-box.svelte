@@ -2,8 +2,8 @@
 
     Contains the summary generated and the subject
 
-    Author: Diya Ramesh, Brenda Dang
-    Last modified: 1/08/2024
+    Author: Diya Ramesh, Brenda Dang, Danny Leung
+    Last modified: 23/08/2024
 
 -->
 
@@ -14,6 +14,9 @@
     import { onMount, onDestroy } from "svelte"
     import regenerateIcon from "../assets/regenerate-icon.png"
     import PopUpModal from "./popUpModal.svelte";
+    import { transcriptStore } from "../stores/transcript-store"
+    import { send_summary } from "../api-functions/send_summary";
+    import { backendURL } from "../api-functions/base-URL"
 
     export let emailSubject = ""
     export let summaryGenerated = ""
@@ -93,9 +96,22 @@
     // }
 
     function openRegeneratePopUp() {
-		// Toggle the popup modal visibility
-		popUpModalComponent.togglePopUp();
-	}
+        // Assuming you have the transcript available, if not, you need to pass it to the function
+        popUpModalComponent.togglePopUp();
+        // Call the backend function to regenerate the summary and subject
+        send_summary($transcriptStore.transcript, backendURL).then(response => {
+
+            emailSubject = $summaryStore.subject;
+            summaryGenerated = $summaryStore.summary;
+
+            console.log("Summary and subject successfully updated from backend.");
+        }).catch(error => {
+            console.error("Failed to regenerate summary and subject:", error);
+        });
+
+        // Someone fix this later
+        popUpModalComponent.togglePopUp();
+    }
 
 </script>
 
