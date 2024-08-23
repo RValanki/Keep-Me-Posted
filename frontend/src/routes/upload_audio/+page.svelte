@@ -52,7 +52,7 @@
   
     <Toggle/>
     
-    {#if ($apiStatusStore == "Complete")}
+    {#if ($apiStatusStore == "Complete" || $apiStatusStore == "Viewed")}
       <div class="flex justify-center items-center p-3">
         <Button 
           type="secondary"
