@@ -60,13 +60,13 @@
     {/if}
   
     <div class="absolute bottom-8 right-8">
-      <Button
+      <!-- <Button
         handleClick={nextPage}
         icon="../../src/assets/arrow-right.png"
         text="View Summary"
         disabled={ $apiStatusStore == "" }
         type={ $apiStatusStore == "" ? "disabled" : "primary" }
-      ></Button>
+      ></Button> -->
     </div>
   </body>
 </html>
