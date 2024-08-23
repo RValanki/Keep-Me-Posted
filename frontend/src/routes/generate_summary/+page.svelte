@@ -28,6 +28,15 @@
     }
     goto("/email");
   };
+
+  let dots = ""
+    setInterval(() => {
+        if (dots.length < 3) {
+            dots += '.';
+        } else {
+            dots = '';
+        }
+    }, 500);
   
   $: hasSummaryGenerated = $summaryStore["summary"] && $summaryStore["subject"];
   $: {
@@ -48,7 +57,7 @@
         {hasSummaryGenerated ? "Summary Generated!" : "Your Summary is Being Generated"}
     </h1>
     <div class="subheading mt-4">
-        {hasSummaryGenerated ? "Your summary is ready to be sent." : "We are still generating your summary..."}
+        {hasSummaryGenerated ? "Your summary is ready to be sent." : "We are still generating your summary" + dots}
     </div>
   </div>
 

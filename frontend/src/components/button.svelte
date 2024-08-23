@@ -16,6 +16,7 @@
     export let text = 'Button';
     export let altText = '';
     export let fullWidth = false; // Default to false for not full width
+    export let minHeight = 11;
     export let fitContainerHeight = false; // New prop to fit container height
     export let disabled = false;
 
@@ -28,7 +29,7 @@
 
 <div class="flex justify-center sm:justify-start h-full">
     <button 
-        class="flex items-center justify-center font-sans rounded-lg px-3 py-1 md:px-4 md:py-3 lg:px-5 lg:py-3.5 transition ease-in-out duration-300 min-h-11
+        class="flex items-center justify-center font-sans rounded-lg px-3 py-1 md:px-4 md:py-1 lg:px-5 lg:py-2 transition ease-in-out duration-300 min-h-{minHeight}
         {type === 'primary' ? 'bg-blue-600 text-white hover:bg-blue-800 border-none' : ''}
         {type === 'secondary' ? 'bg-blue-50 text-blue-700 hover:bg-blue-100 border-none' : ''}
         {type === 'secondary-with-border' ? 'bg-blue-50 text-blue-700 hover:bg-blue-100 border-blue-600 border-2' : ''}
