@@ -3,7 +3,7 @@
     The page where user uploads the audio file for Send Summary ASAP pathway.
 
     Author: Parul Garg (pgar0011)
-    Edited By: Angelina Leung (aleu0007), Maureen Pham (mpha0039)
+    Edited By: Angelina Leung (aleu0007), Maureen Pham (mpha0039), Danny Leung (dleu0007)
     Last Modified: 19/08/24
 
 -->
@@ -16,7 +16,7 @@
   import UploadBox from "../../components/uploadAudioBox.svelte";
   import { goto } from "$app/navigation";
   import { apiStatusStore } from "../../stores/api-status-store";
-    import { resetStores } from "../../stores/reset-store";
+  import { resetStores } from "../../stores/reset-store";
 
   let nextPage = () => {
     goto("/generate_summary");
@@ -25,6 +25,10 @@
   function handleReUpload() {
     apiStatusStore.set("");
     resetStores();
+  }
+  // Automatically route to the summary generated page when the summary is complete
+  $: if ($apiStatusStore === "Complete") {
+    nextPage();
   }
 </script>
 
@@ -56,13 +60,13 @@
     {/if}
   
     <div class="absolute bottom-8 right-8">
-      <Button
+      <!-- <Button
         handleClick={nextPage}
         icon="../../src/assets/arrow-right.png"
         text="View Summary"
         disabled={ $apiStatusStore == "" }
         type={ $apiStatusStore == "" ? "disabled" : "primary" }
-      ></Button>
+      ></Button> -->
     </div>
   </body>
 </html>
