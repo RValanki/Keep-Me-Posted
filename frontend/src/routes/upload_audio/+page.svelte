@@ -26,7 +26,7 @@
     apiStatusStore.set("");
     resetStores();
   }
-
+  // Automatically route to the summary generated page when the summary is complete
   $: if ($apiStatusStore === "Complete") {
     nextPage();
   }
