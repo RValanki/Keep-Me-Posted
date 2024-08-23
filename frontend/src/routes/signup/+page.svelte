@@ -208,9 +208,10 @@
             validationActive={verifyPasswordValidationActive}
           />
 
-          <div class="w-full h-[20px] mb-9 mt-8">
+          <div class="w-full h-[45px] mb-4 mt-8">
             <Button
               fullWidth={true}
+              fitContainerHeight={true}
               type="primary"
               text="Sign Up"
               handleClick={handleSignUp}
@@ -218,9 +219,10 @@
           </div>
 
           <div>
-            <form class="w-full h-[20px] mb-10" method="post" action="?/OAuth2">
+            <form class="w-full h-[45px] mb-8" method="post" action="?/OAuth2">
               <Button
                 fullWidth={true}
+                fitContainerHeight={true}
                 type="tertiary"
                 text="Sign Up with Google"
                 iconSvg={googleIcon}
