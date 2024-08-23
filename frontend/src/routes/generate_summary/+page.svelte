@@ -19,7 +19,7 @@
   let summaryBoxRef;
 
   let backBtn = () => {
-    goto("/upload_audio");
+    goto("/upload_audio")
   };
 
   let forwardBtn = () => {

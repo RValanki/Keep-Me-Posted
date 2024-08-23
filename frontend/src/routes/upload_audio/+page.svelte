@@ -20,7 +20,6 @@
 
   // Function to navigate to the summary page and update the status to "Viewed"
   let nextPage = () => {
-    apiStatusStore.set("Viewed");
     goto("/generate_summary");
   };
 
@@ -28,10 +27,6 @@
   function handleReUpload() {
     apiStatusStore.set("");
     resetStores();
-  }
-  // Automatically route to the summary generated page when the summary is complete
-  $: if ($apiStatusStore === "Complete") {
-    nextPage();
   }
 </script>
 
@@ -52,7 +47,7 @@
   
     <Toggle/>
     
-    {#if ($apiStatusStore == "Complete" || $apiStatusStore == "Viewed")}
+    {#if ($apiStatusStore == "Complete")}
       <div class="flex justify-center items-center p-3">
         <Button 
           type="secondary"

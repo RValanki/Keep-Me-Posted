@@ -25,11 +25,9 @@
 	import { backendURL } from "../api-functions/base-URL"
 	import PopUpModal from "./popUpModal.svelte"; // Import the PopUpModal component
     import { resetStores } from "../stores/reset-store";
+	import { goto } from "$app/navigation";
 
 	// content
-	let fileUploaded = false;
-	let uploadComplete = false;
-	let loadingBarComponent; // pointer for loading bar
 	let popUpModalComponent; // Pointer for the PopUpModal component
 	const dropzoneStyles = "background-color: rgba(255, 0, 0, 0)"; // define custom to style dropzone
 	
@@ -102,6 +100,7 @@
 				return Promise.reject("Upload cancelled")
 			}
 			apiStatusStore.set("Complete");
+			goto("/generate_summary")
 			console.log('Summary Received');
 		}).catch(error => {
 			if (error == "Upload cancelled") {
