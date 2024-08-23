@@ -14,6 +14,8 @@
     import { onMount, onDestroy } from "svelte"
     import regenerateIcon from "../assets/regenerate-icon.png"
     import PopUpModal from "./popUpModal.svelte";
+    import { marked } from 'marked';
+    import TurndownService from 'turndown';
     import { transcriptStore } from "../stores/transcript-store"
     import { send_summary } from "../api-functions/send_summary";
     import { backendURL } from "../api-functions/base-URL"
@@ -39,7 +41,7 @@
     function loadSummaryContent() {
         const unsubscribe = summaryStore.subscribe(value => {
             if (!summaryGenerated) {
-                summaryGenerated = value.summary;
+                summaryGenerated = marked(value.summary);
             }
             if (!emailSubject) {
                 emailSubject = value.subject;
@@ -70,12 +72,14 @@
             }
         }
         if (summaryGenerated) {
-            const updatedSummary = document.getElementById("summaryGenerated").value
+            const updatedSummary = document.getElementById("summaryGenerated").innerHTML
+            const turndownService = new TurndownService();
+            let markdownContent = turndownService.turndown(updatedSummary);
             if (updatedSummary) {
                 summaryStore.update(current => {
                     return {
                         ...current,
-                        summary: updatedSummary
+                        summary: markdownContent
                     };
                 });
             }
@@ -88,12 +92,13 @@
         // })
     }
 
-    let popUpModalComponent;
     // let displayPopUp = false;
 
     // function togglePopUp() {
     //     displayPopUp = !displayPopUp;
     // }
+
+    let popUpModalComponent
 
     function openRegeneratePopUp() {
         // Assuming you have the transcript available, if not, you need to pass it to the function
@@ -115,26 +120,6 @@
 
 </script>
 
-<style>
-    .subject-placeholder::placeholder {
-        color: #98A2B3;
-        opacity: 1;
-        font-weight: 600;
-        font-size: 20px;
-    }
-
-    .summary-placeholder::placeholder {
-        color: #98A2B3;
-        opacity: 1;
-        font-size: 16px;
-    }
-
-    textarea {
-        overflow: hidden; /* Remove scrollbars */
-        resize: none; /* Prevent manual resizing */
-    }
-</style>
-
 <div class="rounded-lg p-4 w-9/12 mx-auto" style="background-color: #F5FAFF;">
     {#if summaryGenerated && emailSubject}
         <div class="flex justify-end ml-auto">
@@ -150,7 +135,7 @@
         </label>
         {#if emailSubject}
             <input 
-                class="w-full p-2 rounded subject-placeholder" 
+                class="w-full p-2 rounded border" 
                 style="background-color: #F5FAFF;" 
                 type="text" 
                 id="emailSubject" 
@@ -170,14 +155,13 @@
             Summary
         </label>
         {#if summaryGenerated}
-            <textarea
-                class="w-full p-2 rounded text-base summary-placeholder"
+            <div
+                class="w-full p-2 rounded text-base border border-black focus-within:border-blue-600 focus-within:border-2 focus-within:p-1.5 outline-none"
                 style="background-color: #F5FAFF;"
                 id="summaryGenerated"
-                bind:value={summaryGenerated}
+                contenteditable=""
                 placeholder="Your summary will be generated here..."
-                on:input={autoResize}
-            ></textarea>
+            >{@html marked(summaryGenerated)}</div>
         {:else}
             <div class="w-full p-2 rounded text-slate-400 text-base">
                 Your subject will be generated here{dots}
