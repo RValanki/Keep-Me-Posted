@@ -199,9 +199,10 @@
                      Forgot Password
                   </div>
 
-                  <div id = "login-button" class="w-full h-[20px] mb-9">
+                  <div id = "login-button" class="w-full h-[45px] mb-4">
                      <Button
                         fullWidth={true}
+                        fitContainerHeight={true}
                         type="primary"
                         text="Sign In"
                         handleClick={handleSignIn}
@@ -210,7 +211,7 @@
 
                   <div>
                      <form
-                        class="w-full h-[20px] mb-8"
+                        class="w-full h-[45px] mb-3"
                         method="post"
                         action="?/OAuth2"
                      >
@@ -224,7 +225,7 @@
                   </div>
 
                   
-                  <div class="flex w-full h-[30px] mb-2">
+                  <div class="flex w-full h-[30px] mb-3">
                      <div class="relative flex items-center basis-[45%]">
                        <span></span>
                        <div class="absolute inset-0 flex items-center justify-center">
@@ -240,9 +241,10 @@
                      </div>
                    </div>
                    
-                   <div class="w-full h-[20px] mb-10">
+                   <div class="w-full h-[45px] mb-8">
                      <Button
                         fullWidth={true}
+                        fitContainerHeight={true}
                         type="tertiary"
                         text="Continue Without an Account"
                         handleClick={handleLoginWithoutAccount}
