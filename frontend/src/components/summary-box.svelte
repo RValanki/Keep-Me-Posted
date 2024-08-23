@@ -117,7 +117,7 @@
         </label>
         {#if emailSubject}
             <input 
-                class="w-full p-2 rounded" 
+                class="w-full p-2 rounded border" 
                 style="background-color: #F5FAFF;" 
                 type="text" 
                 id="emailSubject" 
@@ -138,7 +138,7 @@
         </label>
         {#if summaryGenerated}
             <div
-                class="w-full p-2 rounded text-base"
+                class="w-full p-2 rounded text-base border border-black focus-within:border-blue-600 focus-within:border-2 focus-within:p-1.5 outline-none"
                 style="background-color: #F5FAFF;"
                 id="summaryGenerated"
                 contenteditable=""
