@@ -120,9 +120,11 @@
 </style>
 
 <div class="rounded-lg p-4 w-9/12 mx-auto" style="background-color: #F5FAFF;">
-    <div class="flex justify-end ml-auto">
-        <Button handleClick={openRegeneratePopUp} type="secondary-with-border" text="Regenerate" icon={regenerateIcon} minHeight=8></Button>    
-    </div>
+    {#if summaryGenerated && emailSubject}
+        <div class="flex justify-end ml-auto">
+            <Button handleClick={openRegeneratePopUp} type="secondary-with-border" text="Regenerate" icon={regenerateIcon} minHeight=8></Button>    
+        </div>
+    {/if}
     <div class="flex flex-col gap-0	 mb-4">
         <label 
             class="block text-dark font-semibold pl-2 text-base mb-2" 
