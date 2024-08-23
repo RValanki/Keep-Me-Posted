@@ -96,22 +96,22 @@
     // }
 
     function openRegeneratePopUp() {
-    // Assuming you have the transcript available, if not, you need to pass it to the function
-    popUpModalComponent.togglePopUp();
-    // Call the backend function to regenerate the summary and subject
-    send_summary($transcriptStore.transcript, backendURL).then(response => {
+        // Assuming you have the transcript available, if not, you need to pass it to the function
+        popUpModalComponent.togglePopUp();
+        // Call the backend function to regenerate the summary and subject
+        send_summary($transcriptStore.transcript, backendURL).then(response => {
 
-        emailSubject = $summaryStore.subject;
-        summaryGenerated = $summaryStore.summary;
+            emailSubject = $summaryStore.subject;
+            summaryGenerated = $summaryStore.summary;
 
-        console.log("Summary and subject successfully updated from backend.");
-    }).catch(error => {
-        console.error("Failed to regenerate summary and subject:", error);
-    });
+            console.log("Summary and subject successfully updated from backend.");
+        }).catch(error => {
+            console.error("Failed to regenerate summary and subject:", error);
+        });
 
-    // Someone fix this later
-    popUpModalComponent.togglePopUp();
-}
+        // Someone fix this later
+        popUpModalComponent.togglePopUp();
+    }
 
 </script>
 
