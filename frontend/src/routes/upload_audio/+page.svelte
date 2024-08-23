@@ -16,7 +16,7 @@
   import UploadBox from "../../components/uploadAudioBox.svelte";
   import { goto } from "$app/navigation";
   import { apiStatusStore } from "../../stores/api-status-store";
-    import { resetStores } from "../../stores/reset-store";
+  import { resetStores } from "../../stores/reset-store";
 
   let nextPage = () => {
     goto("/generate_summary");
@@ -25,6 +25,10 @@
   function handleReUpload() {
     apiStatusStore.set("");
     resetStores();
+  }
+
+  $: if ($apiStatusStore === "Complete") {
+    nextPage();
   }
 </script>
 
