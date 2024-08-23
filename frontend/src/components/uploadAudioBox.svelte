@@ -25,11 +25,9 @@
 	import { backendURL } from "../api-functions/base-URL"
 	import PopUpModal from "./popUpModal.svelte"; // Import the PopUpModal component
     import { resetStores } from "../stores/reset-store";
+	import { goto } from "$app/navigation";
 
 	// content
-	let fileUploaded = false;
-	let uploadComplete = false;
-	let loadingBarComponent; // pointer for loading bar
 	let popUpModalComponent; // Pointer for the PopUpModal component
 	const dropzoneStyles = "background-color: rgba(255, 0, 0, 0)"; // define custom to style dropzone
 	
@@ -102,6 +100,7 @@
 				return Promise.reject("Upload cancelled")
 			}
 			apiStatusStore.set("Complete");
+			goto("/generate_summary")
 			console.log('Summary Received');
 		}).catch(error => {
 			if (error == "Upload cancelled") {
@@ -149,7 +148,7 @@
 				</div>
 			</Dropzone>
 		</div>
-	 {:else if $apiStatusStore == "Complete"}
+	 {:else if $apiStatusStore == "Complete" || $apiStatusStore == "Viewed"}
 		<!-- GREEN no dropzone -->
 		 <div id="upload-audio-box" class= "bg-success-25 flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2 border-success-300 rounded-md">
 			<div class="text-center flex flex-col items-center">

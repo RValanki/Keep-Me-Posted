@@ -18,10 +18,12 @@
   import { apiStatusStore } from "../../stores/api-status-store";
   import { resetStores } from "../../stores/reset-store";
 
+  // Function to navigate to the summary page and update the status to "Viewed"
   let nextPage = () => {
     goto("/generate_summary");
   };
 
+  // Function to handle re-upload action and reset the status
   function handleReUpload() {
     apiStatusStore.set("");
     resetStores();
