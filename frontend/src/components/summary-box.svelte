@@ -121,7 +121,7 @@
 
 <div class="rounded-lg p-4 w-9/12 mx-auto" style="background-color: #F5FAFF;">
     <div class="flex justify-end ml-auto">
-        <Button handleClick={openRegeneratePopUp} type="secondary-with-border" text="Regenerate" icon={regenerateIcon}></Button>    
+        <Button handleClick={openRegeneratePopUp} type="secondary-with-border" text="Regenerate" icon={regenerateIcon} minHeight=8></Button>    
     </div>
     <div class="flex flex-col gap-0	 mb-4">
         <label 
