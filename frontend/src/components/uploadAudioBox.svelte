@@ -149,7 +149,7 @@
 				</div>
 			</Dropzone>
 		</div>
-	 {:else if $apiStatusStore == "Complete"}
+	 {:else if $apiStatusStore == "Complete" || $apiStatusStore == "Viewed"}
 		<!-- GREEN no dropzone -->
 		 <div id="upload-audio-box" class= "bg-success-25 flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2 border-success-300 rounded-md">
 			<div class="text-center flex flex-col items-center">
