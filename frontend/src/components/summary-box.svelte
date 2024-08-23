@@ -96,9 +96,17 @@
     // }
 
     function openRegeneratePopUp() {
-		// Toggle the popup modal visibility
-		popUpModalComponent.togglePopUp();
-	}
+    popUpModalComponent.togglePopUp();
+    send_summary($transcriptStore.transcript, backendURL).then(response => {
+
+        emailSubject = $summaryStore.subject;
+        summaryGenerated = $summaryStore.summary;
+
+        console.log("Summary and subject successfully updated from backend.");
+    }).catch(error => {
+        console.error("Failed to regenerate summary and subject:", error);
+    });
+}
 
 </script>
 
