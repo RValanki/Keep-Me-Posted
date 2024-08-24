@@ -28,6 +28,10 @@
     visible = !visible;
   }
 
+  export function getVisible() {
+    return visible
+  }
+
   let progress = 0
   let targetProgress = 100
   export function animateProgress() {
@@ -42,6 +46,10 @@
         animateProgress();
       }, 50);
     }
+  }
+
+  export function resetProgress() {
+    progress = 0
   }
 </script>
 
