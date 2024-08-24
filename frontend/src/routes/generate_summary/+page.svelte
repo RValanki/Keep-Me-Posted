@@ -64,7 +64,7 @@
     </div>
   </div>
 
-  <div class="mt-10 mb-10">
+  <div class="mt-10 mb-8">
     <SummaryBox bind:this={summaryBoxRef} />
   </div>
 
