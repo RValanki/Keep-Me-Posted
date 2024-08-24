@@ -11,7 +11,7 @@
 <script>
     import Button from "./button.svelte"
     import { summaryStore } from "../stores/summary-store"
-    import { onMount, onDestroy } from "svelte"
+    import { onMount } from "svelte"
     import regenerateIcon from "../assets/regenerate-icon.png"
     import PopUpModal from "./popUpModal.svelte";
     import { marked } from 'marked';
@@ -103,6 +103,7 @@
     function openRegeneratePopUp() {
         // Assuming you have the transcript available, if not, you need to pass it to the function
         popUpModalComponent.togglePopUp();
+        popUpModalComponent.animateProgress();
         // Call the backend function to regenerate the summary and subject
         send_summary($transcriptStore.transcript, backendURL).then(response => {
 
@@ -110,12 +111,11 @@
             summaryGenerated = $summaryStore.summary;
 
             console.log("Summary and subject successfully updated from backend.");
+            popUpModalComponent.togglePopUp();
         }).catch(error => {
             console.error("Failed to regenerate summary and subject:", error);
+            popUpModalComponent.togglePopUp();
         });
-
-        // Someone fix this later
-        popUpModalComponent.togglePopUp();
     }
 
 </script>
