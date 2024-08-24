@@ -7,6 +7,7 @@
   import LoginCardHeader from "../../components/loginCardHeader.svelte";
   import Button from "../../components/button.svelte";
   import LoginPrompt from "../../components/loginPrompt.svelte";
+  import { backendURL } from "../../api-functions/base-URL"
 
   let googleIcon = `<svg
               xmlns="http://www.w3.org/2000/svg"
@@ -127,7 +128,7 @@
 
   async function postData(signUpData) {
     try {
-      const url = "http://127.0.0.1:8000/signup";
+      const url = backendURL + "/signup";
       const data = signUpData;
 
       const response = await fetch(url, {
@@ -207,9 +208,10 @@
             validationActive={verifyPasswordValidationActive}
           />
 
-          <div class="w-full h-[20px] mb-9 mt-8">
+          <div class="w-full h-[45px] mb-4 mt-8">
             <Button
               fullWidth={true}
+              fitContainerHeight={true}
               type="primary"
               text="Sign Up"
               handleClick={handleSignUp}
@@ -217,9 +219,10 @@
           </div>
 
           <div>
-            <form class="w-full h-[20px] mb-10" method="post" action="?/OAuth2">
+            <form class="w-full h-[45px] mb-8" method="post" action="?/OAuth2">
               <Button
                 fullWidth={true}
+                fitContainerHeight={true}
                 type="tertiary"
                 text="Sign Up with Google"
                 iconSvg={googleIcon}

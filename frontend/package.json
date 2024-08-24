@@ -13,7 +13,7 @@
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"autoprefixer": "^10.4.19",
-		"cypress": "^13.13.2",
+		"cypress": "^13.13.3",
 		"flowbite": "^2.5.1",
 		"flowbite-svelte": "^0.46.15",
 		"postcss": "^8.4.39",
@@ -24,6 +24,8 @@
 	"type": "module",
 	"dependencies": {
 		"google-auth-library": "^9.10.0",
-		"svelte-file-dropzone": "^2.0.7"
+		"marked": "^14.0.0",
+		"svelte-file-dropzone": "^2.0.7",
+		"turndown": "^7.2.0"
 	}
 }

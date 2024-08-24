@@ -16,7 +16,7 @@
 <!-- JavaScript -->
 <script>
 	import micIcon from "../assets/mic-icon.png";
-	import checkIcon from "../assets/check-icon.png";
+	import checkIcon from "../assets/green-tick.png";
 	import Dropzone from "svelte-file-dropzone";
 	import LoadingBar from "./loadingBar.svelte";
 	import { transcribe_audio } from "../api-functions/transcribe_audio";
@@ -24,11 +24,10 @@
 	import { apiStatusStore } from "../stores/api-status-store"
 	import { backendURL } from "../api-functions/base-URL"
 	import PopUpModal from "./popUpModal.svelte"; // Import the PopUpModal component
+    import { resetStores } from "../stores/reset-store";
+	import { goto } from "$app/navigation";
 
 	// content
-	let fileUploaded = false;
-	let uploadComplete = false;
-	let loadingBarComponent; // pointer for loading bar
 	let popUpModalComponent; // Pointer for the PopUpModal component
 	const dropzoneStyles = "background-color: rgba(255, 0, 0, 0)"; // define custom to style dropzone
 	
@@ -80,14 +79,34 @@
 
 	// Function that calls transcribe_audio API
 	async function startUpload(file) {
-		apiStatusStore.set("Transcribe")
+		apiStatusStore.set("Transcribe");
+		if ($apiStatusStore == "Cancel") {
+			console.log("Upload cancelled after upload");
+			resetStores();
+			console.log("Upload box reset")
+			return;
+		}
 		transcribe_audio(file, backendURL).then(transcript => {
-			apiStatusStore.set("Summary")
-			console.log('Transcript received')
-			send_summary(transcript, backendURL).then(summary => {
-				apiStatusStore.set("Complete")
-				console.log('Summary Received')
-			})
+			if ($apiStatusStore == "Cancel") {
+				console.log("Upload cancelled after transcription");
+				return Promise.reject("Upload cancelled");
+			}
+			apiStatusStore.set("Summary");
+			console.log('Transcript received');
+			return send_summary(transcript, backendURL);  // Return the next promise
+		}).then(summary => {
+			if ($apiStatusStore == "Cancel") {
+				console.log("Upload cancelled after summary");
+				return Promise.reject("Upload cancelled")
+			}
+			apiStatusStore.set("Complete");
+			goto("/generate_summary")
+			console.log('Summary Received');
+		}).catch(error => {
+			if (error == "Upload cancelled") {
+				resetStores();
+				console.log("Upload box reset");
+			}
 		})
 	}
 
@@ -111,7 +130,7 @@
 <!-- COMPONENT -->
 <div class= "flex items-center justify-center">
     <!-- upload-audio-box -->
-	 {#if $apiStatusStore == ""}
+	 {#if $apiStatusStore == "" || $apiStatusStore == "Cancel"}
 	 	<!-- BLUE with dropzone -->
 	 	<div id="upload-audio-box" class= "bg-light-blue flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2  border-medium-blue rounded-md">
 			<Dropzone 
@@ -129,7 +148,7 @@
 				</div>
 			</Dropzone>
 		</div>
-	 {:else if $apiStatusStore == "Complete"}
+	 {:else if $apiStatusStore == "Complete" || $apiStatusStore == "Viewed"}
 		<!-- GREEN no dropzone -->
 		 <div id="upload-audio-box" class= "bg-success-25 flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2 border-success-300 rounded-md">
 			<div class="text-center flex flex-col items-center">

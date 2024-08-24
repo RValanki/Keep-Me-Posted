@@ -8,6 +8,7 @@
    import LoginCardHeader from "../../components/loginCardHeader.svelte";
    import Button from "../../components/button.svelte";
    import LoginPrompt from "../../components/loginPrompt.svelte";
+   import { backendURL } from "../../api-functions/base-URL"
 
    let googleIcon = `<svg
               xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +107,7 @@
 
    async function postData(loginData) {
       try {
-         const url = "http://127.0.0.1:8000/login";
+         const url = backendURL + "/login";
          const data = loginData;
 
          const response = await fetch(url, {
@@ -175,41 +176,46 @@
                      heading="Log in to your account"
                      subheading="Welcome back! Please enter your details."
                   />
-                  <InputFieldWithValidation
-                     label="Email"
-                     placeholder="name@email.com"
-                     bind:value={email}
-                     validationMessage={emailValidationString}
-                     validationActive={emailValidationActive}
-                  />
-                  <InputFieldWithValidation
-                     label="Password"
-                     isPasswordType={true}
-                     placeholder="••••••••"
-                     bind:value={password}
-                     validationMessage={passwordValidationString}
-                     validationActive={passwordValidationActive}
-                  />
+                  <div id = "email-input">
+                     <InputFieldWithValidation
+                        label="Email"
+                        placeholder="name@email.com"
+                        bind:value={email}
+                        validationMessage={emailValidationString}
+                        validationActive={emailValidationActive}
+                     />
+                  </div>
+                  <div id = "password-input">
+                     <InputFieldWithValidation
+                        label="Password"
+                        isPasswordType={true}
+                        placeholder="••••••••"
+                        bind:value={password}
+                        validationMessage={passwordValidationString}
+                        validationActive={passwordValidationActive}
+                     />
+                  </div>
                   <div class="w-full mb-5 flex justify-end text-xs text-gray-500 font-bold hover:text-purple-500 cursor-pointer">
                      Forgot Password
                   </div>
 
-                  <div class="w-full h-[20px] mb-9">
+                  <div id = "login-button" class="w-full h-[45px] mb-4">
                      <Button
                         fullWidth={true}
+                        fitContainerHeight={true}
                         type="primary"
                         text="Sign In"
                         handleClick={handleSignIn}
                      />
                   </div>
 
-                  <div>
+                  <div id = "google-button">
                      <form
-                        class="w-full h-[20px] mb-8"
+                        class="w-full h-[45px] mb-3"
                         method="post"
                         action="?/OAuth2"
                      >
-                        <Button
+                        <Button 
                            fullWidth={true}
                            type="tertiary"
                            text="Sign in with Google"
@@ -219,7 +225,7 @@
                   </div>
 
                   
-                  <div class="flex w-full h-[30px] mb-2">
+                  <div class="flex w-full h-[30px] mb-3">
                      <div class="relative flex items-center basis-[45%]">
                        <span></span>
                        <div class="absolute inset-0 flex items-center justify-center">
@@ -235,9 +241,10 @@
                      </div>
                    </div>
                    
-                   <div class="w-full h-[20px] mb-10">
+                   <div class="w-full h-[45px] mb-8">
                      <Button
                         fullWidth={true}
+                        fitContainerHeight={true}
                         type="tertiary"
                         text="Continue Without an Account"
                         handleClick={handleLoginWithoutAccount}
@@ -247,7 +254,7 @@
 
                   <div class="w-full flex justify-center">
                      <LoginPrompt
-                        text="Don’t have an account?"
+                        text="Don't have an account?"
                         linkText="Sign Up"
                         handleClick={handleSignUpClick}
                      />

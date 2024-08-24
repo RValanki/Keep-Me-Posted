@@ -34,17 +34,13 @@
       if ($apiStatusStore == "Complete") {
         let summary = $summaryStore.summary 
 
-        if ($sendWithTranscriptStore == true) {
-          console.log("adding transcript")
-          summary += '\n\nTranscript: ' + $transcriptStore.transcript
-        }
-
         console.log(summary)
         
         let subject = $summaryStore.subject;
-        let contacts = $ContactsStore;
+        let contacts = $ContactsStore
+        let transcript = $sendWithTranscriptStore ? $transcriptStore.transcript : null;
 
-        await send_email(summary, subject, contacts, backendURL);
+        await send_email(transcript, summary, subject, contacts, backendURL);
         sending = false;
       } else {
         setTimeout(() => {
@@ -74,7 +70,7 @@
     <!-- styling of the clock icon -->
     <div class="flex justify-center">
       <img
-        class="flex flex-row justify-center items-center p-0 bg-indigo-200 flex-none order-none flex-grow-0 w-24 h-24"
+        class="flex flex-row justify-center items-center p-0 flex-none order-none flex-grow-0 w-24 h-24"
         src={$emailStatusStore == "Sent" ? green_tick : clock}
         alt={$emailStatusStore == "Sent" ? "Green Tick" : "Clock"}
       />
@@ -82,19 +78,19 @@
     <!-- the heading and subheading of the page -->
     <h1 class="pt-3">
       {$emailStatusStore == "Sent"
-        ? "Your Summary Has Been Sent."
-        : "Your Summary Will Be Sent."}
+        ? "Your Summary Has Been Sent"
+        : "Your Summary Will Be Sent"}
     </h1>
     {#if $emailStatusStore == "Sent"}
       <p
-        class="subheading text-xl sm:text-xl md:text-2xl lg:text-3xl text-center pt-5"
+        class="subheading pt-4"
       >
         Your summary{$sendWithTranscriptStore ? " and transcript" : ""} has been
         sent to the recipients below.
       </p>
     {:else}
       <p
-        class="subheading text-xl sm:text-xl md:text-2xl lg:text-3xl text-center pt-5"
+        class="subheading pt-4"
       >
         After the summary has been completely generated, it will be sent
         automatically{$sendWithTranscriptStore ? " with the transcript" : ""}.
