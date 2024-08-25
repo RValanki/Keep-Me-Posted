@@ -141,7 +141,7 @@
   {/if}
   <div class="flex flex-col gap-0 mb-4">
     <label
-      class="block text-dark font-semibold pl-2 text-base mb-2"
+      class="block text-dark font-semibold pl-2 text-lg mb-2"
       style="color:#667085"
       for="emailSubject"
     >
@@ -150,7 +150,7 @@
     {#if emailSubject}
       <input
         class="w-full p-2 rounded border"
-        style="background-color: #F5FAFF;"
+        style="background-color: #F5FAFF; border-color: #D1E3F0;"
         type="text"
         id="emailSubject"
         bind:value={emailSubject}
@@ -164,7 +164,7 @@
   </div>
   <div class="flex flex-col gap-0 mb-4">
     <label
-      class="lock text-dark font-semibold pl-2 text-base mb-2"
+      class="lock text-dark font-semibold pl-2 text-lg mb-2"
       style="color:#667085"
       for="summaryGenerated"
     >
@@ -173,7 +173,7 @@
     {#if summaryGenerated}
       <div
         class="w-full p-2 rounded text-base border border-black focus-within:border-blue-600 focus-within:border-2 focus-within:p-1.5 outline-none"
-        style="background-color: #F5FAFF;"
+        style="background-color: #F5FAFF border-color: #D1E3F0;"
         id="summaryGenerated"
         contenteditable=""
         placeholder="Your summary will be generated here..."
