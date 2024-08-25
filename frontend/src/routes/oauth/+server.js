@@ -2,7 +2,7 @@ import { redirect } from '@sveltejs/kit';
 import { OAuth2Client } from 'google-auth-library';
 import { updateAuth } from '../../stores/auth-store.js';
 import {SECRET_CLIENT_ID,SECRET_CLIENT_SECRET} from '$env/static/private';
-
+import { frontendURL } from '../../api-functions/base-URL.js';
 async function getUserData(access_token) {
 
   const response = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${access_token}`);
@@ -14,7 +14,7 @@ async function getUserData(access_token) {
 
 
 export const GET = async ({ url}) => {
-    const redirectURL = 'http://localhost:5173/oauth';
+    const redirectURL = frontendURL + '/oauth';
     const code = await url.searchParams.get('code');
 
     //console.log('returned state',state)
