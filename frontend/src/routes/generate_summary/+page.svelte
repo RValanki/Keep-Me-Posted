@@ -75,14 +75,14 @@
       <Button
         class="primary"
         text="Re-Upload Audio"
-        icon="../src/assets/arrow-left.png"
+        icon={ArrowLeft}
         handleClick={backBtn}
       />
 
       <Button
         class="primary"
         text="Add Recipients"
-        icon="../src/assets/arrow-right.png"
+        icon={ArrowRight}
         iconPos="right"
         handleClick={forwardBtn}
       />
