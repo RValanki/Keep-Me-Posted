@@ -12,6 +12,8 @@
   import SummaryBox from "../../components/summary-box.svelte";
   import { goto } from "$app/navigation";
   import { summaryStore } from "../../stores/summary-store";
+  import ArrowLeft from "../../assets/arrow-left.png"
+  import ArrowRight from "../../assets/arrow-right.png"
 
   export let title = "Your Summary is Being Generated...";
   export let subTitle = "We are still generating your summary...";
@@ -90,7 +92,7 @@
       <Button
         class="primary"
         text="Re-Upload Audio"
-        icon="../src/assets/arrow-left.png"
+        icon={ArrowLeft}
         handleClick={backBtn}
       />
     </div>
@@ -99,7 +101,7 @@
       <Button
         class="primary"
         text="Add Recipients"
-        icon="../src/assets/arrow-right.png"
+        icon={ArrowRight}
         iconPos="right"
         handleClick={forwardBtn}
       />

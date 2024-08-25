@@ -9,6 +9,8 @@
   import { isOpen, isCancelled} from "../../stores/user-email-popup-store";
   import UserEmailEntry from "../../components/userEmailEntry.svelte";
   import { onMount } from "svelte";
+  import ArrowLeft from "../../assets/arrow-left.png"
+  import ArrowRight from "../../assets/arrow-right.png"
 
   onMount(() => {
     if ($authStore["loggedIn"] == true) {
@@ -57,7 +59,7 @@
   <div class="absolute bottom-8 right-8">
     <Button
       handleClick={nextPage}
-      icon="../../src/assets/arrow-right.png"
+      icon={ArrowRight}
       iconPos='right'
       text="Send Email"
       disabled={$ContactsStore.length == 0 && $isCancelled == true}
@@ -69,7 +71,7 @@
 <div class="absolute bottom-8 left-8">
   <Button
     handleClick={previousPage}
-    icon="../../src/assets/arrow-left.png"
+    icon={ArrowLeft}
     text="View Summary"
   ></Button>
 </div>

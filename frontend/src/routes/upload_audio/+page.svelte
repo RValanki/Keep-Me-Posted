@@ -17,6 +17,7 @@
   import { goto } from "$app/navigation";
   import { apiStatusStore } from "../../stores/api-status-store";
   import { resetStores } from "../../stores/reset-store";
+  import RightArrow from "../../assets/arrow-right.png"
 
   // Function to navigate to the summary page and update the status to "Viewed"
   let nextPage = () => {
@@ -60,7 +61,7 @@
     <div class="absolute bottom-8 right-8">
       <Button
         handleClick={nextPage}
-        icon="../../src/assets/arrow-right.png"
+        icon={RightArrow}
         text="View Summary"
         disabled={ $apiStatusStore == "" }
         type={ $apiStatusStore == "" ? "disabled" : "primary" }

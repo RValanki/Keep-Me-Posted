@@ -1,6 +1,7 @@
 <script>
   import Button from "../components/button.svelte";
-  import { ContactsStore } from "../stores/contacts-store";
+  import { ContactsStore } from "../stores/contacts-store"
+  import AddIconBlue from "../assets/add-icon-blue.png"
   let emailString = "";
   let emailErrorString = "";
 
@@ -42,7 +43,7 @@
     </div>
   <Button
     handleClick={addEmail}
-    icon="../../src/assets/add-icon-blue.png"
+    icon={AddIconBlue}
     text=""
     type="secondary"
   >
