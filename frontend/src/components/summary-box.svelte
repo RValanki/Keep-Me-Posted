@@ -127,7 +127,7 @@
   }
 </script>
 
-<div class="rounded-lg p-4 w-9/12 mx-auto" style="background-color: #F5FAFF;">
+<div class="rounded-lg p-4 w-11/12 sm:w-9/12 mx-auto" style="background-color: #F5FAFF;">
   {#if summaryGenerated && emailSubject}
     <div class="flex justify-end ml-auto">
       <Button
@@ -149,8 +149,8 @@
     </label>
     {#if emailSubject}
       <input
-        class="w-full p-2 rounded border"
-        style="background-color: #F5FAFF; border-color: #D1E3F0;"
+        class="w-full p-2 rounded border-[#D1E3F0] bg-[#F5FAFF]"
+        style=""
         type="text"
         id="emailSubject"
         bind:value={emailSubject}
@@ -172,8 +172,8 @@
     </label>
     {#if summaryGenerated}
       <div
-        class="w-full p-2 rounded text-base border border-black focus-within:border-blue-600 focus-within:border-2 focus-within:p-1.5 outline-none"
-        style="background-color: #F5FAFF border-color: #D1E3F0;"
+        class="w-full p-2 rounded text-base border border-[#D1E3F0] bg-[#F5FAFF] focus-within:border-blue-500 focus-within:border-2 focus-within:p-1.5 outline-none"
+        style=""
         id="summaryGenerated"
         contenteditable=""
         placeholder="Your summary will be generated here..."

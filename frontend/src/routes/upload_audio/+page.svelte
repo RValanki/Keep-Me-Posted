@@ -39,7 +39,7 @@
   <body>
     <Topbar />
     <h1 class="mt-12">Upload Meeting Audio</h1>
-    <div class="subheading mb-16 mt-4">
+    <div class="subheading mb-16 mt-4 px-2">
       Upload your meeting audio for us to summarise.
     </div>
 
