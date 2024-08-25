@@ -76,7 +76,7 @@
       />
     </div>
     <!-- the heading and subheading of the page -->
-    <h1 class="pt-3">
+    <h1 class="pt-3 px-4">
       {$emailStatusStore == "Sent"
         ? "Your Summary Has Been Sent"
         : "Your Summary Will Be Sent"}
