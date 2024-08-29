@@ -41,6 +41,7 @@ bash run_servers.sh
 # Required APIs
 1. Add a **.env file** to the **KEEP-ME-POSTED** root directory.
 2. Add a **.env.local file** to the **frontend** directory.
+3. Add the paths for these 2 files to **.gitignore** (these files must NOT be pushed to Git).
 ## Google Gemini
 1. Generate an API key and put it in the **.env file** in the following format:
 
