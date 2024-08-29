@@ -57,7 +57,6 @@ bash run_servers.sh
     SECRET_CLIENT_ID={insert ID here}
 
     SECRET_CLIENT_SECRET={insert ID here}
-
     ```
 
 ## AssemblyAI
@@ -67,12 +66,9 @@ bash run_servers.sh
     ASSEMBLYAI_API_KEY="insert API key here"
     ```
 
-## API Key History
-See [this link](https://docs.google.com/document/d/1eGwRlwuLmwz3y3zsQAngS8fpgq3jqJbLyGa8uDfpx7M/edit?usp=sharing) for the API key history.
-
 # Login Credentials
 See [this link](https://docs.google.com/document/d/12utGqgSPGZd5jvaNlT22FTJlpHR073LqWaKULZvcidU/edit) for accounts for:
-* AssemblyAI project (API key)
+* AssemblyAI project
 * Django admin account
 
 # UI/UX Prototyping
