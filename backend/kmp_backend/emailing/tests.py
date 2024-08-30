@@ -1,63 +1,41 @@
 from django.test import TestCase
 from django.http import HttpRequest, JsonResponse
+from django.urls import reverse
 from unittest.mock import patch, MagicMock
 from emailing.views import send_email
 import json, ssl, smtplib
+import os
 
 # Create your tests here.
 class TestEmailSent(TestCase):
 
-    @patch('emailing.views.send_email')
-    def test_sending_email(self, mock_send_smtp_email):
+    @patch('emailing.views.smtplib.SMTP_SSL')
+    def test_sending_email(self, MockSMTP_SSL):
         """
-        This function is responsible for testing if an email is sent successfully by determining the json response
-        received from the request. 
-        The function utilises mocking concept to test this functionality. @Patch is used to create a mock object
-        for the function send_email to be tested
+        Test if the view correctly handles send_email and returns the expected response.
         """
-        request = HttpRequest()
-        request.method = 'POST'
-        #creating mock request
-        request.POST = {
-            'message': 'Here are the meeting minutes',
-            'subject': 'TeamMeeting-20/07/2024',
-            'contacts': 'test@gmail.com'
-        }
-        #setting the mock_response to what is expected
-        mock_response = JsonResponse({'details':'Emails sent successfully!'})
-       
-        mock_send_smtp_email.return_value = mock_response
+        # Create a mock instance of SMTP_SSL
+        mock_smtp_instance = MagicMock()
+        MockSMTP_SSL.return_value = mock_smtp_instance
 
-        response = send_email(request)
-        #extracting the response received from the function
+        # Configure the mock instance to avoid actual email sending
+        mock_smtp_instance.login.return_value = None
+        mock_smtp_instance.sendmail.return_value = None
+
+        # Make the POST request
+        response = self.client.post(
+            reverse('send_email'),
+            {
+                'message': 'hi, please find the meeting minutes below',
+                'subject': 'TestMeeting',
+                'contacts': 'test@example.com'
+            },
+            fromat='json'
+        )
+
+        # Check the response
         response_content = json.loads(response.content.decode('utf-8'))
-        
-        self.assertEqual(response_content, {'details':'Emails sent successfully!'})
-
-
-    @patch('emailing.views.send_email')
-    def test_sent_email_status_code(self, mock_status_email):
-        """
-        This test case function determines the status code of the 
-        request
-
-        Status code 200 confirms that the email has been sent successfully
-        """
-        request = HttpRequest()
-        request.method = 'POST'
-        request.POST ={
-            'message': 'hi, please find the meeting minutes below',
-            'subject' : 'TestMeeting',
-            'contacts': 'test@gmail.com',
-        }
-        
-        #setting mock status code value
-        mock_response = {'status_code': 200}
-
-        mock_status_email.return_value = mock_response
-
-        response = send_email(request)
-        #determine if the status code is as expected
+        self.assertEqual(response_content, {'details': 'Emails sent successfully!'})
         self.assertEqual(response.status_code, 200)
 
 
@@ -89,6 +67,7 @@ class TestEmailSent(TestCase):
 
     @patch('emailing.views.smtplib.SMTP_SSL')
     @patch('emailing.views.ssl.create_default_context')
+    @patch.dict(os.environ, {"SMTP_EMAIL": "test@example.com", "SMTP_API_KEY": "fakeapikey"})
     def test_server_login(self, mock_create_default_context,mock_smtp):
         """
         test server login function determines if the the login method is called with the correct
@@ -113,7 +92,7 @@ class TestEmailSent(TestCase):
         response = send_email(request)
 
         # test verify that server login is called with correct credentials
-        mock_server.login.assert_called_with('keepmeposted.monash@gmail.com', 'aqsokzlapmzxvuev')
+        mock_server.login.assert_called_with('test@example.com', 'fakeapikey')
 
         response_content = json.loads(response.content.decode('utf-8'))
 
