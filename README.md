@@ -7,17 +7,12 @@
 
 | **Product Owners**                              | **Release Train Engineers**                              | **System Architects**                              |
 |-------------------------------------------------|------------------------------------------------|------------------------------------------------|
-| **Danny Leung** <br> *Product Management* <br> 32478704 |**Alex Ung** <br> *Release Train Engineer* <br> 32498853 | **Ahmed Almasry** <br> *System Architect* <br> 31130143 |
-
+| **Danny Leung** <br> *Product Management* <br> 32478704 |**Alex Ung** <br> *Release Train Engineer* <br> 32498853 | **Ahmed Almasry** <br> *System Architect* <br> 31130143|
 | **Diya Ramesh** <br> *Product Management* <br> 32336012 | **Maureen Pham** <br> *Release Train Engineer* <br> 33117144 | **Harrison Lane** <br> *System Architect* <br> 33110077 |
-
 | **Afia Farzana** <br> *Product Management* <br> 32501986 | **Zihao (Jeremy) Wang** <br> *Release Train Engineer* <br> 32520433 | **Rohit Valanki** <br> *System Architect* <br> 31451764 |
-
 | **Ayesha Tariq** <br> *Product Management* <br> 32497857 | **Benjamin Cherian** <br> *Release Train Engineer* <br> 31483534 | **Brenda Dang** <br> *System Architect* <br> 33111197 |
-
-|**Parul Garg** <br> *Product Management* <br> 32720254  |**Bowen Dong** <br> *Release Train Engineer* <br> 33109834 | **Angelina Leung** <br> *System Architect* <br> 33114447 |
-
-|  |**Marcus Wei** <br> *Release Train Engineer* <br> 32503881 | |
+|**Parul Garg** <br> *Product Management* <br> 32720254  |**Bowen Dong** <br> *Release Train Engineer* <br> 33109834 | **Angelina Leung** <br> *System Architect* <br> 33114447|
+||**Marcus Wei** <br> *Release Train Engineer* <br> 32503881 ||
 
 # System Requirements
 ## Software
