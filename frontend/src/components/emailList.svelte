@@ -1,5 +1,6 @@
 <script>
   import { ContactsStore } from "../stores/contacts-store"
+  import RemoveIcon from "../assets/remove-icon.png"
 
   let remove_email = (email) => {
     ContactsStore.update((prev) => prev.filter((contact) => contact != email));
@@ -13,7 +14,7 @@
       <button on:click={remove_email(email)}
         ><img
           class="h-4"
-          src="../../src/assets/remove-icon.png"
+          src={RemoveIcon}
           alt="Remove Icon"
         /></button
       >

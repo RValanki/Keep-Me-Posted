@@ -241,7 +241,7 @@
                      </div>
                    </div>
                    
-                   <div class="w-full h-[45px] mb-8">
+                   <div class="w-full h-[45px] mb-4">
                      <Button
                         fullWidth={true}
                         fitContainerHeight={true}

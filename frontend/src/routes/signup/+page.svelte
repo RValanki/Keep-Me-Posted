@@ -219,7 +219,7 @@
           </div>
 
           <div>
-            <form class="w-full h-[45px] mb-8" method="post" action="?/OAuth2">
+            <form class="w-full h-[45px] mb-4" method="post" action="?/OAuth2">
               <Button
                 fullWidth={true}
                 fitContainerHeight={true}
