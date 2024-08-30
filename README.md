@@ -56,7 +56,7 @@ Django is used for the backend. Django is a high-level Python web framework that
 2. Add a **.env.local file** to the **frontend** directory.
 3. Add the paths for these 2 files to **.gitignore** (these files must NOT be pushed to Git).
 ## Google Gemini
-1. Generate an API key and put it in the **.env file** in the following format:
+1. Generate an API key (see [here](https://ai.google.dev/gemini-api/docs/api-key)) and put it in the **.env file** in the following format:
 
     ```
     GEMINI_API_KEY = "insert API key here"
@@ -73,7 +73,7 @@ Django is used for the backend. Django is a high-level Python web framework that
     ```
 
 ## AssemblyAI
-1. Generate an API key and put it in the **.env file** in the following format:
+1. Generate an API key (see [here](https://www.assemblyai.com/products/speech-to-text?utm_source=google&utm_medium=cpc&utm_campaign=Brand&utm_term=assemblyai%20api&gad_source=1&gclid=CjwKCAjwuMC2BhA7EiwAmJKRrI_UILFgqbguYibYz-ycmPIH38b_nN6eS8sUZX0ES2pGG_A2ldjJSxoC22IQAvD_BwE)) and put it in the **.env file** in the following format:
 
     ```
     ASSEMBLYAI_API_KEY="insert API key here"
