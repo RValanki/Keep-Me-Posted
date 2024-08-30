@@ -96,3 +96,9 @@ See [this link](https://docs.google.com/document/d/12utGqgSPGZd5jvaNlT22FTJlpHR0
 
 # UI/UX Prototyping
 See [this link](https://www.figma.com/design/2ViXY8jjaYoqQUNvJ0zHOE/Keep-Me-Posted-Designs?node-id=2210-441096&t=XM3WtZ90aTzj3E8g-1) to edit and view the Figma.
+
+# Developer Notes and Common Bugs
+
+## Common Bugs and Responses
+| **Description**                              | **Counter Measures**                              |
+|----------------------------------------------|------------------------------------------------|
