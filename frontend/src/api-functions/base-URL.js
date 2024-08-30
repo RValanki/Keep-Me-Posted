@@ -4,4 +4,4 @@ export const backendURL = import.meta.env.MODE !== 'production'
 
 export const frontendURL = import.meta.env.MODE !== 'production'
   ? "http://127.0.0.1:5173"  // Development URL
-  : "https://keep-me-posted-ai.vercel.app";  // Production URL
+  : "https://keepmeposted.netlify.app/";  // Production URL
