@@ -19,9 +19,9 @@ from . import views
 
 urlpatterns = [
     # Endpoint for user login
-    path('login', views.login),
+    path('login', views.login, name='login'),
     # Endpoint for user signup
-    path('signup', views.signup),
+    path('signup', views.signup, name='signup'),
     # Test endpoint for token authentication
-    path('test_token', views.test_token),
+    path('test_token', views.test_token, name='test_token'),
 ]

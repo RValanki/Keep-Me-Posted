@@ -1,373 +1,177 @@
 <!--
 
-    Upload Audio Box Component
+	Upload Audio Box Component
 
-    Authors: Parul Garg (pgar0011)
-    Editied by: Benjamin Cherian, Zihao Wang, Angelina Leung
-    Last Modified: 13/05/24
+	consists of parts
+	1. the box itself = blue on initial, green on complete
+	2. dropzone = container that can be clicked on/drag drop file
+	3. description = a text box with either instruction or completion, 
+		includes an icon, a header (bolded line), second and third line
+
+	Authors: Parul Garg (pgar0011)
+	Editied by: Benjamin Cherian, Zihao Wang, Angelina Leung, Maureen Pham, Danny Leung
+	Last Modified: 14/08/24
 
 -->
 <!-- JavaScript -->
 <script>
-  import micIcon from "../assets/mic-icon.png";
-  import uploadIcon from "../assets/upload-icon.png";
-  import radioIcon from "../assets/radio-icon.png";
-  import fileIcon from "../assets/file-icon.png";
-  import Dropzone from "svelte-file-dropzone";
-  import { simple_pathway } from "../api-functions/simple_pathway";
-  import { api_status } from "../stores/simple-pathway-store";
-  import { goto } from "$app/navigation";
-  export let simple = false;
+	import micIcon from "../assets/mic-icon.png";
+	import checkIcon from "../assets/green-tick.png";
+	import Dropzone from "svelte-file-dropzone";
+	import LoadingBar from "./loadingBar.svelte";
+	import { transcribe_audio } from "../api-functions/transcribe_audio";
+	import { send_summary } from "../api-functions/send_summary";
+	import { apiStatusStore } from "../stores/api-status-store"
+	import { backendURL } from "../api-functions/base-URL"
+	import PopUpModal from "./popUpModal.svelte"; // Import the PopUpModal component
+    import { resetStores } from "../stores/reset-store";
+	import { goto } from "$app/navigation";
 
-  const unsubscribe = api_status.subscribe((value) => {
-    console.log(value.status); // Log the status value
-    updateLoadingBar(value.status);
-  });
+	// content
+	let popUpModalComponent; // Pointer for the PopUpModal component
+	const dropzoneStyles = "background-color: rgba(255, 0, 0, 0)"; // define custom to style dropzone
+	
+	// File Handling
+	const MAX_DURATION_SECONDS = 7200; // 7200 seconds = 120 minutes, used to check limit on files
+	const errorMessage = {
+		DURATION_EXCEEDED: ["Meeting duration exceeded", "Your meeting audio should be less than 120 minutes.", "Re-upload"],
+		INVALID_FORMAT: ["Invalid audio format!", "Your meeting audio must be in MP3 or WAV format.", "Re-upload"],
+		ASSEMBLYAI_ERROR: ["AssemblyAI Error name", "Some description of the error. Please try again later", "Close"],	
+	};
 
-  function updateLoadingBar(api_status) {
-    if (api_status == "Transcribe") {
-      updateUploadBoxContents("Transcribing audio", false);
-      currentProgress = 0.4;
-      makeProgression();
+	
+	let popupHeader = ''; // Header for the popup
+	let popupMainText = ''; // Main text for the popup
 
-      setTimeout(() => {
-        currentProgress = 0.55;
-        makeProgression();
-      }, 8000);
+	async function handleFilesSelect(e) {
+		const { acceptedFiles } = e.detail;
 
-    } else if (api_status == "Summary") {
-      updateUploadBoxContents("Generating summary", true);
-      currentProgress = 0.7;
-      makeProgression();
+		if (acceptedFiles.length > 0) {
+			const selectedFile = acceptedFiles[0];
 
-    } else if (api_status == "Email") {
-      updateUploadBoxContents("Sending email", true);
-      currentProgress = 0.9;
-      makeProgression();
+			// Initial file type check before loading it as an audio source
+			if (
+				!selectedFile.name.endsWith(".mp3") &&
+				!selectedFile.name.endsWith(".wav")
+			) {
+				raiseError(errorMessage.INVALID_FORMAT);
+				return; // Exit the function early if file type is incorrect
+			}
+			
+			// check duration of audio file
+			const audio = new Audio(URL.createObjectURL(selectedFile)); // Create new Audio HTML object, create URL used as source for audio element
 
-    } else if (api_status == "Complete") {
-      currentProgress = 0.99;
-      makeProgression();
-      setTimeout(() => {
-        goto("/sent");
-      }, 2500);
-      
-    }
-  }
+			audio.addEventListener("loadedmetadata", async () => {
+				if (audio.duration >= MAX_DURATION_SECONDS) {
+					raiseError(errorMessage.DURATION_EXCEEDED);
+					return; // Exit the function early if file duration is too long
+				}
+				// File has passed all checks
+				startUpload(selectedFile);
+			});
+  		}
+	}
 
-  // ------------------------------------------ Progress Bar
-  let progressBarWidth = 0;
-  let progressBarProgress;
-  let progressBarDisplay = 0;
-  let loadingBarWidth;
-  let progressBarMax = 1;
-  let currentProgress = 0;
+	// Function to handle event where incorrect file formats are uploaded
+	async function handleFileRejection({handleFileRejection}){
+		raiseError(errorMessage.INVALID_FORMAT);
+	}
 
-  $: switch (progressBarWidth) {
-    case Math.round(loadingBarWidth * progressBarMax):
-      clearInterval(progressBarProgress);
-  }
+	// Function that calls transcribe_audio API
+	async function startUpload(file) {
+		apiStatusStore.set("Transcribe");
+		if ($apiStatusStore == "Cancel") {
+			console.log("Upload cancelled after upload");
+			resetStores();
+			console.log("Upload box reset")
+			return;
+		}
+		transcribe_audio(file, backendURL).then(transcript => {
+			if ($apiStatusStore == "Cancel") {
+				console.log("Upload cancelled after transcription");
+				return Promise.reject("Upload cancelled");
+			}
+			apiStatusStore.set("Summary");
+			console.log('Transcript received');
+			return send_summary(transcript, backendURL);  // Return the next promise
+		}).then(summary => {
+			if ($apiStatusStore == "Cancel") {
+				console.log("Upload cancelled after summary");
+				return Promise.reject("Upload cancelled")
+			}
+			apiStatusStore.set("Complete");
+			goto("/generate_summary")
+			console.log('Summary Received');
+		}).catch(error => {
+			if (error == "Upload cancelled") {
+				resetStores();
+				console.log("Upload box reset");
+			}
+		})
+	}
 
-  const progression = () => {
-    if (progressBarWidth < currentProgress * loadingBarWidth) {
-      progressBarWidth += 1;
-      progressBarDisplay = Math.round(
-        (progressBarWidth / loadingBarWidth) * 100,
-      );
-    }
-  };
+	// Function to trigger the appropriate error popup modal based on the error type
+	function raiseError(errorType) {
+		// Setting the popup modal properties based on the error type
+		popupHeader = errorType[0];
+		popupMainText = errorType[1];
 
-  const makeProgression = () => {
-    loadingBarWidth = document.getElementById("loadingBar").clientWidth;
-    document.getElementById("loadingBar").style.visibility = "visible";
-    document.getElementById("progressNumber").style.visibility = "visible";
-    progressBarProgress = setInterval(progression, 10);
+		// Toggle the popup modal visibility
+		popUpModalComponent.togglePopUp();
+  	}
 
-    return true;
-  };
-  const MAX_DURATION_SECONDS = 7200; // 7200 seconds = 120 minutes
-
-  var ICON_DICT = {
-    "Uploading meeting audio": uploadIcon,
-    "Transcribing audio": radioIcon,
-    "Generating summary": fileIcon,
-    "Sending email": fileIcon,
-  };
-
-  // ------------------------------------------ File Handling
-  let file;
-  let errorMessage = "";
-
-  async function handleFilesSelect(e) {
-    const { acceptedFiles } = e.detail;
-    file = null; // Reset the file each time new files are selected
-
-    if (acceptedFiles.length > 0) {
-      const selectedFile = acceptedFiles[0];
-
-      // Initial file type check before loading it as an audio source
-      if (
-        !selectedFile.name.endsWith(".mp3") &&
-        !selectedFile.name.endsWith(".wav")
-      ) {
-        errorMessage =
-          "Invalid audio format! \n Your meeting audio must be in MP3 or WAV format.";
-        return; // Exit the function early if file type is incorrect
-      }
-
-      const audio = new Audio(URL.createObjectURL(selectedFile)); // Create new Audio HTML object, create URL used as source for audio element
-
-      audio.addEventListener("loadedmetadata", async () => {
-        if (audio.duration <= MAX_DURATION_SECONDS) {
-          file = selectedFile;
-          errorMessage = "";
-          console.log("mao");
-          const response = await simple_pathway(file, "http://127.0.0.1:8000");
-        } else {
-          errorMessage =
-            "Meeting duration exceeded! \n Your meeting audio should be less than 120 minutes.";
-          file = null;
-          //TODO: Replace with error message pop-up
-        }
-      });
-    } else {
-      errorMessage =
-        "Invalid audio format! Your meeting audio must be in MP3 or WAV format";
-    }
-  }
-
-  // ------------------------------------------ Box Contents
-  // changes the contents of the audio box
-  function updateUploadBoxContents(newText, isProgression) {
-    var firstLine = document.querySelector(".first-line");
-    // changeClass('.first-line', '.loading-line')
-    firstLine.textContent = newText + "...";
-
-    if (isProgression) {
-      // Change icon source
-      var icon = document.getElementById("icon");
-      icon.src = ICON_DICT[newText];
-    } else {
-      var secondLine = document.querySelector(".second-line");
-      changeClass(".second-line", "loading-line");
-      secondLine.textContent = "";
-
-      // Change icon source
-      var icon = document.querySelector(".large-icon");
-      icon.src = ICON_DICT[newText];
-      changeClass(".large-icon", ".small-icon");
-    }
-
-    // when a file is dragged in show the loading bar and 'Uploading meeting audio'
-    // when file is sent to assemblyai; show 'Transcribing audio'
-    // when file is sent to gemini; show 'Generating Summary'
-    // when file is sent to assemblyai; show 'transcribing audio'
-  }
-
-  function changeClass(elemId, newClassName) {
-    // Get the span element by its ID
-    const spanElement = document.querySelector(elemId);
-
-    // Remove any existing class from the span element
-    if (spanElement != null) {
-      spanElement.className = "";
-
-      // Add the new class to the span element
-      spanElement.classList.add(newClassName);
-    }
-  }
+	// Function to dismiss the error popup modal
+	function dismissError() {
+		// Toggle the popup modal visibility
+		popUpModalComponent.togglePopUp();
+	}
 </script>
 
 <!-- COMPONENT -->
-<div class="upload-box">
-  <label for="uploadAudioBox" class="custom-input">
-    <Dropzone on:drop={handleFilesSelect} accept=".mp3, .wav">
-      <!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
-      <img id="icon" class="large-icon" src={micIcon} alt="Icon" />
-      <span class="first-line">Upload meeting audio</span>
-      <span class="second-line"
-        >Must be under 120 minutes. MP3 or WAV formats accepted.</span
-      >
-
-      <div id="loadingBar">
-        <div id="progressBar" style="width: {progressBarWidth}px"></div>
-      </div>
-      <div id="progressNumber"><b>{progressBarDisplay}</b>%</div>
-    </Dropzone>
-  </label>
+<div class= "flex items-center justify-center">
+    <!-- upload-audio-box -->
+	 {#if $apiStatusStore == "" || $apiStatusStore == "Cancel"}
+	 	<!-- BLUE with dropzone -->
+	 	<div id="upload-audio-box" class= "bg-light-blue flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2  border-medium-blue rounded-md">
+			<Dropzone 
+				on:drop={handleFilesSelect} 
+				on:droprejected = {handleFileRejection}
+				accept=".mp3, .wav" 
+				containerStyles={dropzoneStyles}
+			>
+				<!-- The dropzone is on top of custom-input so the grey is covering the lightblue-->
+				<div class="text-center flex flex-col items-center">
+					<img id="icon" class="w-12 h-12 m-3" src={micIcon} alt="Icon" />
+					<p id="upload-audio-box-first-line" class="sm:text-xl font-bold text-blue-800 mb-1">Upload meeting audio</p>
+					<p id="upload-audio-box-second-line" class="text-xs sm:text-base text-gray-400">Must be under 120 minutes.</p>
+					<p class="text-xs sm:text-base text-gray-400">MP3 or WAV formats accepted.</p>
+				</div>
+			</Dropzone>
+		</div>
+	 {:else if $apiStatusStore == "Complete" || $apiStatusStore == "Viewed"}
+		<!-- GREEN no dropzone -->
+		 <div id="upload-audio-box" class= "bg-success-25 flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2 border-success-300 rounded-md">
+			<div class="text-center flex flex-col items-center">
+				<img id="icon" class="w-12 h-12 m-3" src={checkIcon} alt="Icon" />
+				<p id="upload-audio-box-first-line" class="sm:text-xl font-bold text-success-700 mb-1">Your summary has been generated!</p>
+				<p id="upload-audio-box-second-line" class="text-xs sm:text-base text-success-700">View the summary by clicking 'View Summary'</p>
+			</div>
+		</div>
+	 {:else} <!--file has been uploaded awaiting api-->
+	 	<div id="upload-audio-box" class= "bg-light-blue flex flex-col justify-center w-5/6 h-48 max-w-2xl border-2  border-medium-blue rounded-md">
+	 		<LoadingBar/>
+		</div>
+	 {/if}
 </div>
 
-<div class="status-message">
-  {#if file}
-    <p>File ready: {file.name}</p>
-  {:else}
-    <p>{errorMessage}</p>
-  {/if}
-</div>
+<!-- Error Pop-Up Modal with dynamic header, text, button, icon, and visibility control based on error type -->
+<PopUpModal 
+	bind:this={popUpModalComponent}
+	type="error"
+	header={popupHeader}
+	mainText={popupMainText}
+	firstButtonText="Re-upload"
+	firstHandleClick={dismissError}
+	width="96"
+/>
 
-<!-- Styling -->
-<style>
-  .upload-box {
-    display: flex;
-    justify-content: center;
-  }
-
-  .large-icon {
-    /* large icon */
-
-    width: 3.5vw;
-    height: calc(2 * width);
-
-    max-width: 46px;
-    max-height: 52px;
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-  }
-
-  /* Not on inital load in */
-  .small-icon {
-    /* small icon */
-
-    width: 30px;
-    height: 30px;
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-  }
-
-  .custom-input {
-    /* Upload Audio Box */
-
-    box-sizing: border-box;
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0px 0px;
-    gap: 16px;
-
-    width: 55vw;
-    height: 27vh;
-    max-width: 700px;
-    max-height: 233px;
-
-    /* Blue/25 */
-    background: #f5faff;
-    /* Blue/300 */
-    border: 3px solid #84caff;
-    border-radius: 5px;
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-  }
-
-  .first-line {
-    /* Upload meeting audio */
-    width: 25vw;
-    height: 5vh;
-
-    /* Text xl/Medium */
-    font-style: normal;
-    font-family: "Inter";
-    font-weight: 500;
-    font-size: 1.45vw;
-    line-height: 5vh;
-    /* identical to box height, or 150% */
-    text-align: center;
-
-    /* Blue/800 */
-    color: #1849a9;
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-  }
-
-  .second-line {
-    /* Must be under 120 minutes. MP3 or WAV formats accepted. */
-
-    width: 16.5vw;
-    height: 5vh;
-
-    /* Text md/Regular */
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1.1vw;
-    line-height: 4vh;
-    /* or 150% */
-    text-align: center;
-
-    /* Gray/400 */
-    color: #98a2b3;
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-  }
-
-  /* Not on inital load in */
-  .loading-line {
-    /* 
-  /* Auto layout */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0px;
-    gap: 4px;
-
-    width: 256px;
-    height: 30px;
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-  }
-
-  .status-message {
-    text-align: center;
-    padding: 10px;
-    color: #333;
-    font-size: 16px;
-    margin-top: 100px;
-  }
-
-  #loadingBar {
-    top: 57%;
-    visibility: hidden;
-    border: 1px solid;
-    position: absolute;
-    margin-top: 67px;
-    width: 35vw;
-    height: 10px;
-    background-color: #e9eaec;
-    border-radius: 30px 30px 30px 30px;
-    border-color: #e9eaec;
-  }
-
-  #progressBar {
-    position: relative;
-    height: 10px;
-    background-color: #1570ef;
-    border-radius: 30px 30px 30px 30px;
-  }
-
-  #progressNumber {
-    color: rgb(105, 104, 104);
-    visibility: hidden;
-    font-size: 14px;
-    left: 19vw;
-    top: 2.8vh;
-    position: relative;
-  }
-</style>
