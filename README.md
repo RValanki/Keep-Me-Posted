@@ -5,14 +5,14 @@
 ## Team Members (2024)
 
 
-| **Agile Team 1**                                | **Agile Team 2**                               | **Agile Team 3**                               |
+| **Product Owners**                              | **Release Train Engineers**                              | **System Architects**                              |
 |-------------------------------------------------|------------------------------------------------|------------------------------------------------|
-| **Danny Leung** <br> *Product Management* <br> 32478704    | **Parul Garg** <br> *Product Management* <br> 32720254      | **Ayesha Tariq** <br> *Product Management* <br> 32497857      |
-| **Diya Ramesh** <br> *Product Management* <br> 32336012    | **Angelina Leung** <br> *Product Management* <br> 33114447  | **Afia Farzana** <br> *Product Management* <br> 32501986      |
-| **Maureen Pham** <br> *Release Train Engineer* <br> 33117144    | **Zihao (Jeremy) Wang** <br> *Release Train Engineer* <br> 32520433   | **Alex Ung** <br> *Release Train Engineer* <br> 32498853     |
-| **Bowen Dong** <br> *Release Train Engineer* <br> 33109834    | **Benjamin Cherian** <br> *Release Train Engineer* <br> 31483534    | **Marcus Wei** <br> *Release Train Engineer* <br> 32503881   |
-| **Brenda Dang** <br> *System Architect* <br> 33111197    | **Rohit Valanki** <br> *System Architect* <br> 31451764   | **Harrison Lane** <br> *System Architect* <br> 33110077    |
-| **Ahmed Almasry** <br> *System Architect* <br> 31130143    |                                                 |                                                 |
+| **Danny Leung** <br> 32478704 |**Alex Ung** <br> 32498853 | **Ahmed Almasry** <br> 31130143|
+| **Diya Ramesh** <br>  32336012 | **Maureen Pham** <br> 33117144 | **Harrison Lane** <br>  33110077 |
+| **Afia Farzana** <br>  32501986 | **Zihao (Jeremy) Wang** <br>  32520433 | **Rohit Valanki** <br> 31451764 |
+| **Ayesha Tariq** <br>  32497857 | **Benjamin Cherian** <br>  31483534 | **Brenda Dang** <br> 33111197 |
+|**Parul Garg** <br> 32720254  |**Bowen Dong** <br>  33109834 | **Angelina Leung** <br> 33114447|
+||**Marcus Wei** <br>  32503881 ||                                              |                                                 |
 
 # Installation Guide
 
