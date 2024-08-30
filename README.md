@@ -38,6 +38,19 @@ To run the servers on macOS, execute the run_servers.sh script. Use the followin
 bash run_servers.sh
 ```
 
+# Hardware and Software Required
+
+## Hardware 
+The project can be run on any machine. MacOS and Windows have shell scripts that can be used to run the project locally.
+
+## Software
+
+### Frontend
+Sveltekit is used for the frontend. SvelteKit is a framework for rapidly developing robust, performant web applications using Svelte. Svelte is a tool for building web applications. Like other user interface frameworks, it allows you to build your app declaratively out of components that combine markup, styles and behaviours. These components are compiled into small, efficient JavaScript modules that eliminate overhead traditionally associated with UI frameworks. A Svelte tutorial document was created in the process of building the application - [guide](https://docs.google.com/document/d/17psSA8k25k4564wV-8v7a0rGIPiNH81VshTD11CCbUA/edit#heading=h.9ezp793n1bwb). Other tutorials can be found for Svelte - [guide](https://learn.svelte.dev/tutorial/welcome-to-svelte), and SvelteKit - [guide](https://kit.svelte.dev/docs/introduction). For our application we are using SvelteKit version 3.0.0.
+
+### Backend
+Django is used for the backend. Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design. A Django tutorial document was created in the process of building the application - [guide](https://docs.google.com/document/d/1YI8r4dVbv2plGCXqexPKSkVPoaYwnvzpAtN_q0XUfro/edit#heading=h.9ezp793n1bwb). Other tutorials can be found for Django - [guide](https://docs.djangoproject.com/en/5.1/). For our application we are using Django version 5.0.4.
+
 # Required APIs
 1. Add a **.env file** to the **KEEP-ME-POSTED** root directory.
 2. Add a **.env.local file** to the **frontend** directory.
