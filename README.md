@@ -79,6 +79,15 @@ Django is used for the backend. Django is a high-level Python web framework that
     ASSEMBLYAI_API_KEY="insert API key here"
     ```
 
+## SMTP
+1. Create a google account
+2. Enable 2-factor authentication and generate a pass key (see [here](https://www.youtube.com/watch?v=RlfyGCxuNVI)) and put it in the **.env file** in the following format:
+
+    ```
+    SMTP_EMAIL = "your google email address"
+    SMTP_API_KEY = "insert pass key here"
+    ```
+
 # Login Credentials
 See [this link](https://docs.google.com/document/d/12utGqgSPGZd5jvaNlT22FTJlpHR073LqWaKULZvcidU/edit) for accounts for:
 * AssemblyAI project
