@@ -12,11 +12,16 @@ from reportlab.lib.units import inch
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from PyPDF2 import PdfReader, PdfWriter
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 def send_email(request):
    
-    username = "keepmeposted.monash@gmail.com"  
-    password = "aqsokzlapmzxvuev" 
+    username =  os.getenv("SMTP_EMAIL")
+    password = os.getenv("SMTP_API_KEY")
 
     message = request.POST.get('message') # get message from data
     subject = request.POST.get('subject')  
