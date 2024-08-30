@@ -1,3 +1,10 @@
+<!-- Login page
+
+    Landing Page for application that allows users to login to application
+
+    Author: Rohit
+    Last Modified: 5/08/2024
+-->
 <script>
    import { onMount } from "svelte";
    import { goto } from "$app/navigation";
@@ -8,7 +15,7 @@
    import LoginCardHeader from "../../components/loginCardHeader.svelte";
    import Button from "../../components/button.svelte";
    import LoginPrompt from "../../components/loginPrompt.svelte";
-   import { backendURL } from "../../api-functions/base-URL"
+   import { backendURL } from "../../api-functions/base-URL";
 
    let googleIcon = `<svg
               xmlns="http://www.w3.org/2000/svg"
@@ -136,28 +143,33 @@
       goto("/signup");
    }
 
-   function navigateToNextPage(){
+   function navigateToNextPage() {
       goto("/upload_audio");
    }
 
-   function handleLoginWithoutAccount(){
+   function handleLoginWithoutAccount() {
       clearAuth();
       navigateToNextPage();
    }
-  
 </script>
 
 <title>Keep Me Posted</title>
-<div class="m-0 h-screen bg-gradient-to-l from-[#53b1fd] to-[#1570ef] flex justify-center items-center text-white">
+<div
+   class="m-0 h-screen bg-gradient-to-l from-[#53b1fd] to-[#1570ef] flex justify-center items-center text-white"
+>
    <div class="flex flex-col md:flex-row h-screen w-full">
       <!-- Top Row on Mobile / Left Column on Desktop -->
       <div class="flex md:flex-col w-full md:w-1/2">
          <div class="ml-0 sm:ml-24 md:ml-0 w-1/4 md:w-full md:flex-1">
-            <div class=" ml-4 p-4 sm:p-6 md:p-0 mt-1 md:mt-0 min-w-[100%] md:min-w-[150px] ml-0 md:ml-40 h-full w-1/5 flex flex-col justify-end md:justify-end">
+            <div
+               class=" ml-4 p-4 sm:p-6 md:p-0 mt-1 md:mt-0 min-w-[100%] md:min-w-[150px] ml-0 md:ml-40 h-full w-1/5 flex flex-col justify-end md:justify-end"
+            >
                <Logo class="mt-auto" />
             </div>
          </div>
-         <div class="w-3/4 md:w-full md:flex-1 flex items-center md:items-start">
+         <div
+            class="w-3/4 md:w-full md:flex-1 flex items-center md:items-start"
+         >
             <div class="ml-4 md:ml-40 mt-2 md:mt-4 mb-0">
                <LandingPageTitle
                   title="Keep Me Posted"
@@ -168,15 +180,19 @@
       </div>
       <!-- Bottom Row on Mobile / Right Column on Desktop -->
       <div class="w-full md:w-1/2 flex justify-center items-center h-full">
-         <div class="h-full w-full md:w-full lg:w-2/3 flex justify-center items-center">
-            <div class="py-10 px-16 h-full md:h-3/4 lg:h-3/4 w-full sm:w-3/4 md:w-4/5 rounded-[16px] bg-white md:min-w-full lg:min-w-[450px] md:min-h-[635px] lg:min-h-[635px] ml-0 md:ml-16 mr-0 md:mr-16 max-h-[700px]">
+         <div
+            class="h-full w-full md:w-full lg:w-2/3 flex justify-center items-center"
+         >
+            <div
+               class="py-10 px-16 h-full md:h-3/4 lg:h-3/4 w-full sm:w-3/4 md:w-4/5 rounded-[16px] bg-white md:min-w-full lg:min-w-[450px] md:min-h-[635px] lg:min-h-[635px] ml-0 md:ml-16 mr-0 md:mr-16 max-h-[700px]"
+            >
                <!-- Content here -->
                <div class="w-full h-full">
                   <LoginCardHeader
                      heading="Log in to your account"
                      subheading="Welcome back! Please enter your details."
                   />
-                  <div id = "email-input">
+                  <div id="email-input">
                      <InputFieldWithValidation
                         label="Email"
                         placeholder="name@email.com"
@@ -185,7 +201,7 @@
                         validationActive={emailValidationActive}
                      />
                   </div>
-                  <div id = "password-input">
+                  <div id="password-input">
                      <InputFieldWithValidation
                         label="Password"
                         isPasswordType={true}
@@ -195,11 +211,13 @@
                         validationActive={passwordValidationActive}
                      />
                   </div>
-                  <div class="w-full mb-5 flex justify-end text-xs text-gray-500 font-bold hover:text-purple-500 cursor-pointer">
+                  <div
+                     class="w-full mb-5 flex justify-end text-xs text-gray-500 font-bold hover:text-purple-500 cursor-pointer"
+                  >
                      Forgot Password
                   </div>
 
-                  <div id = "login-button" class="w-full h-[45px] mb-4">
+                  <div id="login-button" class="w-full h-[45px] mb-4">
                      <Button
                         fullWidth={true}
                         fitContainerHeight={true}
@@ -209,13 +227,13 @@
                      />
                   </div>
 
-                  <div id = "google-button">
+                  <div id="google-button">
                      <form
                         class="w-full h-[45px] mb-3"
                         method="post"
                         action="?/OAuth2"
                      >
-                        <Button 
+                        <Button
                            fullWidth={true}
                            type="tertiary"
                            text="Sign in with Google"
@@ -224,24 +242,31 @@
                      </form>
                   </div>
 
-                  
                   <div class="flex w-full h-[30px] mb-3">
                      <div class="relative flex items-center basis-[45%]">
-                       <span></span>
-                       <div class="absolute inset-0 flex items-center justify-center">
-                         <div class="w-full h-[1px] bg-gray-300"></div>
-                       </div>
+                        <span></span>
+                        <div
+                           class="absolute inset-0 flex items-center justify-center"
+                        >
+                           <div class="w-full h-[1px] bg-gray-300"></div>
+                        </div>
                      </div>
-                     <div class="basis-[10%] flex items-center justify-center text-sm text-bold text-gray-600">or</div>
+                     <div
+                        class="basis-[10%] flex items-center justify-center text-sm text-bold text-gray-600"
+                     >
+                        or
+                     </div>
                      <div class="relative flex items-center basis-[45%]">
-                       <span></span>
-                       <div class="absolute inset-0 flex items-center justify-center">
-                         <div class="w-full h-[1px] bg-gray-300"></div>
-                       </div>
+                        <span></span>
+                        <div
+                           class="absolute inset-0 flex items-center justify-center"
+                        >
+                           <div class="w-full h-[1px] bg-gray-300"></div>
+                        </div>
                      </div>
-                   </div>
-                   
-                   <div class="w-full h-[45px] mb-4">
+                  </div>
+
+                  <div class="w-full h-[45px] mb-4">
                      <Button
                         fullWidth={true}
                         fitContainerHeight={true}
@@ -250,7 +275,6 @@
                         handleClick={handleLoginWithoutAccount}
                      />
                   </div>
-                   
 
                   <div class="w-full flex justify-center">
                      <LoginPrompt
