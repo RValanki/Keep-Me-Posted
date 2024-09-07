@@ -18,7 +18,7 @@ async function getUserData(access_token) {
 }
 
 export const GET = async ({ url }) => {
-  const redirectURL = `${frontendURL}/oauth`; // Use the dynamic frontend URL
+  const redirectURL = `${frontendURL}oauth`; // Use the dynamic frontend URL
   const code = await url.searchParams.get('code');
 
   console.log('returned code', code);
@@ -43,5 +43,5 @@ export const GET = async ({ url }) => {
     console.log('Error logging in with OAuth2 user', err);
   }
   
-  throw redirect(303, `${frontendURL}/upload_audio?email=${encodeURIComponent(userEmail)}`); // Use the dynamic frontend URL
+  throw redirect(303, `${frontendURL}upload_audio?email=${encodeURIComponent(userEmail)}`); // Use the dynamic frontend URL
 };

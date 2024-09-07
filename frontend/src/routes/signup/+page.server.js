@@ -5,7 +5,7 @@ import { frontendURL } from '../../api-functions/base-URL'
 
 export const actions = {
     OAuth2: async({}) => {
-        const redirectURL = `${frontendURL}/oauth`; // Use the dynamic frontend URL
+        const redirectURL = `${frontendURL}oauth`; // Use the dynamic frontend URL
 
         console.log('id', SECRET_CLIENT_ID);
 
