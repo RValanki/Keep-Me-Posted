@@ -17,6 +17,10 @@
    import LoginPrompt from "../../components/loginPrompt.svelte";
    import { backendURL } from "../../api-functions/base-URL";
 
+   onMount(() => {
+    alert('Hello');
+  });
+
    let googleIcon = `<svg
               xmlns="http://www.w3.org/2000/svg"
               x="0px"
@@ -107,10 +111,7 @@
       }
    }
 
-   // Optional: Fetch initial data or perform other tasks on component mount
-   onMount(async () => {
-      // Fetch initial data or perform other async tasks here
-   });
+   
 
    async function postData(loginData) {
       try {
