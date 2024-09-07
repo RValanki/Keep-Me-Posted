@@ -1,13 +1,10 @@
 import { redirect } from '@sveltejs/kit';
 import { OAuth2Client } from 'google-auth-library';
 import {SECRET_CLIENT_ID,SECRET_CLIENT_SECRET} from '$env/static/private';
-import { frontendURL } from '../../api-functions/base-URL';
-
-export const prerender = false;
 
 export const actions = {
     OAuth2: async({})=>{
-        const redirectURL = frontendURL + '/oauth';
+        const redirectURL = 'http://localhost:5173/oauth';
 
         console.log('id',SECRET_CLIENT_ID)
 
@@ -28,3 +25,4 @@ export const actions = {
     }
 
 }
+ 

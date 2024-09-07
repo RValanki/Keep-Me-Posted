@@ -3,8 +3,8 @@
     The page where user uploads the audio file for Send Summary ASAP pathway.
 
     Author: Parul Garg (pgar0011)
-    Edited By: Angelina Leung (aleu0007), Maureen Pham (mpha0039), Danny Leung (dleu0007)
-    Last Modified: 19/08/24
+    Edited By: Angelina Leung (aleu0007), Maureen Pham (mpha0039), Danny Leung (dleu0007), Rohit Valanki (rval0008)
+    Last Modified: 07/09/24
 
 -->
 
@@ -18,6 +18,24 @@
   import { apiStatusStore } from "../../stores/api-status-store";
   import { resetStores } from "../../stores/reset-store";
   import RightArrow from "../../assets/arrow-right.png"
+  import { onMount } from 'svelte';
+  import { updateAuth } from '../../stores/auth-store.js';
+
+  onMount(() => {
+    // Get the current URL
+    const currentUrl = window.location.href;
+    
+    // Create a URL object
+    const url = new URL(currentUrl);
+    
+    // Extract the email from the query parameters
+    const email = url.searchParams.get('email');
+    
+    if (email) {
+      updateAuth(email, true);
+      
+    } 
+  });
 
   // Function to navigate to the summary page and update the status to "Viewed"
   let nextPage = () => {
