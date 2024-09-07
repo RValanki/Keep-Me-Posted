@@ -6,7 +6,6 @@
     Last Modified: 5/08/2024
 -->
 <script>
-   import { onMount } from "svelte";
    import { goto } from "$app/navigation";
    import { updateAuth, clearAuth } from "../../stores/auth-store.js";
    import Logo from "../../components/logo.svelte";
@@ -16,12 +15,6 @@
    import Button from "../../components/button.svelte";
    import LoginPrompt from "../../components/loginPrompt.svelte";
    import { backendURL } from "../../api-functions/base-URL";
-   import { frontendURL } from '../../api-functions/base-URL'
-
-   onMount(() => {
-    alert('Hello');
-    alert(frontendURL)
-  });
 
    let googleIcon = `<svg
               xmlns="http://www.w3.org/2000/svg"
