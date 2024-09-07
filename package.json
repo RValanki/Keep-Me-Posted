@@ -1,8 +1,10 @@
 {
   "dependencies": {
+    "pnpm": "^9.9.0",
     "svelte-file-dropzone": "^2.0.7"
   },
   "devDependencies": {
-    "cypress": "^13.13.3"
+    "cypress": "^13.13.3",
+    "sveltekit-adapter-chrome-extension": "^2.0.1"
   }
 }

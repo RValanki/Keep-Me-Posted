@@ -9,8 +9,8 @@
 <script>
   import logo from "../assets/kmp-logo-large.svg";
 
-  export let width = "w-full";
-  export let height = "h-full";
+  export const width = "w-full";
+  export const height = "h-full";
 </script>
 
 <div class="mb-4">

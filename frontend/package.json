@@ -4,6 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
+		"devext": "nodemon --watch src --exec \"vite build\" -e json,ts,css,html,svelte",
 		"build": "vite build",
 		"preview": "vite preview",
 		"cy:open": "cypress open"
@@ -25,7 +26,7 @@
 	"type": "module",
 	"dependencies": {
 		"google-auth-library": "^9.10.0",
-		"marked": "^14.0.0",
+		"marked": "^14.1.1",
 		"svelte-file-dropzone": "^2.0.7",
 		"turndown": "^7.2.0"
 	}

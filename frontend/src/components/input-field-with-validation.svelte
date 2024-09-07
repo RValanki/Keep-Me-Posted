@@ -14,21 +14,25 @@
   export let showValidation = false; // Default false state
   export let validationActive = false; // Default false state
   export let isPasswordType = false;
-  export let onInput;
+  export let onInput = () => {};
   export let isWithIcon = false; // allows for icon padding
 
   function handleInput(event) {
-    value = event.target.value;
+    $value = event.target.value;
     if (onInput) {
       onInput(value);
     }
   }
+
+  // Generate a unique ID for the input field
+  let inputId = `input-${Math.random().toString(36).substr(2, 9)}`;
 </script>
 
 <div id="login-form-container" class="mb-4">
-  <label class="block text-gray-700 text-sm mb-1">{label}</label>
+  <label for={inputId} class="block text-gray-700 text-sm mb-1">{label}</label>
   {#if isPasswordType}
     <input
+      id={inputId}
       type="password"
       bind:value
       {placeholder}
@@ -38,6 +42,7 @@
     />
   {:else if isWithIcon}
     <input
+      id={inputId}
       type="text"
       bind:value
       {placeholder}
@@ -47,6 +52,7 @@
     />
   {:else}
     <input
+      id={inputId}
       type="text"
       bind:value
       {placeholder}

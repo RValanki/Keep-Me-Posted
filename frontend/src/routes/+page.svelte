@@ -15,4 +15,3 @@
 </script>
 <button on:click = {goto("/login")}></button>
 <TopBar />
-

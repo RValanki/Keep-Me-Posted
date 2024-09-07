@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "Keep Me Posted",
+    "description": "A chrome extension version of Keep Me Posted",
+    "version": "1.0",
+    "permissions": [
+      "storage"
+    ],
+    "action": {
+      "default_title": "Keep Me Posted",
+      "default_popup": "upload_audio.html"
+    }
+  }
+  
