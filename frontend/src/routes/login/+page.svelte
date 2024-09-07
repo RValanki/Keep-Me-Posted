@@ -16,9 +16,11 @@
    import Button from "../../components/button.svelte";
    import LoginPrompt from "../../components/loginPrompt.svelte";
    import { backendURL } from "../../api-functions/base-URL";
+   import { frontendURL } from '../../api-functions/base-URL'
 
    onMount(() => {
     alert('Hello');
+    alert(frontendURL)
   });
 
    let googleIcon = `<svg
