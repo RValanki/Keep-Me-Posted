@@ -1,7 +1,8 @@
 import { redirect } from '@sveltejs/kit';
 import { OAuth2Client } from 'google-auth-library';
 import { updateAuth } from '../../stores/auth-store.js';
-import {SECRET_CLIENT_ID,SECRET_CLIENT_SECRET} from '$env/static/private';
+import { SECRET_CLIENT_ID, SECRET_CLIENT_SECRET } from '$env/static/private';
+import { frontendURL } from '../../api-functions/base-URL'
 
 let userEmail = "";
 
@@ -16,36 +17,31 @@ async function getUserData(access_token) {
   return data.email; // Return the email for further use
 }
 
+export const GET = async ({ url }) => {
+  const redirectURL = `${frontendURL}/oauth`; // Use the dynamic frontend URL
+  const code = await url.searchParams.get('code');
 
-export const GET = async ({ url}) => {
-    const redirectURL = 'http://localhost:5173/oauth';
-    const code = await url.searchParams.get('code');
+  console.log('returned code', code);
 
-    //console.log('returned state',state)
-    console.log('returned code',code)
-
-    try {
-        const oAuth2Client = new OAuth2Client(
-          SECRET_CLIENT_ID,
-          SECRET_CLIENT_SECRET,
-            redirectURL
-          );
-        const r = await oAuth2Client.getToken(code);
-        // Make sure to set the credentials on the OAuth2 client.
-        oAuth2Client.setCredentials(r.tokens);
-        console.info('Tokens acquired.');
-        const user = oAuth2Client.credentials;
-        console.log('credentials',user);
-
-        userEmail = await getUserData(user.access_token);
-        
-
-      } catch (err) {
-        console.log('Error logging in with OAuth2 user', err);
-    }
+  try {
+    const oAuth2Client = new OAuth2Client(
+      SECRET_CLIENT_ID,
+      SECRET_CLIENT_SECRET,
+      redirectURL
+    );
     
+    const r = await oAuth2Client.getToken(code);
+    // Make sure to set the credentials on the OAuth2 client.
+    oAuth2Client.setCredentials(r.tokens);
+    console.info('Tokens acquired.');
+    const user = oAuth2Client.credentials;
+    console.log('credentials', user);
 
-    throw redirect(303, `/upload_audio?email=${encodeURIComponent(userEmail)}`);
+    userEmail = await getUserData(user.access_token);
+    
+  } catch (err) {
+    console.log('Error logging in with OAuth2 user', err);
+  }
+  
+  throw redirect(303, `${frontendURL}/upload_audio?email=${encodeURIComponent(userEmail)}`); // Use the dynamic frontend URL
 };
-
-
