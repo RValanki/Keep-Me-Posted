@@ -206,7 +206,6 @@
                         bind:value={email}
                         validationMessage={emailValidationString}
                         validationActive={emailValidationActive}
-                        on:keydown={handleKeydown}
                      />
                   </div>
                   <div id="password-input">
@@ -217,7 +216,7 @@
                         bind:value={password}
                         validationMessage={passwordValidationString}
                         validationActive={passwordValidationActive}
-                        on:keydown={handleKeydown}
+                        onKeydown={handleKeydown}
                      />
                   </div>
                   <div
