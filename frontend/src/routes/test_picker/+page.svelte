@@ -2,7 +2,7 @@
   import { onMount } from 'svelte'
 
 
-  const clientId = import.meta.env.SECRET_CLIENT_ID;
+  const clientId = "342252136789-ii0f1addun3qerarorug1hddaimsvlte.apps.googleusercontent.com";
 
   onMount(async () => {
       const handleCredentialResponse = async (response) => {
