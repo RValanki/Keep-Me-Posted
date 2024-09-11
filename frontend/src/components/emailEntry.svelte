@@ -1,3 +1,12 @@
+<!-- Email box Component
+
+    Component for the email input field
+
+    Modified by: Parul Garg
+    Last modified: 11/09/2024
+
+-->
+
 <script>
   import Button from "../components/button.svelte";
   import { ContactsStore } from "../stores/contacts-store"
