@@ -12,23 +12,30 @@
   //required imports
   import Button from "../../components/button.svelte";
   import Topbar from "../../components/topbar.svelte";
-  import Toggle from '../../components/toggle.svelte';
+  import Toggle from "../../components/toggle.svelte";
   import UploadBox from "../../components/uploadAudioBox.svelte";
   import { goto } from "$app/navigation";
   import { apiStatusStore } from "../../stores/api-status-store";
   import { resetStores } from "../../stores/reset-store";
-  import RightArrow from "../../assets/arrow-right.png"
-  import { onMount } from 'svelte';
-  import { updateAuth } from '../../stores/auth-store.js';
- 
+  import RightArrow from "../../assets/arrow-right.png";
+  import { onMount } from "svelte";
+  import { updateAuth } from "../../stores/auth-store.js";
+
   let userEmail = null;
+  let accessToken = null;
 
   onMount(async () => {
     try {
-      const response = await fetch('/api/user_email');
+      const response = await fetch("/api/user_email");
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      // Read the response body as a stream
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
-      let result = '';
+      let result = "";
 
       // Read the stream
       while (true) {
@@ -40,26 +47,19 @@
       // Parse the JSON data
       const data = JSON.parse(result);
       userEmail = data.userEmail;
+      accessToken = data.accessToken;
 
-      // Update the store with the fetched email
-      if (userEmail) {
-        updateAuth(userEmail, true);
+      // Update the store with the fetched email and access token
+      if (userEmail && accessToken) {
+        updateAuth(userEmail, true, accessToken);
       }
 
-      console.log('Fetched user email:', userEmail);
+      console.log("Fetched user email:", userEmail);
+      console.log("Fetched access token:", accessToken);
     } catch (error) {
-      console.error('Error fetching user email:', error);
+      console.error("Error fetching user email and access token:", error);
     }
   });
-
-
-
-
-
-
-
-
-
 
   // Function to navigate to the summary page and update the status to "Viewed"
   let nextPage = () => {
@@ -87,26 +87,26 @@
     </div>
 
     <UploadBox />
-  
-    <Toggle/>
-    
-    {#if ($apiStatusStore == "Complete")}
+
+    <Toggle />
+
+    {#if $apiStatusStore == "Complete"}
       <div class="flex justify-center items-center p-3">
-        <Button 
+        <Button
           type="secondary"
           text="Re-Upload Audio"
           handleClick={handleReUpload}
         />
       </div>
     {/if}
-  
+
     <div class="absolute bottom-8 right-8">
       <Button
         handleClick={nextPage}
         icon={RightArrow}
         text="View Summary"
-        disabled={ $apiStatusStore == "" }
-        type={ $apiStatusStore == "" ? "disabled" : "primary" }
+        disabled={$apiStatusStore == ""}
+        type={$apiStatusStore == "" ? "disabled" : "primary"}
       ></Button>
     </div>
   </body>

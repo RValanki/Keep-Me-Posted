@@ -1,3 +1,4 @@
+// src/routes/oauth/+server.js
 import { redirect } from '@sveltejs/kit';
 import { OAuth2Client } from 'google-auth-library';
 import { SECRET_CLIENT_ID, SECRET_CLIENT_SECRET } from '$env/static/private';
@@ -15,7 +16,7 @@ export const GET = async ({ url, cookies }) => {
   const redirectURL = `${frontendURL}oauth`; // Use the dynamic frontend URL
   const code = await url.searchParams.get('code');
 
-  console.log('returned code', code);
+  console.log('Returned code:', code);
 
   try {
     const oAuth2Client = new OAuth2Client(
@@ -28,19 +29,25 @@ export const GET = async ({ url, cookies }) => {
     oAuth2Client.setCredentials(r.tokens);
     console.info('Tokens acquired.');
     const user = oAuth2Client.credentials;
-    console.log('credentials', user);
+    console.log('Credentials:', user);
 
     const userEmail = await getUserData(user.access_token);
-    
-    // Store email in a cookie
+
+    // Store email and access token in cookies
     cookies.set('userEmail', userEmail, {
       path: '/',
       httpOnly: true, // Optional: to prevent JavaScript access (better security)
       maxAge: 60 * 60 * 24 * 7, // 1 week expiration
     });
 
-    console.log('User email stored in cookie:', userEmail);
-    
+    cookies.set('accessToken', user.access_token, {
+      path: '/',
+      httpOnly: true, // Optional: to prevent JavaScript access
+      maxAge: 60 * 60 * 24 * 7, // 1 week expiration
+    });
+
+    console.log('User email and access token stored in cookies:', userEmail);
+
   } catch (err) {
     console.log('Error logging in with OAuth2 user', err);
   }
