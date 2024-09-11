@@ -20,22 +20,46 @@
   import RightArrow from "../../assets/arrow-right.png"
   import { onMount } from 'svelte';
   import { updateAuth } from '../../stores/auth-store.js';
+ 
+  let userEmail = null;
 
-  onMount(() => {
-    // Get the current URL
-    const currentUrl = window.location.href;
-    
-    // Create a URL object
-    const url = new URL(currentUrl);
-    
-    // Extract the email from the query parameters
-    const email = url.searchParams.get('email');
-    
-    if (email) {
-      updateAuth(email, true);
-      
-    } 
+  onMount(async () => {
+    try {
+      const response = await fetch('/api/user_email');
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let result = '';
+
+      // Read the stream
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        result += decoder.decode(value, { stream: true });
+      }
+
+      // Parse the JSON data
+      const data = JSON.parse(result);
+      userEmail = data.userEmail;
+
+      // Update the store with the fetched email
+      if (userEmail) {
+        updateAuth(userEmail, true);
+      }
+
+      console.log('Fetched user email:', userEmail);
+    } catch (error) {
+      console.error('Error fetching user email:', error);
+    }
   });
+
+
+
+
+
+
+
+
+
 
   // Function to navigate to the summary page and update the status to "Viewed"
   let nextPage = () => {

@@ -1,23 +1,17 @@
 import { redirect } from '@sveltejs/kit';
 import { OAuth2Client } from 'google-auth-library';
-import { updateAuth } from '../../stores/auth-store.js';
 import { SECRET_CLIENT_ID, SECRET_CLIENT_SECRET } from '$env/static/private';
-import { frontendURL } from '../../api-functions/base-URL'
-
-let userEmail = "";
+import { frontendURL } from '../../api-functions/base-URL';
 
 async function getUserData(access_token) {
   const response = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${access_token}`);
   const data = await response.json();
   console.log('User data received:', data); // Check data received
-
-  // Update the store with the user's email and logged-in status
-  updateAuth(data.email, true);
   
   return data.email; // Return the email for further use
 }
 
-export const GET = async ({ url }) => {
+export const GET = async ({ url, cookies }) => {
   const redirectURL = `${frontendURL}oauth`; // Use the dynamic frontend URL
   const code = await url.searchParams.get('code');
 
@@ -31,17 +25,25 @@ export const GET = async ({ url }) => {
     );
     
     const r = await oAuth2Client.getToken(code);
-    // Make sure to set the credentials on the OAuth2 client.
     oAuth2Client.setCredentials(r.tokens);
     console.info('Tokens acquired.');
     const user = oAuth2Client.credentials;
     console.log('credentials', user);
 
-    userEmail = await getUserData(user.access_token);
+    const userEmail = await getUserData(user.access_token);
+    
+    // Store email in a cookie
+    cookies.set('userEmail', userEmail, {
+      path: '/',
+      httpOnly: true, // Optional: to prevent JavaScript access (better security)
+      maxAge: 60 * 60 * 24 * 7, // 1 week expiration
+    });
+
+    console.log('User email stored in cookie:', userEmail);
     
   } catch (err) {
     console.log('Error logging in with OAuth2 user', err);
   }
   
-  throw redirect(303, `${frontendURL}upload_audio?email=${encodeURIComponent(userEmail)}`); // Use the dynamic frontend URL
+  throw redirect(303, `${frontendURL}upload_audio`); // Redirect to another page without query parameter
 };
