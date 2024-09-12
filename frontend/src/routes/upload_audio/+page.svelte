@@ -18,14 +18,34 @@
   import { apiStatusStore } from "../../stores/api-status-store";
   import { resetStores } from "../../stores/reset-store";
   import RightArrow from "../../assets/arrow-right.png";
-  import { onMount } from "svelte";
-  import { updateAuth } from "../../stores/auth-store.js";
+  import { onMount, onDestroy } from "svelte";
+  import { updateAuth, authStore } from "../../stores/auth-store.js";
+
+  let loggedIn;
+  let googleAuth = false;
+
+  // Subscribe to the store to get the current value of `loggedIn`
+  const unsubscribe = authStore.subscribe(value => {
+    loggedIn = value.loggedIn;
+  });
+
+  // Clean up the subscription when the component is destroyed
+  onDestroy(() => {
+    unsubscribe();
+  });
+  console.log(loggedIn)
 
   let userEmail = null;
   let accessToken = null;
   let mailingList = []; // Add variable to hold mailing list
 
   onMount(async () => {
+    const queryParams = new URLSearchParams(window.location.search);
+    googleAuth = queryParams.get('google_auth') === 'true';
+    
+    console.log('Google Auth:', googleAuth);
+
+    if(!loggedIn && googleAuth){
     try {
       const response = await fetch("/sse");
 
@@ -65,6 +85,7 @@
         error,
       );
     }
+  }
   });
 
   // Function to navigate to the summary page and update the status to "Viewed"

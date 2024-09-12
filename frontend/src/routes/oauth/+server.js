@@ -66,5 +66,5 @@ export const GET = async ({ url, cookies }) => {
     console.log('Error logging in with OAuth2 user', err);
   }
   
-  throw redirect(303, `${frontendURL}upload_audio`); // Redirect to another page without query parameter
+  throw redirect(303, `${frontendURL}upload_audio?google_auth=true`); // Redirect to another page without query parameter
 };
