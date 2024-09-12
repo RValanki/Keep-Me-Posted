@@ -31,7 +31,8 @@
     //   "gh1jk@stu.com",
     //   "qazwsx@vbn.com",
     //   "edc45rf@poi.net",
-    // ]; uncomment this to add allow search results
+    // ]; 
+    // uncomment this to see dummy email data
   });
 
   let addEmail = () => {
@@ -104,19 +105,18 @@
 
     {#if inputFocused && searchResults.length > 0}
       <div
-        class="absolute bg-white shadow-sm border border-gray-300 rounded-lg w-96 z-10 max-h-24 overflow-y-scroll my-1"
+        class="absolute bg-white shadow-sm border border-gray-300 rounded-lg w-96 z-10 max-h-48 overflow-y-scroll my-1"
       >
-        <ul class="py-2">
+        <ul class="py-2 space-y-2">
           {#each searchResults as result}
-            <button
-              class="px-4 py-2 hover:bg-gray-200 rounded-xl cursor-pointer"
-              on:click={() => {
+            <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <li class="px-4 py-2 hover:bg-gray-200 rounded-xl cursor-pointer flex" on:click={() => {
                 emailString = result;
                 addEmail();
-              }}
-            >
+              }}>
               {result}
-            </button>
+            </li>
           {/each}
         </ul>
       </div>
