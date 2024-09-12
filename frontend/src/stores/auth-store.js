@@ -9,13 +9,15 @@ function getInitialState() {
     const storedState = sessionStorage.getItem(STORAGE_KEY);
     return storedState ? JSON.parse(storedState) : {
       email: "",
-      loggedIn: false
+      loggedIn: false,
+      contactsList: [],
     };
   }
   // Fallback state for non-browser environments
   return {
     email: "",
-    loggedIn: false
+    loggedIn: false,
+    contactsList: []
   };
 }
 
@@ -31,11 +33,12 @@ if (typeof window !== 'undefined' && window.sessionStorage) {
 }
 
 // Function to update the authStore
-export function updateAuth(email, loggedIn) {
+export function updateAuth(email, loggedIn, contactsList) {
   authStore.update(state => ({
     ...state,
     email,
-    loggedIn
+    loggedIn,
+    contactsList
   }));
 }
 
@@ -61,6 +64,7 @@ export function clearAuth() {
   
   authStore.set({
     email: "",
-    loggedIn: false
+    loggedIn: false,
+    contactsList: []
   });
 }
