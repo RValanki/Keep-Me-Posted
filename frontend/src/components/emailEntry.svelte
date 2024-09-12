@@ -9,10 +9,30 @@
 
 <script>
   import Button from "../components/button.svelte";
-  import { ContactsStore } from "../stores/contacts-store"
-  import AddIconBlue from "../assets/add-icon-blue.png"
+  import { ContactsStore } from "../stores/contacts-store";
+  import { authStore } from "../stores/auth-store";
+  import AddIconBlue from "../assets/add-icon-blue.png";
+  import { onMount } from "svelte";
+
   let emailString = "";
   let emailErrorString = "";
+  let searchResults = [];
+  let inputFocused = false;
+
+  onMount(() => {
+    // $authStore.contactsList = [
+    //   "fgh6a@abc.com",
+    //   "jklb7p@xyz.net",
+    //   "mn234@def.org",
+    //   "zxcvbnm@ghi.co",
+    //   "qw56er@jkl.org",
+    //   "ty8uio@xyz.com",
+    //   "as9df@pqr.co",
+    //   "gh1jk@stu.com",
+    //   "qazwsx@vbn.com",
+    //   "edc45rf@poi.net",
+    // ]; uncomment this to add allow search results
+  });
 
   let addEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -32,42 +52,82 @@
       }, 3000);
     }
   };
+
+  let searchEmails = () => {
+    searchResults = $authStore.contactsList.filter((email) =>
+      email.toLowerCase().includes(emailString.toLowerCase())
+    );
+  };
+
+  let handleFocus = () => {
+    inputFocused = true;
+    searchEmails();
+  };
+
+  let handleBlur = () => {
+    setTimeout(() => {
+      inputFocused = false; // Delay to allow click on search results
+    }, 100);
+  };
 </script>
 
 <div class="flex justify-center gap-2 px-4">
-    <div class="relative border border-slate-300 pl-9 p-2 rounded-xl w-full sm:w-96 text-left">
-      <div class = "border-b">
-        <input
-          class="border-none pt-0 pl-0"
-          type="email"
-          placeholder="johndoe@email.com"
-          bind:value={emailString}
+  <div class="relative">
+    <input
+      class="border border-slate-300 pl-9 p-2 rounded-xl w-full sm:w-96"
+      type="email"
+      placeholder="johndoe@email.com"
+      bind:value={emailString}
+      on:input={searchEmails}
+      on:focus={handleFocus}
+      on:blur={handleBlur}
+    />
+    <button
+      class="absolute cursor-default h-5 w-5 left-3 top-3 py-2 flex items-center bg-white"
+      type="button"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.9"
+        stroke="#667085"
+        class="size-12"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
         />
-        <button
-              class="absolute cursor-default h-5 w-5 left-3 top-3 pb-1 flex items-center bg-white"
-              type="button">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.9" stroke="#667085" class="size-12">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-            </svg>
-        </button>
+      </svg>
+    </button>
+
+    {#if inputFocused && searchResults.length > 0}
+      <div
+        class="absolute bg-white shadow-sm border border-gray-300 rounded-lg w-96 z-10 max-h-24 overflow-y-scroll my-1"
+      >
+        <ul class="py-2">
+          {#each searchResults as result}
+            <button
+              class="px-4 py-2 hover:bg-gray-200 rounded-xl cursor-pointer"
+              on:click={() => {
+                emailString = result;
+                addEmail();
+              }}
+            >
+              {result}
+            </button>
+          {/each}
+        </ul>
       </div>
-      <div class = "py-2 cursor-pointer">
-          <ul class="">
-            <li>
-              number 1
-            </li>
-            <li>
-                number 2
-            </li>
-          </ul>
-      </div>
-    </div>
-  <Button
-    handleClick={addEmail}
-    icon={AddIconBlue}
-    text=""
-    type="secondary"
-  >
+    {/if}
+  </div>
+
+  <Button handleClick={addEmail} icon={AddIconBlue} text="" type="secondary">
     <span class="hidden sm:inline sm:ml-2 text-blue-700">Add Recipient</span>
   </Button>
 </div>
+
+{#if emailErrorString}
+  <div class="text-red-500 absolute bottom-8 left-1/2 transform -translate-x-1/2">{emailErrorString}</div>
+{/if}
