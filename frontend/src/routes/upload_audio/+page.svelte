@@ -22,47 +22,50 @@
   import { updateAuth } from "../../stores/auth-store.js";
 
   let userEmail = null;
-let accessToken = null;
-let mailingList = []; // Add variable to hold mailing list
+  let accessToken = null;
+  let mailingList = []; // Add variable to hold mailing list
 
-onMount(async () => {
-  try {
-    const response = await fetch("/sse");
+  onMount(async () => {
+    try {
+      const response = await fetch("/sse");
 
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      // Read the response body as a stream
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let result = "";
+
+      // Read the stream
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        result += decoder.decode(value, { stream: true });
+      }
+
+      // Parse the JSON data
+      const data = JSON.parse(result);
+      userEmail = data.userEmail;
+      accessToken = data.accessToken;
+      mailingList = data.mailingList || []; // Handle mailing list
+
+      // Update the store with the fetched data
+      if (userEmail && accessToken) {
+        updateAuth(userEmail, true, accessToken, mailingList); // Pass mailing list to updateAuth
+      }
+
+      console.log("Fetched user email:", userEmail);
+      console.log("Fetched access token:", accessToken);
+      console.log("Fetched mailing list:", mailingList);
+    } catch (error) {
+      console.error(
+        "Error fetching user email, access token, and mailing list:",
+        error,
+      );
     }
-
-    // Read the response body as a stream
-    const reader = response.body.getReader();
-    const decoder = new TextDecoder();
-    let result = "";
-
-    // Read the stream
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      result += decoder.decode(value, { stream: true });
-    }
-
-    // Parse the JSON data
-    const data = JSON.parse(result);
-    userEmail = data.userEmail;
-    accessToken = data.accessToken;
-    mailingList = data.mailingList || []; // Handle mailing list
-
-    // Update the store with the fetched data
-    if (userEmail && accessToken) {
-      updateAuth(userEmail, true, accessToken, mailingList); // Pass mailing list to updateAuth
-    }
-
-    console.log("Fetched user email:", userEmail);
-    console.log("Fetched access token:", accessToken);
-    console.log("Fetched mailing list:", mailingList);
-  } catch (error) {
-    console.error("Error fetching user email, access token, and mailing list:", error);
-  }
-});
+  });
 
   // Function to navigate to the summary page and update the status to "Viewed"
   let nextPage = () => {
