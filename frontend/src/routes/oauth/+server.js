@@ -12,9 +12,23 @@ async function getUserData(access_token) {
   return data.email; // Return the email for further use
 }
 
-// Function to generate a mock mailing list
-function getMockMailingList() {
-  return ['user1@example.com', 'user2@example.com', 'user3@example.com']; // Replace with your mock data
+// Function to fetch contacts from Google People API
+async function getContacts(access_token) {
+  const response = await fetch('https://people.googleapis.com/v1/people/me/connections?personFields=emailAddresses', {
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+  });
+  const data = await response.json();
+  console.log('Contacts data received:', data); // Check contacts data received
+  
+  // Extract email addresses from contacts
+  const contacts = data.connections || [];
+  const emailAddresses = contacts
+    .flatMap(contact => contact.emailAddresses || [])
+    .map(emailObj => emailObj.value);
+
+  return emailAddresses; // Return array of email addresses
 }
 
 export const GET = async ({ url, cookies }) => {
@@ -38,10 +52,10 @@ export const GET = async ({ url, cookies }) => {
 
     const userEmail = await getUserData(user.access_token);
 
-    // Generate a mock mailing list
-    const mailingList = getMockMailingList();
+    // Fetch contacts
+    const contacts = await getContacts(user.access_token);
 
-    // Store email, access token, and mailing list in cookies
+    // Store email, access token, and contacts in cookies
     cookies.set('userEmail', userEmail, {
       path: '/',
       httpOnly: true, // Optional: to prevent JavaScript access (better security)
@@ -54,17 +68,17 @@ export const GET = async ({ url, cookies }) => {
       maxAge: 60 * 60 * 24 * 7, // 1 week expiration
     });
 
-    cookies.set('mailingList', JSON.stringify(mailingList), {
+    cookies.set('mailingList', JSON.stringify(contacts), {
       path: '/',
       httpOnly: true, // Optional: to prevent JavaScript access
       maxAge: 60 * 60 * 24 * 7, // 1 week expiration
     });
 
-    console.log('User email, access token, and mailing list stored in cookies:', userEmail, mailingList);
+    console.log('User email, access token, and contacts stored in cookies:', userEmail, contacts);
 
   } catch (err) {
-    console.log('Error logging in with OAuth2 user', err);
+    console.error('Error logging in with OAuth2 user:', err);
   }
   
-  throw redirect(303, `${frontendURL}upload_audio?google_auth=true`); // Redirect to another page without query parameter
+  throw redirect(303, `${frontendURL}upload_audio?google_auth=true`); // Redirect to another page with query parameter
 };

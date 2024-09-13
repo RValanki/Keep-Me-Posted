@@ -1,7 +1,7 @@
 import { redirect } from '@sveltejs/kit';
 import { OAuth2Client } from 'google-auth-library';
 import { SECRET_CLIENT_ID, SECRET_CLIENT_SECRET } from '$env/static/private';
-import { frontendURL } from '../../api-functions/base-URL'
+import { frontendURL } from '../../api-functions/base-URL';
 
 export const actions = {
     OAuth2: async({}) => {
@@ -18,7 +18,13 @@ export const actions = {
         // Generate the URL that will be used for the consent dialog.
         const authorizeUrl = oAuth2Client.generateAuthUrl({
             access_type: 'offline',
-            scope: 'https://www.googleapis.com/auth/userinfo.email openid',
+            scope: [
+                'https://www.googleapis.com/auth/userinfo.email', // Access user's email
+                'https://www.googleapis.com/auth/userinfo.profile', // Access user's profile info
+                'https://www.googleapis.com/auth/contacts.readonly', // Access user's contacts
+                'https://www.googleapis.com/auth/contacts', // Manage user's contacts
+                'openid' // OpenID Connect for authentication
+            ],
             prompt: 'select_account'
         });
 
