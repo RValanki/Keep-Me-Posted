@@ -20,7 +20,7 @@
   let inputFocused = false;
 
   onMount(() => {
-    // $authStore.contactsList = [
+    // $authStore.mailing_list = [
     //   "fgh6a@abc.com",
     //   "jklb7p@xyz.net",
     //   "mn234@def.org",
@@ -55,7 +55,7 @@
   };
 
   let searchEmails = () => {
-    searchResults = $authStore.contactsList.filter((email) =>
+    searchResults = $authStore.mailing_list.filter((email) =>
       email.toLowerCase().includes(emailString.toLowerCase())
     );
   };
