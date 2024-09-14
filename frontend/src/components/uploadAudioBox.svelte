@@ -128,7 +128,7 @@
 </script>
 
 <!-- COMPONENT -->
-<div class= "flex items-center justify-center">
+<div class= "flex items-center justify-center mb-4">
     <!-- upload-audio-box -->
 	 {#if $apiStatusStore == "" || $apiStatusStore == "Cancel"}
 	 	<!-- BLUE with dropzone -->
