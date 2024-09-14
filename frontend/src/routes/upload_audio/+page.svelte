@@ -3,8 +3,8 @@
     The page where user uploads the audio file for Send Summary ASAP pathway.
 
     Author: Parul Garg (pgar0011)
-    Edited By: Angelina Leung (aleu0007), Maureen Pham (mpha0039), Danny Leung (dleu0007)
-    Last Modified: 19/08/24
+    Edited By: Angelina Leung (aleu0007), Maureen Pham (mpha0039), Danny Leung (dleu0007), Rohit Valanki (rval0008)
+    Last Modified: 12/09/24
 
 -->
 
@@ -12,12 +12,77 @@
   //required imports
   import Button from "../../components/button.svelte";
   import Topbar from "../../components/topbar.svelte";
-  import Toggle from '../../components/toggle.svelte';
+  import Toggle from "../../components/toggle.svelte";
   import UploadBox from "../../components/uploadAudioBox.svelte";
   import { goto } from "$app/navigation";
   import { apiStatusStore } from "../../stores/api-status-store";
   import { resetStores } from "../../stores/reset-store";
-  import RightArrow from "../../assets/arrow-right.png"
+  import RightArrow from "../../assets/arrow-right.png";
+  import { onMount, onDestroy } from "svelte";
+  import { updateAuth, authStore } from "../../stores/auth-store.js";
+
+  let loggedIn;
+  let googleAuth = false;
+  let userEmail = null;
+  let accessToken = null;
+  let mailingList = []; // Add variable to hold mailing list
+
+  // Subscribe to the store to get the current value of `loggedIn`
+  const unsubscribe = authStore.subscribe((value) => {
+    loggedIn = value.loggedIn;
+  });
+  // Clean up the subscription when the component is destroyed
+  onDestroy(() => {
+    unsubscribe();
+  });
+
+  onMount(async () => {
+    const queryParams = new URLSearchParams(window.location.search);
+    googleAuth = queryParams.get("google_auth") === "true";
+    console.log("Google Auth:", googleAuth);
+
+    if (!loggedIn && googleAuth) {
+      try {
+        const response = await fetch("/sse");
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        // Read the response body as a stream
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let result = "";
+
+        // Read the stream
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          result += decoder.decode(value, { stream: true });
+        }
+
+        // Parse the JSON data
+        const data = JSON.parse(result);
+        userEmail = data.userEmail;
+        accessToken = data.accessToken;
+        mailingList = data.mailingList || []; // Handle mailing list
+
+        // Update the store with the fetched data
+        if (userEmail && accessToken) {
+          updateAuth(userEmail, true, accessToken, mailingList); // Pass mailing list to updateAuth
+        }
+
+        console.log("Fetched user email:", userEmail);
+        console.log("Fetched access token:", accessToken);
+        console.log("Fetched mailing list:", mailingList);
+      } catch (error) {
+        console.error(
+          "Error fetching user email, access token, and mailing list:",
+          error,
+        );
+      }
+    }
+  });
 
   // Function to navigate to the summary page and update the status to "Viewed"
   let nextPage = () => {
@@ -45,26 +110,26 @@
     </div>
 
     <UploadBox />
-  
-    <Toggle/>
-    
-    {#if ($apiStatusStore == "Complete")}
+
+    <Toggle />
+
+    {#if $apiStatusStore == "Complete"}
       <div class="flex justify-center items-center p-3">
-        <Button 
+        <Button
           type="secondary"
           text="Re-Upload Audio"
           handleClick={handleReUpload}
         />
       </div>
     {/if}
-  
+
     <div class="absolute bottom-8 right-8">
       <Button
         handleClick={nextPage}
         icon={RightArrow}
         text="View Summary"
-        disabled={ $apiStatusStore == "" }
-        type={ $apiStatusStore == "" ? "disabled" : "primary" }
+        disabled={$apiStatusStore == ""}
+        type={$apiStatusStore == "" ? "disabled" : "primary"}
       ></Button>
     </div>
   </body>
