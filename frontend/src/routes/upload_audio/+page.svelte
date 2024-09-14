@@ -16,7 +16,6 @@
   import UploadBox from "../../components/uploadAudioBox.svelte";
   import { goto } from "$app/navigation";
   import { apiStatusStore } from "../../stores/api-status-store";
-  import { navStatusStore } from "../../stores/nav-status-store";
   import { resetStores } from "../../stores/reset-store";
   import RightArrow from "../../assets/arrow-right.png";
   import { onMount, onDestroy } from "svelte";
@@ -88,7 +87,6 @@
   // Function to navigate to the summary page and update the status to "Viewed"
   let nextPage = () => {
     goto("/generate_summary");
-    navStatusStore.set("Skipped");
   };
 
   // Function to handle re-upload action and reset the status

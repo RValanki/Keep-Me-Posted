@@ -21,8 +21,7 @@
 	import LoadingBar from "./loadingBar.svelte";
 	import { transcribe_audio } from "../api-functions/transcribe_audio";
 	import { send_summary } from "../api-functions/send_summary";
-	import { apiStatusStore } from "../stores/api-status-store";
-	import { navStatusStore } from "../stores/nav-status-store";
+	import { apiStatusStore } from "../stores/api-status-store"
 	import { backendURL } from "../api-functions/base-URL"
 	import PopUpModal from "./popUpModal.svelte"; // Import the PopUpModal component
     import { resetStores } from "../stores/reset-store";
@@ -101,10 +100,7 @@
 				return Promise.reject("Upload cancelled")
 			}
 			apiStatusStore.set("Complete");
-			if ($navStatusStore != "Skipped") {
-				goto("/generate_summary");
-			};
-			navStatusStore.set("");
+			goto("/generate_summary")
 			console.log('Summary Received');
 		}).catch(error => {
 			if (error == "Upload cancelled") {
