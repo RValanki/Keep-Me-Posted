@@ -105,7 +105,7 @@
 
     {#if inputFocused && searchResults.length > 0}
       <div
-        class="absolute bg-white shadow-sm border border-gray-300 rounded-lg w-96 z-10 max-h-48 overflow-y-scroll my-1"
+        class="absolute bg-white shadow-sm border border-gray-300 rounded-lg w-full z-10 max-h-48 overflow-y-scroll my-1"
       >
         <ul class="py-2 space-y-2">
           {#each searchResults as result}
