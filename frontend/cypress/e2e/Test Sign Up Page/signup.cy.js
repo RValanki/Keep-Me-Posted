@@ -35,19 +35,19 @@ describe('Sign Up Flow', () => {
   });
 
   it('should successfully submit the form with valid inputs', () => {
-    cy.intercept('POST', apiUrl, {
-      statusCode: 200,
-      body: {},
-    }).as('postSignUp');
+    cy.intercept('POST', apiUrl).as('postSignUp');
 
     cy.get('input[placeholder="name@email.com"]').type('test@example.com');
     cy.get('input[placeholder="••••••••"]').first().type('ValidPass123!');
     cy.get('input[placeholder="••••••••"]').last().type('ValidPass123!');
     cy.get('button').contains('Sign Up').click();
 
-    cy.wait('@postSignUp').its('response.statusCode').should('eq', 200);
+    cy.wait('@postSignUp').its('response.body').should((body) => {
+      expect(body).to.have.property('token');
+      expect(body).to.have.property('user');
+    })
 
-    cy.url().should('eq', `${baseUrl}/login`);
+    cy.url().should("include", "/login");
   });
 
   it('should display an error if the email is already in use', () => {
