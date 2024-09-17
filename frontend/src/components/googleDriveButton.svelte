@@ -43,6 +43,7 @@
     });
 
     async function handleAuthClick() {
+        accessToken = getAuth().accessToken; // pull token from store to prevent forbidden error message
         await createPicker();
     }
 
@@ -52,7 +53,7 @@
     function createPicker() {
         console.log("Creating picker");
         const view = new google.picker.View(google.picker.ViewId.DOCS);
-        view.setMimeTypes("video/mp4,audio/mp3");
+        view.setMimeTypes("audio/mpeg,video/mp4,audio/wav"); //displays the files shown in google picker
         const picker = new google.picker.PickerBuilder()
             .enableFeature(google.picker.Feature.NAV_HIDDEN)
             .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
@@ -71,23 +72,33 @@
      * @param {object} data - Containers the user selection from the picker
      */
     async function pickerCallback(data) {
+        console.log(data)
         if (data.action === google.picker.Action.PICKED) {
             let text = `Picker response: \n${JSON.stringify(data, null, 2)}\n`;
             const document = data[google.picker.Response.DOCUMENTS][0];
             const fileId = document[google.picker.Document.ID];
-            try {
-                const res = await gapi.client.drive.files.get({
-                    fileId: fileId,
-                    fields: "*",
-                });
-                text += `Drive API response for first document: \n${JSON.stringify(res.result, null, 2)}\n`;
-            } catch (error) {
-                text += `Error fetching file: ${error.message}\n`;
-                console.error("Error fetching file:", error);
-            }
-            document.getElementById("content").innerText = text;
+            const response = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`, {
+                headers: new Headers({
+                    Authorization: `Bearer ${accessToken}`, // pass in the token as an authorization header to access its google files
+                }),
+            });
+            // storing the http request data(mp3/mp4) as a blob
+            const blob = await response.blob();
+            //converting blob to an actual file
+            const file = new File([blob], document[google.picker.Document.NAME], { type: blob.type });
+
+            // create event which will trigger the file handling in upload audio box
+            const event = new CustomEvent("fileSelected", {
+                detail: {acceptedFiles: [file] },
+            }); 
+            window.dispatchEvent(event);                
         }
     }
+
+// get webcontentlink
+// send link to backend - make a function in assemblyai views with a POST request to the url, put new url in urls
+// make backend download that file
+// send file to assemblyai to transcribe
 
 </script>
 
@@ -107,7 +118,7 @@
                 fullWidth={true} 
                 fitContainerHeight={true}
                 type="secondary" 
-                text="Sign in"
+                text="Upload from Google Drive"
                 icon = {DriveIcon}
                 handleClick={handleAuthClick} />
         </form>
